@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css"/>
+  <title>Overview</title>
+  <script src="js/moon.js"></script>
+  <script src="js/timegregorian.js"></script>
+  <script src="js/overviewclock.js"></script>
+  <script src="js/input.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+    var overview = new Overview();
+    overview.display(new TimeGregorian(new Date()));
+    overview.startUpdate();
+
+    var input = new Input(overview.canvas);
+    overview.canvas.addEventListener('changeValue', function (e)
+    {
+      overview.changeValue(e.detail);
+    });
+  </script>
+</body>
+</html>
