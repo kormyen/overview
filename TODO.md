@@ -1,13 +1,23 @@
 # TO DO
 
-### TO DO
+### V1 fixes
 
+- BUG: reported issue displaying on external monitor (DPI related) - need more details.
 - add mobile input/drag.
-- add improved ratio/scaling (scale to width).
+- add improved ratio/scaling (scale to fit width).
+
+### V2
+
 - draw moon visual.
 - draw sunlight markers like https://daylight.website/ with https://github.com/Fabiz/MeeusJs.
 - draw marker visual (triangle vs semi-circle).
-- add text info, ideally editable.
+- Show day of week via saturday and sunday being different color.
+
+### Future
+
+- tide marker
+- add text info, ideally editable (next/prev; day, full moon, month, year etc).
 - replace moon.js with https://github.com/Fabiz/MeeusJs.
 - Set up Decimal time option.
 - Set up Arvelie time option.
+- geolocation settings
