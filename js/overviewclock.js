@@ -7,7 +7,7 @@ function Overview()
   this.canvas = document.createElement("canvas"); 
   this.canvas.id = "overview";
   
-  this.size = { width:window.innerWidth, height:window.innerHeight, ratio:1 };
+  this.size = null;
   this.settings = { targetFps: 60 }
 
   const COLOR_PRIMARY = '#FFFFFF';
@@ -56,18 +56,17 @@ function Overview()
   this.drawTellurion = function()
   {
     let context = this.getContext();
-    // context.beginPath();
 
-    let cx = this.size.width * this.size.ratio / 2;
-    let cy = this.size.height * this.size.ratio / 2;
+    let cx = this.size.width / 2;
+    let cy = this.size.height / 2;
 
     this.drawEarth(context, cx, cy);
     this.drawMoon(context, cx, cy);
-    this.drawLINEs(context, cx, cy);
+    this.drawSun(context, cx, cy);
   }
 
   // SUN (DAY AND MONTH IN YEAR)
-  this.drawLINEs = function(context, cx, cy)
+  this.drawSun = function(context, cx, cy)
   {
     let currentDayInCurrentMonth = 1;
     let currentMonth = 0;
@@ -287,25 +286,20 @@ function Overview()
 
   this.setCanvasSize = function()
   {
-    overview.size = { width:window.innerWidth, height:window.innerHeight, ratio:1 };
+    this.size = { width:window.innerWidth, height:window.innerHeight, ratio:window.devicePixelRatio };
 
-    if (window.devicePixelRatio > 1)
-    {
-      var canvasWidth = this.size.width * this.size.ratio;
-      var canvasHeight = this.size.height * this.size.ratio;
-
-      this.canvas.width = canvasWidth * window.devicePixelRatio;
-      this.canvas.height = canvasHeight * window.devicePixelRatio;
-      this.canvas.style.width = canvasWidth + "px";
-      this.canvas.style.height = canvasHeight + "px";
-
-      this.getContext().scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
+    // Set high DPI canvas, if high devicePixelRatio.
+    this.canvas.width = this.size.width * this.size.ratio;
+    this.canvas.height = this.size.height * this.size.ratio;
+    // Set html canvas size as expected.
+    this.canvas.style.width = this.size.width + "px";
+    this.canvas.style.height = this.size.height + "px";
+    // Set internal canvas scale as expected.
+    this.getContext().scale(window.devicePixelRatio, window.devicePixelRatio);
   }
 
   window.onresize = function(event)
   {
-    overview.size = {width:window.innerWidth,height:window.innerHeight,ratio:2};
     overview.update();
   };
 }
