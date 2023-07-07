@@ -1,3 +1,5 @@
-body { 
+* { 
   background: #1E1E1E;
+  height: 100%;
+  overflow: hidden;
 }

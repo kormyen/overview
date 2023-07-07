@@ -3,8 +3,7 @@
 ### V1 fixes
 
 - BUG: reported issue displaying on external monitor (DPI related) - need more details.
-- add mobile input/drag.
-- add improved ratio/scaling (scale to fit width).
+- add improved ratio/scaling (scale to fit width). https://davidmatthew.ie/the-canvas-api-part-3-a-retina-ready-responsive-canvas/
 
 ### V2
 

@@ -9,9 +9,16 @@ function Input(canvas)
   this.settings = { targetFps: 60 }
 
   canvas.addEventListener('mousemove', ev => this.mouseMove(ev), false);
+  canvas.addEventListener('touchmove', ev => this.mouseMove(ev), false);
+
   canvas.addEventListener('mousedown', ev => this.mouseDown(ev), false);
+  canvas.addEventListener('touchstart', ev => this.mouseDown(ev), false);
+
   canvas.addEventListener('mouseup', ev => this.mouseUp(ev), false);
   canvas.addEventListener('mouseout',  ev => this.mouseUp(ev), false);
+  canvas.addEventListener('touchup',  ev => this.mouseUp(ev), false);
+  canvas.addEventListener('touchend',  ev => this.mouseUp(ev), false);
+  canvas.addEventListener('touchcancel',  ev => this.mouseUp(ev), false);
 
   setInterval(() => { this.update(); }, 1000 / this.settings.targetFps);
 
@@ -46,8 +53,15 @@ function Input(canvas)
 
   this.mouseMove = function(event)
   {
+    event.preventDefault();
     this.mouse.x = event.pageX;
     this.mouse.y = event.pageY;
+    if (event.touches && event.touches.length > 0)
+    {
+      this.mouse.x = event.touches[0].pageX;
+      this.mouse.y = event.touches[0].pageY;
+    }
+
     this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
     if (this.mouse.down)
     {
@@ -57,31 +71,40 @@ function Input(canvas)
 
   this.mouseDown = function(event)
   {
+    event.preventDefault();
+
+    // TOUCH
+    if (event.touches && event.touches.length > 0)
+    {
+      this.setMouseDownValues(event.touches[0].pageX, event.touches[0].pageY);
+    }
+
+    // MOUSE
     switch (event.which) {
       case 1:
           // Left Mouse button pressed.
-          this.mouse.down = true;
-          this.mouseDown.x = event.pageX;
-          this.mouseDown.y = event.pageY;
-          this.mouse.x = event.pageX;
-          this.mouse.y = event.pageY;
-          this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
-          this.sendValue = this.mouseChangeValue;
-          break;
-      case 2:
-          // Middle Mouse button pressed.
-          break;
-      case 3:
-          // Right Mouse button pressed.
+          this.setMouseDownValues(event.pageX, event.pageY);
           break;
       default:
-          // You have a strange Mouse!
+          // Other
           break;
     }
+  }
+
+  this.setMouseDownValues = function(x, y)
+  {
+    this.mouse.down = true;
+    this.mouseDown.x = x;
+    this.mouseDown.y = y;
+    this.mouse.x = x;
+    this.mouse.y = y;
+    this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
+    this.sendValue = this.mouseChangeValue;
   }
   
   this.mouseUp = function(event)
   {
+    event.preventDefault();
     this.mouse.down = false;
   }
 }
