@@ -286,7 +286,15 @@ function Overview()
 
   this.setCanvasSize = function()
   {
-    this.size = { width:window.innerWidth, height:window.innerHeight, ratio:window.devicePixelRatio };
+    // Set responsive (fit to screen) 1:1 resizing.
+    if (window.innerHeight >= window.innerWidth)
+    {
+      this.size = { width:window.innerWidth, height:window.innerWidth, ratio:window.devicePixelRatio };
+    } 
+    else 
+    {
+      this.size = { width:window.innerHeight, height:window.innerHeight, ratio:window.devicePixelRatio };
+    }
 
     // Set high DPI canvas, if high devicePixelRatio.
     this.canvas.width = this.size.width * this.size.ratio;
