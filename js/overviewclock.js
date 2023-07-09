@@ -26,6 +26,7 @@ function Overview()
 
   const MOON_DISTANCE = 0.35;
 
+
   this.display = function(timeData)
   {
     this.timeData = timeData;
@@ -47,6 +48,8 @@ function Overview()
   {
     return this.canvas.getContext('2d');
   }
+
+  this.moonPainter = new MoonPainter(this.getContext());
 
   this.clearCanvas = function()
   {
@@ -247,14 +250,14 @@ function Overview()
     // MOON (LUNATION / SYNODIC MONTH)
     let degreesEarthOffsetShared = this.calcEarthDegreeOffsetShared();
     let moonPos = this.calcOrbitLocation(cx, cy, degreesEarthOffsetShared -(360 * this.timeData.currentLuationPercentage), MOON_DISTANCE);
-    this.drawCircle(context, moonPos.x, moonPos.y, MOON_SIZE, LINE_WIDTH, COLOR_PRIMARY);
+    this.moonPainter.drawMoon(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, LINE_WIDTH, COLOR_PRIMARY, this.timeData.currentLuationPercentage, degreesEarthOffsetShared);
   }
 
-  this.drawCircle = function(context, x, y, r, lineWidth, lineColor)
+  this.drawCircle = function(context, x, y, radius, lineWidth, lineColor)
   {
     context.lineWidth = lineWidth;
     context.strokeStyle = lineColor;
-    return context.stroke(new Path2D(`M ${x}, ${y} m ${-r * this.size.height}, 0 a ${r * this.size.height},${r * this.size.height} 0 1, 1 0, 0.1`));
+    return context.stroke(new Path2D(`M ${x}, ${y} m ${-radius * this.size.height}, 0 a ${radius * this.size.height},${radius * this.size.height} 0 1, 1 0, 0.1`));
   }
 
   this.drawCircGraduation = function(context, x, y, degrees, radius, lineLength, lineWidth, lineColor)

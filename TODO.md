@@ -1,5 +1,7 @@
 # TO DO
 
+- change input to window not canvas
+
 ### V2
 
 - draw moon visual.

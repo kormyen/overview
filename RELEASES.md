@@ -8,4 +8,8 @@
 
 ### 1.0
 
-- Add basic functionality with simple display features (square time marker, circle earth with graduations, circle moon, graduations sun for date).
+- Add basic functionality with simple display features;
+    - square day time marker.
+    - circle earth with day time graduation lines.
+    - circle moon with age displayed by orbit position.
+    - graduation lines as sun light for date.
