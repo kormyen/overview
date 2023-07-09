@@ -29,9 +29,9 @@ function Overview()
   const MOON_DISTANCE = 0.35;
 
   this.drawShared = new DrawShared();
-  this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY, COLOR_PRIMARY, COLOR_SECONDARY);
+  this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY, COLOR_ASCENT, COLOR_SECONDARY, this.drawShared.hexMix(COLOR_PRIMARY, COLOR_SECONDARY, 0.5));
   this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_ASCENT, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
-  this.drawMoon = new DrawMoon(COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND);
+  this.drawMoon = new DrawMoon(this.drawShared, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND);
 
   this.display = function(timeData)
   {

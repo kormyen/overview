@@ -16,6 +16,7 @@ function TimeGregorian(myDate)
   this.currentLuationPercentage = null;
   this.currentMoonIlluminationPercentage = null;
   this.currentMonth = null;
+  this.currentYear = null;
   this.currentYearsTotalDays = null;
   this.currentYearsDaysPerMonth = null;
   
@@ -99,6 +100,7 @@ function TimeGregorian(myDate)
     this.currentMonth = this.currentDate.getMonth();
 
     // Current year stats
+    this.currentYear = this.currentDate.getFullYear();
     this.currentYearsTotalDays = this.calcDaysInGregorianYear(this.currentDate.getFullYear());
     this.currentYearsDaysPerMonth = this.calccurrentYearsDaysPerMonthInGregorianYear(this.currentDate.getFullYear());
 

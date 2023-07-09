@@ -1,5 +1,6 @@
-function DrawMoon(colorPrimary, colorSecondary, colorBackground)
+function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 {
+    this.drawShared = drawShared;
 	const COLOR_PRIMARY = colorPrimary;
 	const COLOR_SECONDARY = colorSecondary;
 	const COLOR_BACKGROUND = colorBackground;
@@ -53,7 +54,7 @@ function DrawMoon(colorPrimary, colorSecondary, colorBackground)
 		{
 			let halfPercentageSecond = (phasePerc-0.5)*2;
 			halfPercentageSecond = this.easeInSine(halfPercentageSecond);
-			let mixColor = this.hexMix(COLOR_SECONDARY, COLOR_BACKGROUND, halfPercentageSecond);
+			let mixColor = this.drawShared.hexMix(COLOR_SECONDARY, COLOR_BACKGROUND, halfPercentageSecond);
 
 			if (phasePerc <= 0.75) 
 			{
@@ -129,24 +130,5 @@ function DrawMoon(colorPrimary, colorSecondary, colorBackground)
 	this.degreesToRadians = function(degrees)
 	{
 		return degrees * (Math.PI / 180);
-	}
-
-	// Source: https://codepen.io/chambaz/pen/EyNeNw
-	this.hexMix = function(colorFrom, colorTo, ratio)
-	{
-		colorFrom = colorFrom.slice(1);
-		colorTo = colorTo.slice(1);
-
-		const hex = function(x)
-		{
-			x = x.toString(16);
-			return (x.length == 1) ? '0' + x : x;
-		};
-	
-		let r = Math.ceil(parseInt(colorTo.substring(0, 2), 16) * ratio + parseInt(colorFrom.substring(0, 2), 16) * (1 - ratio)),
-			g = Math.ceil(parseInt(colorTo.substring(2, 4), 16) * ratio + parseInt(colorFrom.substring(2, 4), 16) * (1 - ratio)),
-			b = Math.ceil(parseInt(colorTo.substring(4, 6), 16) * ratio + parseInt(colorFrom.substring(4, 6), 16) * (1 - ratio));
-	
-		return '#' + hex(r) + hex(g) + hex(b);
 	}
 }
