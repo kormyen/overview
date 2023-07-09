@@ -1,5 +1,6 @@
 # TO DO
 
+- bug: resolution/window-size affects line width
 - change input to window not canvas
 
 ### V2

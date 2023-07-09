@@ -8,17 +8,17 @@ function Input(canvas)
   this.sendValue = 0;
   this.settings = { targetFps: 60 }
 
-  canvas.addEventListener('mousemove', ev => this.mouseMove(ev), false);
-  canvas.addEventListener('touchmove', ev => this.mouseMove(ev), false);
+  window.addEventListener('mousemove', ev => this.mouseMove(ev), false);
+  window.addEventListener('touchmove', ev => this.mouseMove(ev), false);
 
-  canvas.addEventListener('mousedown', ev => this.mouseDown(ev), false);
-  canvas.addEventListener('touchstart', ev => this.mouseDown(ev), false);
+  window.addEventListener('mousedown', ev => this.mouseDown(ev), false);
+  window.addEventListener('touchstart', ev => this.mouseDown(ev), false);
 
-  canvas.addEventListener('mouseup', ev => this.mouseUp(ev), false);
-  canvas.addEventListener('mouseout',  ev => this.mouseUp(ev), false);
-  canvas.addEventListener('touchup',  ev => this.mouseUp(ev), false);
-  canvas.addEventListener('touchend',  ev => this.mouseUp(ev), false);
-  canvas.addEventListener('touchcancel',  ev => this.mouseUp(ev), false);
+  window.addEventListener('mouseup', ev => this.mouseUp(ev), false);
+  window.addEventListener('mouseout',  ev => this.mouseUp(ev), false);
+  window.addEventListener('touchup',  ev => this.mouseUp(ev), false);
+  window.addEventListener('touchend',  ev => this.mouseUp(ev), false);
+  window.addEventListener('touchcancel',  ev => this.mouseUp(ev), false);
 
   setInterval(() => { this.update(); }, 1000 / this.settings.targetFps);
 
