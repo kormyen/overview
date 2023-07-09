@@ -37,7 +37,7 @@ function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMediu
             let anyDayOfThisMonth = timeData.currentMonth == currentMonth;
             if (anyDayOfThisMonth)
             {
-                let strokeColor = this.checkIfWeekend(timeData, i) ? COLOR_ASCENT : COLOR_SECONDARY;
+                let strokeColor = this.checkIfWeekend(timeData, i+1) ? COLOR_ASCENT : COLOR_SECONDARY;
                 if (timeData.currentDaysIntoYear == i + 1)
                 {
                     strokeColor = COLOR_PRIMARY;
