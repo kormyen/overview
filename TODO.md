@@ -1,7 +1,6 @@
 # TO DO
 
 - bug: resolution/window-size affects line width
-- change input to window not canvas
 
 ### V2
 
@@ -16,3 +15,9 @@
 - Set up Decimal time option.
 - Set up Arvelie time option.
 - geolocation settings
+
+
+#### Done for v2
+
+- Add improved moon visual showing moon phase.
+- Add day of week display on sun graduations via saturday and sunday being different color.

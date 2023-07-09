@@ -20,6 +20,23 @@ This is a 24h clock face design that more literally references the origins of ho
 
 ## Docs
 
-- [Releases](RELEASES.md)
 - [To do](TODO.md)
 - [Ideas](IDEAS.md)
+
+## Changelog
+
+#### 1.1 &mdash; 2023-07-08
+
+- Fix bug: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
+- Add responsive width/height handling.
+- Add mobile input handling.
+
+#### 1.0 &mdash; 2023-07-06
+
+Core functionality, basic line display.
+
+- Add basic functionality with simple display features;
+- Add square day time marker.
+- Add circle earth with day time graduation lines.
+- Add circle moon with age displayed by orbit position.
+- Add graduation lines as sun light for date.
