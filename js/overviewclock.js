@@ -13,6 +13,8 @@ function Overview()
   const COLOR_PRIMARY = '#FFFFFF';
   const COLOR_SECONDARY = '#666666';
   const COLOR_ASCENT = '#EE4B2B';
+  const COLOR_BACKGROUND = '#1E1E1E';
+  // const COLOR_BACKGROUND = '#000000';
 
   const LINE_WIDTH = 4;
   const LINE_LENGTH_TINY = 0.01;
@@ -250,7 +252,7 @@ function Overview()
     // MOON (LUNATION / SYNODIC MONTH)
     let degreesEarthOffsetShared = this.calcEarthDegreeOffsetShared();
     let moonPos = this.calcOrbitLocation(cx, cy, degreesEarthOffsetShared -(360 * this.timeData.currentLuationPercentage), MOON_DISTANCE);
-    this.moonPainter.drawMoon(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, LINE_WIDTH, COLOR_PRIMARY, this.timeData.currentLuationPercentage, degreesEarthOffsetShared);
+    this.moonPainter.drawMoon(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND, this.timeData.currentLuationPercentage, degreesEarthOffsetShared);
   }
 
   this.drawCircle = function(context, x, y, radius, lineWidth, lineColor)

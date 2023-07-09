@@ -4,7 +4,6 @@
 
 ### V2
 
-- draw moon visual.
 - draw sunlight markers like https://daylight.website/ with https://github.com/Fabiz/MeeusJs.
 - draw marker visual (triangle vs semi-circle).
 - Show day of week via saturday and sunday being different color.
