@@ -1,6 +1,10 @@
-function MoonPainter()
+function DrawMoon(colorPrimary, colorSecondary, colorBackground)
 {
-	this.drawMoon = function(context, cx, cy, radius, colorForeground, colorSecondary, colorBackground, phasePerc, rotationOffset)
+	const COLOR_PRIMARY = colorPrimary;
+	const COLOR_SECONDARY = colorSecondary;
+	const COLOR_BACKGROUND = colorBackground;
+
+	this.display = function(context, cx, cy, radius, phasePerc, rotationOffset)
 	{
 		context.save(); // save current canvas state (position, rotation).
 		context.translate(cx, cy);
@@ -17,12 +21,12 @@ function MoonPainter()
 				quarterPercentageFirst = this.easeInSine(quarterPercentageFirst);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, colorForeground, true);
+				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
 
 				// First half: Black overlay
 				context.scale(1-quarterPercentageFirst, 1);
 				context.beginPath();
-				context.fillStyle = colorBackground;
+				context.fillStyle = COLOR_BACKGROUND;
 				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
 				context.closePath();
 				context.fill();	
@@ -34,12 +38,12 @@ function MoonPainter()
 				quarterPercentageSecond = this.easeOutSine(quarterPercentageSecond);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, colorForeground, true);
+				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
 
 				// Second half: white phase
 				context.scale(-quarterPercentageSecond, 1);
 				context.beginPath();
-				context.fillStyle = colorForeground;
+				context.fillStyle = COLOR_PRIMARY;
 				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
 				context.closePath();
 				context.fill();		
@@ -49,8 +53,7 @@ function MoonPainter()
 		{
 			let halfPercentageSecond = (phasePerc-0.5)*2;
 			halfPercentageSecond = this.easeInSine(halfPercentageSecond);
-			let mixColor = this.hexMix(colorSecondary, colorBackground, halfPercentageSecond);
-			// this.drawCircle(context, cx, cy, radius-lineWidth/2, lineWidth, mixColor);
+			let mixColor = this.hexMix(COLOR_SECONDARY, COLOR_BACKGROUND, halfPercentageSecond);
 
 			if (phasePerc <= 0.75) 
 			{
@@ -59,14 +62,14 @@ function MoonPainter()
 				quarterPercentageThird = this.easeInSine(quarterPercentageThird);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, colorForeground, true);
+				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
 
 				// Second half: white phase
 				this.drawHalfMoon(context, radius, mixColor, false);
 
 				context.scale(1-quarterPercentageThird, 1);
 				context.beginPath();
-				context.fillStyle = colorForeground;
+				context.fillStyle = COLOR_PRIMARY;
 				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, false); // half circle
 				context.closePath();
 				context.fill();		
@@ -81,7 +84,7 @@ function MoonPainter()
 				this.drawHalfMoon(context, radius, mixColor, false);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, colorForeground, true);
+				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
 
 				// First half: secondary overlay
 				context.scale(quarterPercentageForth, 1);
@@ -126,13 +129,6 @@ function MoonPainter()
 	this.degreesToRadians = function(degrees)
 	{
 		return degrees * (Math.PI / 180);
-	}
-
-	this.drawCircle = function(context, x, y, radius, lineWidth, lineColor)
-	{
-		context.lineWidth = lineWidth;
-		context.strokeStyle = lineColor;
-		return context.stroke(new Path2D(`M ${x}, ${y} m ${-radius}, 0 a ${radius},${radius} 0 1, 1 0, 0.1`));
 	}
 
 	// Source: https://codepen.io/chambaz/pen/EyNeNw
