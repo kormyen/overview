@@ -22,6 +22,7 @@ This is a 24h clock face design that more literally references the origins of ho
 
 - [To do](TODO.md)
 - [Ideas](IDEAS.md)
+- [Astronomy js lib comparison](https://tealdulcet.com/weather/)
 
 ## Changelog
 

@@ -1,14 +1,20 @@
 # TO DO
 
-- bug: resolution/window-size affects line width
+- bug: resolution/window-size should not affect line-width.
 
 ### V2
 
-- draw sunlight markers like https://daylight.website/ with https://github.com/Fabiz/MeeusJs.
+- draw sunlight markers like https://daylight.website/ with;
+-- https://github.com/mourner/suncalc or
+-- https://github.com/commenthol/astronomia or
+-- https://github.com/Fabiz/MeeusJs or
+-- https://tealdulcet.com/weather/riseset.js or
+-- https://github.com/Triggertrap/sun-js
 - draw marker visual (triangle vs semi-circle).
 
 ### Future
 
+- review https://tealdulcet.com/weather/moon.js
 - tide marker
 - add text info, ideally editable (next/prev; day, full moon, month, year etc).
 - replace moon.js with https://github.com/Fabiz/MeeusJs.
