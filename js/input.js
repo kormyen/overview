@@ -15,7 +15,6 @@ function Input(canvas)
   window.addEventListener('touchstart', ev => this.mouseDown(ev), false);
 
   window.addEventListener('mouseup', ev => this.mouseUp(ev), false);
-  window.addEventListener('mouseout',  ev => this.mouseUp(ev), false);
   window.addEventListener('touchup',  ev => this.mouseUp(ev), false);
   window.addEventListener('touchend',  ev => this.mouseUp(ev), false);
   window.addEventListener('touchcancel',  ev => this.mouseUp(ev), false);
