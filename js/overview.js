@@ -3,6 +3,7 @@
 function Overview()
 {
   this.timeData = null;
+  this.moonData = null;
 
   this.canvas = document.createElement("canvas"); 
   this.canvas.id = "overview";
@@ -33,21 +34,27 @@ function Overview()
   this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_ASCENT, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
   this.drawMoon = new DrawMoon(this.drawShared, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND);
 
-  this.display = function(timeData)
+  this.setData = function(timeData, moonData)
   {
     this.timeData = timeData;
+    this.moonData = moonData;
     this.update();
+  }
+
+  this.display = function()
+  {
+    document.body.appendChild(this.canvas);
+  }
+
+  this.startUpdateLoop = function()
+  {
+    this.update();
+    setInterval(() => { this.update(); }, 1000 / this.settings.targetFps);
   }
 
   this.getContext = function()
   {
     return this.canvas.getContext('2d');
-  }
-
-  this.startUpdate = function()
-  {
-    document.body.appendChild(this.canvas);
-    setInterval(() => { this.update(); }, 1000 / this.settings.targetFps);
   }
 
   this.changeValue = function(value)
@@ -72,8 +79,8 @@ function Overview()
     this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated);
 
     // Moon (synodic month)
-    let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.timeData.currentLuationPercentage), MOON_DISTANCE);
-    this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.timeData.currentLuationPercentage, degreesEarthRotated);
+    let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
+    this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated);
     
     // Sun (date of month and month in year)
     this.drawSun.display(context, cx, cy, this.timeData);
@@ -96,12 +103,18 @@ function Overview()
 
   this.update = function()
   {
-    if (this.timeData != null)
+    if (this.timeData != null && this.moonData != null)
     {
       this.timeData.update();
+      this.moonData.updateGregorian(this.timeData.currentDate);
+
       this.setCanvasSize();
       this.clearCanvas();
       this.drawTellurion();
+    }
+    else
+    {
+      console.error('Missing data');
     }
   }
 

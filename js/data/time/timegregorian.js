@@ -1,5 +1,6 @@
 "use strict";
 
+// DIY library for simple time wrapper.
 function TimeGregorian(myDate)
 {
   // App update data
@@ -13,17 +14,11 @@ function TimeGregorian(myDate)
   this.currentDaysIntoYear = null;
   this.currentDayPercentage = null;
   this.currentJulianDate = null;
-  this.currentLuationPercentage = null;
-  this.currentMoonIlluminationPercentage = null;
   this.currentMonth = null;
   this.currentYear = null;
   this.currentYearsTotalDays = null;
   this.currentYearsDaysPerMonth = null;
   
-  let that = this;
-
-  this.moon = new Moon();
-
   const MS_IN_A_DAY = 86400000; // = 1000 * 60 * 60 * 24;
   
   this.calcDaysInGregorianYear = function(year)
@@ -90,12 +85,6 @@ function TimeGregorian(myDate)
     this.currentDaysIntoYear = this.calcCurrentDaysIntoYear(this.currentDate);
     this.currentDayPercentage = this.calcCurrentDayPercentage(this.currentDate);
 
-    this.moon.updateGregorian(this.currentDate);
-    this.currentJulianDate = this.moon.currentJulianDate;
-    this.currentLuationPercentage = this.moon.currentLuationPercentage;
-    this.currentMoonIlluminationPercentage = this.moon.currentMoonIlluminationPercentage;
-    this.currentMoonPhase = this.moon.currentMoonPhase;
-
     // Current month stats
     this.currentMonth = this.currentDate.getMonth();
 
@@ -103,11 +92,6 @@ function TimeGregorian(myDate)
     this.currentYear = this.currentDate.getFullYear();
     this.currentYearsTotalDays = this.calcDaysInGregorianYear(this.currentDate.getFullYear());
     this.currentYearsDaysPerMonth = this.calccurrentYearsDaysPerMonthInGregorianYear(this.currentDate.getFullYear());
-
-    // DEBUG
-    // console.log('Moon Illuminated: ' + this.currentMoonIlluminationPercentage);
-    // console.log('Gregorian date: ' + this.baseDate);
-    // console.log('Julian date: ' + this.currentJulianDate);
   }
 
   this.updateValues();

@@ -1,6 +1,7 @@
 "use strict";
 
-function Moon()
+// DIY library for moon phase calculations from a given date.
+function OverviewMoon()
 {
   this.currentJulianDate = null;
   this.currentLuationPercentage = null;

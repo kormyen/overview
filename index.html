@@ -4,20 +4,23 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="style.css"/>
   <title>Overview</title>
-  <script src="js/moon.js"></script>
-  <script src="js/timegregorian.js"></script>
-  <script src="js/drawshared.js"></script>
-  <script src="js/drawsun.js"></script>
-  <script src="js/drawearth.js"></script>
-  <script src="js/drawmoon.js"></script>
-  <script src="js/overviewclock.js"></script>
+  <script src="js/data/time/timegregorian.js"></script>
+  <script src="js/data/moon/overviewmoon.js"></script>
+
+  <script src="js/draw/drawshared.js"></script>
+  <script src="js/draw/drawsun.js"></script>
+  <script src="js/draw/drawearth.js"></script>
+  <script src="js/draw/drawmoon.js"></script>
+
   <script src="js/input.js"></script>
+  <script src="js/overview.js"></script>
 </head>
 <body>
   <script type="text/javascript">
     var overview = new Overview();
-    overview.display(new TimeGregorian(new Date()));
-    overview.startUpdate();
+    overview.setData(new TimeGregorian(new Date()), new OverviewMoon());
+    overview.display();
+    overview.startUpdateLoop();
 
     var input = new Input(overview.canvas);
     overview.canvas.addEventListener('changeValue', function (e)
