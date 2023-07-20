@@ -33,8 +33,6 @@ function SunCalcWrapper()
         // times.sunsetStart	                sunset starts (bottom edge of the sun touches the horizon)
         this.result.Set2Sunset =                times.sunsetStart;
 
-        // console.log(date + "'s sunset = " + this.result.Set2Sunset);
-
         // times.sunset	                        sunset (sun disappears below the horizon, evening civil twilight starts)
         this.result.Set3TwilightCivil =         times.sunset;
 
