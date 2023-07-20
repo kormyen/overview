@@ -31,13 +31,15 @@ function Overview()
 
   this.drawShared = new DrawShared();
   this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY, COLOR_ASCENT, COLOR_SECONDARY, this.drawShared.hexMix(COLOR_PRIMARY, COLOR_SECONDARY, 0.5));
-  this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_ASCENT, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
+  this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND, COLOR_ASCENT, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
   this.drawMoon = new DrawMoon(this.drawShared, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND);
 
-  this.setData = function(timeData, moonData)
+  this.setData = function(timeData, moonData, sunData)
   {
     this.timeData = timeData;
     this.moonData = moonData;
+    this.sunData = sunData;
+
     this.update();
   }
 
@@ -76,7 +78,7 @@ function Overview()
     let degreesEarthRotated = this.calcEarthDegreeOffsetShared();
 
     // Eath (24h time of day)
-    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated);
+    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result);
 
     // Moon (synodic month)
     let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
@@ -107,6 +109,7 @@ function Overview()
     {
       this.timeData.update();
       this.moonData.updateGregorian(this.timeData.currentDate);
+      this.sunData.updateGregorian(this.timeData.currentDate, -36.85, 174.76);
 
       this.setCanvasSize();
       this.clearCanvas();
@@ -141,6 +144,7 @@ function Overview()
     // Set internal canvas scale as expected.
     this.getContext().scale(window.devicePixelRatio, window.devicePixelRatio);
     this.drawShared.setSize(this.size);
+    this.drawEarth.setSize(this.size);
   }
 
   window.onresize = function(event)

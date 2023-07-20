@@ -1,20 +1,109 @@
-function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, colorAscent, lineLengthLarge, lineLengthSmall, lineLengthTiny)
+function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, colorBackground, colorAscent, lineLengthLarge, lineLengthSmall, lineLengthTiny)
 {
+    this.size = null;
+
     this.drawShared = drawShared;
     const EARTH_SIZE = radius;
     const LINE_WIDTH = lineWidth;
     const COLOR_PRIMARY = colorPrimary;
     const COLOR_SECONDARY = colorSecondary;
+    const COLOR_BACKGROUND = colorBackground;
     const COLOR_ASCENT = colorAscent;
     const LINE_LENGTH_LARGE = lineLengthLarge;
     const LINE_LENGTH_SMALL = lineLengthSmall;
     const LINE_LENGTH_TINY = lineLengthTiny;
 
-    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared)
+    this.setSize = function(size)
     {
+        this.size = size;
+    }
+
+    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData)
+    {
+        this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData);
+
         this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY);
+    }
+
+    // Normalizes any number to an arbitrary range 
+    // by assuming the range wraps around when going below min or above max 
+    this.normalize = function(value, start, end) 
+    {
+        let width       = end - start   ;   // 
+        let offsetValue = value - start ;   // value relative to 0
+
+        return (offsetValue - ( Math.floor( offsetValue / width ) * width ) ) + start;
+        // + start to reset back to start of original range
+    }
+
+    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData)
+    {
+        let currentGraduationDegrees = this.normalize(degreesEarthOffsetShared-180, 0, 360);
+
+        const TOTALSECONDSINDAY = 60*60*24;
+        
+        let set1Perc = this.getSecondsThroughDay(sunData.Set1GoldenHour) / TOTALSECONDSINDAY;
+        let set2Perc = this.getSecondsThroughDay(sunData.Set2Sunset) / TOTALSECONDSINDAY;
+
+        let set3Perc = this.getSecondsThroughDay(sunData.Set3TwilightCivil) / TOTALSECONDSINDAY;
+        let set4Perc = this.getSecondsThroughDay(sunData.Set4TwilightNautical) / TOTALSECONDSINDAY;
+        let set5Perc = this.getSecondsThroughDay(sunData.Set5TwilightAstro) / TOTALSECONDSINDAY;
+        let set6Perc = this.getSecondsThroughDay(sunData.Set6Night) / TOTALSECONDSINDAY;
+        let set7Perc = this.getSecondsThroughDay(sunData.Set7SolarNadir) / TOTALSECONDSINDAY;
+
+        let rise1Perc = this.getSecondsThroughDay(sunData.Rise1TwilightAstro) / TOTALSECONDSINDAY;
+        let rise2Perc = this.getSecondsThroughDay(sunData.Rise2TwilightNautical) / TOTALSECONDSINDAY;
+        let rise3Perc = this.getSecondsThroughDay(sunData.Rise3TwilightCivil) / TOTALSECONDSINDAY;
+        let rise4Perc = this.getSecondsThroughDay(sunData.Rise4Sunrise) / TOTALSECONDSINDAY;
+        let rise5Perc = this.getSecondsThroughDay(sunData.Rise5GoldenHour) / TOTALSECONDSINDAY;
+        let rise6Perc = this.getSecondsThroughDay(sunData.Rise6Day) / TOTALSECONDSINDAY;
+        let rise7Perc = this.getSecondsThroughDay(sunData.Rise7SolarNoon) / TOTALSECONDSINDAY; 
+
+        context.beginPath();
+        context.fillStyle = drawShared.hexMix(COLOR_SECONDARY, COLOR_BACKGROUND, 0.8);
+
+        const ARC_FIX = -90;
+        let sDegrees = this.normalize(ARC_FIX - currentGraduationDegrees - (set2Perc * -360), 0, 360);
+        console.log('sunset = ' + sunData.Set2Sunset);
+        console.log('sunrise = ' + sunData.Rise4Sunrise);
+        // let sDegrees = this.normalize((-90 + set2Perc * 360), 0, 360);
+        let eDegrees = this.normalize(ARC_FIX - currentGraduationDegrees - (rise4Perc * -360), 0, 360);
+        // let eDegrees = this.normalize((-90 + rise4Perc * 360), 0, 360);
+        let sAngle = this.degreesToRadians(sDegrees);
+        let eAngle = this.degreesToRadians(eDegrees);
+        // console.log(sDegrees + ', ' + eDegrees);
+
+        context.arc(cx, cy, EARTH_SIZE * this.size.height, eAngle, sAngle, false);
+        context.closePath();
+        context.fill();
+
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set1Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set2Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set3Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set4Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set5Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set6Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (set7Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise1Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise2Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise3Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise4Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise5Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise6Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+        // this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees + (rise7Perc * 360), EARTH_SIZE, LINE_LENGTH_TINY, LINE_WIDTH, COLOR_PRIMARY);
+    }
+
+    this.getSecondsThroughDay = function(givenDate)
+    {
+        return givenDate.getHours() * 3600 + givenDate.getMinutes() * 60 + givenDate.getSeconds();
+    }
+
+    this.degreesToRadians = function(degrees)
+    {
+        return degrees * (Math.PI / 180);
     }
 
     this.drawEarthTimeHand = function(context, cx, cy, timeData, degreesEarthOffsetShared)

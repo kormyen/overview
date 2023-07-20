@@ -4,8 +4,8 @@ function DrawShared()
 
     this.calcOrbitLocation = function(x, y, degrees, radius)
     {
-        var x = x - y*2* radius * Math.cos((degrees-90) * Math.PI / 180);
-        var y = y - y*2*-radius * Math.sin((degrees-90) * Math.PI / 180);
+        var x = x - y * 2 * radius * Math.cos((degrees-90) * Math.PI / 180);
+        var y = y - y * 2 *-radius * Math.sin((degrees-90) * Math.PI / 180);
         return {x:x, y:y};
     }
 
