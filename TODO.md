@@ -4,13 +4,10 @@
 
 ### V2
 
-- draw sunlight markers like https://daylight.website/ with;
--- https://github.com/mourner/suncalc or
--- https://github.com/commenthol/astronomia or
--- https://github.com/Fabiz/MeeusJs or
--- https://tealdulcet.com/weather/riseset.js or
--- https://github.com/Triggertrap/sun-js
 - draw marker visual (triangle vs semi-circle).
+- add ability to change location for sun time calculations.
+- BUG: first day of month extended line on sat/sun is not all highlighted
+- BUG: line in middle of moon
 
 ### Future
 
@@ -21,9 +18,14 @@
 - Set up Decimal time option.
 - Set up Arvelie time option.
 - geolocation settings
-
+- draw sunlight markers like https://daylight.website/ with;
+-- wrapper https://github.com/commenthol/astronomia or
+-- wrapper https://github.com/Fabiz/MeeusJs or
+-- wrapper https://tealdulcet.com/weather/riseset.js or
+-- wrapper https://github.com/Triggertrap/sun-js
 
 #### Done for v2
 
 - Add improved moon visual showing moon phase.
 - Add day of week display on sun graduations via saturday and sunday being different color.
+- draw sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc

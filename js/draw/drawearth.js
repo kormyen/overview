@@ -63,9 +63,9 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set6Perc, rise1Perc, 0.966); // astro
         this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set5Perc, rise2Perc, 0.933); // nautical
         this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set4Perc, rise3Perc, 0.9); // civil
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set3Perc, rise4Perc, 0); // sunrise
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set2Perc, rise5Perc, 0.5); // golden hour
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set1Perc, rise6Perc, 0.55); // day
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set3Perc, rise4Perc, 0.3); // sunrise
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set2Perc, rise5Perc, 0.45); // golden hour
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set1Perc, rise6Perc, 0.5); // day
     }
 
     this.drawSunLightArc = function(context, cx, cy, currentGraduationDegrees, startPerc, endPerc, colorPerc)
