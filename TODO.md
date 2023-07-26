@@ -2,6 +2,7 @@
 
 ## Next
 
+- BUG: first day of month extended line on sat/sun is not all highlighted.
 - BUG: resolution/window-size should not affect line-width.
 - BUG: line in middle of moon due to split half rendering.
 - Add improved time marker visual (triangle vs semi-circle).
