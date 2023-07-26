@@ -9,19 +9,19 @@
 
 ## Future
 
-- Add ocean tide data display
+- Add ocean tide data display.
 - Add text info, ideally editable (next/prev; day, full moon, month, year etc).
-- Add geolocation settings
+- Add geolocation settings.
 
-- Add alternate time data wrappers
--- decimal time
--- Arvelie time
+- Add alternate time data wrappers.
+-- decimal time.
+-- Arvelie time.
 
-- Add alternate moon data wrappers
+- Add alternate moon data wrappers.
 -- https://github.com/Fabiz/MeeusJs
 -- https://tealdulcet.com/weather/moon.js
 
-- Add alternate sun data wrappers
+- Add alternate sun data wrappers.
 -- https://github.com/commenthol/astronomia
 -- https://github.com/Fabiz/MeeusJs
 -- https://tealdulcet.com/weather/riseset.js

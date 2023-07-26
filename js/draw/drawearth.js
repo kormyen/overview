@@ -50,7 +50,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         let set4Perc = this.getSecondsThroughDay(sunData.Set4TwilightNautical) / TOTALSECONDSINDAY;
         let set5Perc = this.getSecondsThroughDay(sunData.Set5TwilightAstro) / TOTALSECONDSINDAY;
         let set6Perc = this.getSecondsThroughDay(sunData.Set6Night) / TOTALSECONDSINDAY;
-        let set7Perc = this.getSecondsThroughDay(sunData.Set7SolarNadir) / TOTALSECONDSINDAY;
+        // let set7Perc = this.getSecondsThroughDay(sunData.Set7SolarNadir) / TOTALSECONDSINDAY;
 
         let rise1Perc = this.getSecondsThroughDay(sunData.Rise1TwilightAstro) / TOTALSECONDSINDAY;
         let rise2Perc = this.getSecondsThroughDay(sunData.Rise2TwilightNautical) / TOTALSECONDSINDAY;
@@ -58,13 +58,13 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         let rise4Perc = this.getSecondsThroughDay(sunData.Rise4Sunrise) / TOTALSECONDSINDAY;
         let rise5Perc = this.getSecondsThroughDay(sunData.Rise5GoldenHour) / TOTALSECONDSINDAY;
         let rise6Perc = this.getSecondsThroughDay(sunData.Rise6Day) / TOTALSECONDSINDAY;
-        let rise7Perc = this.getSecondsThroughDay(sunData.Rise7SolarNoon) / TOTALSECONDSINDAY; 
+        // let rise7Perc = this.getSecondsThroughDay(sunData.Rise7SolarNoon) / TOTALSECONDSINDAY; 
 
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set6Perc, rise1Perc, 0.966); // astro
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set5Perc, rise2Perc, 0.933); // nautical
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set4Perc, rise3Perc, 0.9); // civil
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set3Perc, rise4Perc, 0.3); // sunrise
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set2Perc, rise5Perc, 0.45); // golden hour
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set6Perc, rise1Perc, 0.95); // astro
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set5Perc, rise2Perc, 0.85); // nautical
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set4Perc, rise3Perc, 0.75); // civil
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set3Perc, rise4Perc, 0.2); // sunrise
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set2Perc, rise5Perc, 0.4); // golden hour
         this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set1Perc, rise6Perc, 0.5); // day
     }
 

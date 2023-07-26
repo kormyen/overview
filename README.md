@@ -28,6 +28,10 @@ This is a 24h clock face design that more literally references the origins of ho
 
 #### 2.0 &mdash; 2023-07-26
 
+<img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-21.jpg'/>
+
+Originally intended basic display achieved.
+
 - Add improved moon visual showing moon phase.
 - Add day of week display on sun graduations via saturday and sunday being lighter color.
 - Add sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc.
