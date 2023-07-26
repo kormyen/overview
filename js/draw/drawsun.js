@@ -1,14 +1,20 @@
 function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMedium, lineLengthSmall, colorPrimary, colorSecondary, colorAscent)
 {   
     this.drawShared = drawShared;
+    this.lineWidth = lineWidth;
+
     const SUN_SIZE = radius;
-    const LINE_WIDTH = lineWidth;
     const LINE_LENGTH_LARGE = lineLengthLarge;
     const LINE_LENGTH_MEDIUM = lineLengthMedium;
     const LINE_LENGTH_SMALL = lineLengthSmall;
     const COLOR_PRIMARY = colorPrimary; // used to display today
     const COLOR_SECONDARY = colorSecondary; // used for month graduations
     const COLOR_ASCENT = colorAscent; // used for saturday and sunday
+
+    this.setLineWidth = function(lineWidth)
+    {
+        this.lineWidth = lineWidth;
+    }
 
     this.display = function(context, cx, cy, timeData)
 	{
@@ -44,7 +50,7 @@ function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMediu
                     strokeColor = COLOR_PRIMARY;
                 }
                 
-                this.drawShared.drawCircGraduation(context, cx, cy, degrees, SUN_SIZE, dayLineLength, LINE_WIDTH, strokeColor);
+                this.drawShared.drawCircGraduation(context, cx, cy, degrees, SUN_SIZE, dayLineLength, this.lineWidth, strokeColor);
             }
 
             // GRADUATIONS FOR THE FIRST OF EACH MONTH
@@ -62,7 +68,7 @@ function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMediu
                     // If this is the current day, then show the marker with the indicator color.
                     strokeColor = COLOR_PRIMARY;
                 }
-                this.drawShared.drawCircGraduation(context, cx, cy, degrees, SUN_SIZE + dayLineLength, dayLineLength, LINE_WIDTH, strokeColor);
+                this.drawShared.drawCircGraduation(context, cx, cy, degrees, SUN_SIZE + dayLineLength, dayLineLength, this.lineWidth, strokeColor);
             }
 
             currentDayInCurrentMonth++;

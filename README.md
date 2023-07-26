@@ -83,6 +83,8 @@ Originally intended basic display achieved.
 - Add day of week display on sun graduations via saturday and sunday being lighter color.
 - Add sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc.
 - Add geolocation access for sunlight calculations.
+- Fix bug: first day of month extended line section on sat/sun is not highlighted for weekend day.
+- Fix bug: line thickness should not appear thicker on smaller resolutions.
 
 #### 1.1 &mdash; 2023-07-08
 

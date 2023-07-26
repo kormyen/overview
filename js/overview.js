@@ -9,6 +9,7 @@ function Overview()
   this.canvas.id = "overview";
   
   this.size = null;
+  this.sizeReference = 1024;
   this.settings = { targetFps: 60 }
   this.location = { latitude: -36.85, longditude: 174.76 } // Auckland, New Zealand.
 
@@ -129,15 +130,19 @@ function Overview()
 
   this.setCanvasSize = function()
   {
+    let curSize = 0;
     // Set responsive (fit to screen) 1:1 resizing.
     if (window.innerHeight >= window.innerWidth)
     {
-      this.size = { width:window.innerWidth, height:window.innerWidth, ratio:window.devicePixelRatio };
+      curSize = window.innerWidth;
+      this.size = { width:curSize, height:curSize, ratio:window.devicePixelRatio };
     } 
     else 
     {
-      this.size = { width:window.innerHeight, height:window.innerHeight, ratio:window.devicePixelRatio };
+      curSize = window.innerHeight;
+      this.size = { width:curSize, height:curSize, ratio:window.devicePixelRatio };
     }
+
 
     // Set high DPI canvas, if high devicePixelRatio.
     this.canvas.width = this.size.width * this.size.ratio;
@@ -149,8 +154,14 @@ function Overview()
 
     // Set internal canvas scale as expected.
     this.getContext().scale(window.devicePixelRatio, window.devicePixelRatio);
+
     this.drawShared.setSize(this.size);
     this.drawEarth.setSize(this.size);
+
+    // Set scale adjusted line width to fix the line appearing to be thicker on smaller resolutions
+    let curLineWidth = curSize/this.sizeReference * LINE_WIDTH;
+    this.drawEarth.setLineWidth(curLineWidth);
+    this.drawSun.setLineWidth(curLineWidth);
   }
 
   window.onresize = function(event)

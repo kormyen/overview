@@ -1,10 +1,10 @@
 function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, colorBackground, colorAscent, lineLengthLarge, lineLengthSmall, lineLengthTiny)
 {
     this.size = null;
+    this.lineWidth = lineWidth;
 
     this.drawShared = drawShared;
     const EARTH_SIZE = radius;
-    const LINE_WIDTH = lineWidth;
     const COLOR_PRIMARY = colorPrimary;
     const COLOR_SECONDARY = colorSecondary;
     const COLOR_BACKGROUND = colorBackground;
@@ -18,13 +18,18 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         this.size = size;
     }
 
+    this.setLineWidth = function(lineWidth)
+    {
+        this.lineWidth = lineWidth;
+    }
+
     this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData)
     {
         this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData);
 
         this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared);
-        this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY);
+        this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, COLOR_PRIMARY);
     }
 
     // Normalizes any number to an arbitrary range 
@@ -100,7 +105,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         let degreesForTimeOfDay = degreesEarthOffsetShared;
         degreesForTimeOfDay += 180; // offset to align to midnight.
         degreesForTimeOfDay += timeData.currentDayPercentage * -360; // 360 degree rotation for time of day.
-        this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, LINE_WIDTH*2.5, COLOR_ASCENT);
+        this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, this.lineWidth*2.5, COLOR_ASCENT);
     }
 
     this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared)
@@ -185,7 +190,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
                     lineLength = LINE_LENGTH_LARGE;
                 }
                 
-                this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees, EARTH_SIZE, lineLength, LINE_WIDTH, valueColor);
+                this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees, EARTH_SIZE, lineLength, this.lineWidth, valueColor);
             }
         }
     }
