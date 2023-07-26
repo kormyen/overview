@@ -34,7 +34,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         let width       = end - start   ;   // 
         let offsetValue = value - start ;   // value relative to 0
 
-        return (offsetValue - ( Math.floor( offsetValue / width ) * width ) ) + start;
+        return (offsetValue - (Math.floor( offsetValue / width ) * width )) + start;
         // + start to reset back to start of original range
     }
 
@@ -148,14 +148,14 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
                 graduationTypeSecondary = true;
                 if (secondary_AutoHide)
                 {
-                if (secondary_currentSection == secondary_DrawnSection)
-                {
-                    display = true;
-                }
+                    if (secondary_currentSection == secondary_DrawnSection)
+                    {
+                        display = true;
+                    }
                 }
                 else
                 {
-                display = true;
+                    display = true;
                 }
             }
             else
@@ -163,7 +163,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
                 // Tertiary graduation!
                 if (tertiary_currentSection == tertiary_DrawnSection)
                 {
-                display = true;
+                    display = true;
                 }
             }
 
@@ -172,17 +172,17 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
                 let valueColor = COLOR_SECONDARY;
                 if (i == currentGraduationHighlighted)
                 {
-                valueColor = COLOR_PRIMARY;
+                    valueColor = COLOR_PRIMARY;
                 }
 
                 let lineLength = LINE_LENGTH_TINY;
                 if (graduationTypeSecondary)
                 {
-                lineLength = LINE_LENGTH_SMALL;
+                    lineLength = LINE_LENGTH_SMALL;
                 }
                 if (graduationTypePrimary)
                 {
-                lineLength = LINE_LENGTH_LARGE;
+                    lineLength = LINE_LENGTH_LARGE;
                 }
                 
                 this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees, EARTH_SIZE, lineLength, LINE_WIDTH, valueColor);
