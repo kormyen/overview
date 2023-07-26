@@ -26,18 +26,18 @@ This is a 24h clock face design that more literally references the origins of ho
 
 ## Changelog
 
-#### 2.0 &mdash; WIP
+#### 2.0 &mdash; 2023-07-26
 
 - Add improved moon visual showing moon phase.
 - Add day of week display on sun graduations via saturday and sunday being lighter color.
 - Add sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc.
-- Add geolocation access for sun time calculations.
+- Add geolocation access for sunlight calculations.
 
 #### 1.1 &mdash; 2023-07-08
 
-- Fix bug: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
-- Add responsive width/height handling.
 - Add mobile input handling.
+- Add responsive width/height handling.
+- Fix bug: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
 
 #### 1.0 &mdash; 2023-07-06
 
