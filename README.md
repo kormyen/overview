@@ -1,8 +1,8 @@
-# Overview Clock
+# Overview
 
 A digital [tellurion](https://en.wikipedia.org/wiki/Tellurion).
 
-<img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-06.jpg'/>
+<img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-21.jpg'/>
 
 [**Live web version here**](https://overview-kormyen.vercel.app/)
 
@@ -26,6 +26,13 @@ This is a 24h clock face design that more literally references the origins of ho
 
 ## Changelog
 
+#### 2.0 &mdash; WIP
+
+- Add improved moon visual showing moon phase.
+- Add day of week display on sun graduations via saturday and sunday being lighter color.
+- Add sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc.
+- Add geolocation access for sun time calculations.
+
 #### 1.1 &mdash; 2023-07-08
 
 - Fix bug: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
@@ -33,6 +40,8 @@ This is a 24h clock face design that more literally references the origins of ho
 - Add mobile input handling.
 
 #### 1.0 &mdash; 2023-07-06
+
+<img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-06.jpg'/>
 
 Core functionality, basic line display.
 

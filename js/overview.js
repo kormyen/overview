@@ -10,12 +10,12 @@ function Overview()
   
   this.size = null;
   this.settings = { targetFps: 60 }
+  this.location = { latitude: -36.85, longditude: 174.76 } // Auckland, New Zealand.
 
   const COLOR_PRIMARY = '#FFFFFF';
   const COLOR_SECONDARY = '#666666';
   const COLOR_ASCENT = '#EE4B2B';
   const COLOR_BACKGROUND = '#1E1E1E';
-  // const COLOR_BACKGROUND = '#000000';
 
   const LINE_WIDTH = 4;
   const LINE_LENGTH_TINY = 0.01;
@@ -41,6 +41,12 @@ function Overview()
     this.sunData = sunData;
 
     this.update();
+  }
+
+  this.setLocation = function(lat, long)
+  {
+    this.location.latitude = lat;
+    this.location.longditude = long;
   }
 
   this.display = function()
@@ -109,7 +115,7 @@ function Overview()
     {
       this.timeData.update();
       this.moonData.updateGregorian(this.timeData.currentDate);
-      this.sunData.updateGregorian(this.timeData.currentDate, -36.85, 174.76);
+      this.sunData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
 
       this.setCanvasSize();
       this.clearCanvas();

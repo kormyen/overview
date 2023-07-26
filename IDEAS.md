@@ -12,3 +12,6 @@
 - Presession? (25,772~ year cycle) Could be 
 - Moon distance? Moon position adjustments and distance lines.
 - Lunar eclipses?
+- moon perigee and apogee
+- moon types (blood, blue, super etc) 
+- seasons

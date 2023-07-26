@@ -1,0 +1,67 @@
+:root {
+  --color-highlight: #FFF;
+  --color-primary: #EEE;
+  --color-secondary: #999;
+  --color-tertiary: #333;
+  --color-background: #1E1E1E;
+
+  --size-columnPaddingNormal: 10px;
+}
+
+* { 
+  background: var(--color-background);
+  height: 100%;
+  overflow: hidden;
+}
+#overview {
+  padding: 0;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.overview-buttonContainer {
+  display: block;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  z-index: 1;
+  height: 60px;
+}
+.overview-button {
+  background-color: var(--color-tertiary);
+  border: none;
+  color: var(--color-highlight);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-columnPaddingNormal);
+  align-items: center;
+}
+.overview-button:hover {
+  cursor: pointer;
+  background-color: var(--color-secondary);
+  color: var(--color-highlight);
+}
+.overview-button-disabled {
+  border: none;
+  color: var(--color-highlight);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-columnPaddingNormal);
+  align-items: center;
+}

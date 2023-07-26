@@ -23,7 +23,6 @@ function SunCalcWrapper()
 
     this.updateGregorian = function(date, lat, long)
     {
-
         date.setHours(12) // ensure SunCalc identifies correct day
         let times = SunCalc.getTimes(date, lat, long);
         

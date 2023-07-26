@@ -2,8 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="asset/style.css"/>
   <title>Overview</title>
+
   <script src="js/data/time/timegregorian.js"></script>
   <script src="js/data/moon/overviewmoon.js"></script>
   <script src="js/data/sun/suncalcwrapper.js"></script>
@@ -14,10 +15,15 @@
   <script src="js/draw/drawearth.js"></script>
   <script src="js/draw/drawmoon.js"></script>
 
+  <script src="js/getlocation.js"></script>
   <script src="js/input.js"></script>
   <script src="js/overview.js"></script>
 </head>
-<body>
+<body>  
+  <div class='overview-buttonContainer'>
+    <button class='overview-button' id='btn-location'>Enable Geolocation</button>
+  </div>
+
   <script type="text/javascript">
     var overview = new Overview();
     overview.setData(new TimeGregorian(new Date()), new OverviewMoon(), new SunCalcWrapper());
@@ -29,6 +35,8 @@
     {
       overview.changeValue(e.detail);
     });
+
+    getLocationSetup();
   </script>
 </body>
 </html>
