@@ -2,8 +2,10 @@
 
 ## Next
 
-- BUG: line in middle of moon due to split half rendering.
+- BUG: moon has line render glitch in middle due to split half rendering, seen when moon half aligns horizontal or vertical (overdraw the first arc).
+- BUG: moon gets glitchy dithery look when close to zero/new moon (epsilon number).
 - Add improved time marker visual (triangle vs semi-circle).
+- Add smooth animations on sunlight (get sun times for next or prev days and lerp).
 
 ## Future
 

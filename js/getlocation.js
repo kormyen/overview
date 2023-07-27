@@ -3,7 +3,8 @@ function GetLocation()
   this.setup = function()
   {
     let btnLocation = document.getElementById('btn-location');
-    btnLocation.addEventListener("click", ()=>{ getLocation(); });
+    btnLocation.addEventListener('click', ()=>{ getLocation(); });
+    btnLocation.addEventListener('touchstart', ()=>{ getLocation(); });
   }
 }
 
