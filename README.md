@@ -76,24 +76,29 @@ The changing shape orbiting Earth is the moon. The position of it as it orbits E
 
 ## Changelog
 
-#### 2.0 &mdash; OG 2023-07-26
+#### 2.1 &mdash; Fixes 2023-07-28
+
+- Fix: visual glitch in middle of moon due to scaling half, seen when moon halves align horizontally or vertically to screen - fixed by over drawing arc on specfic layers.
+
+
+#### 2.0 &mdash; Intent 2023-07-26
 
 <img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-26_17-50.jpg'/>
 
 Originally intended basic display achieved.
 
-- Add improved moon visual showing moon phase.
-- Add day of week display on sun graduations via saturday and sunday being lighter color.
-- Add sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc.
-- Add geolocation access for sunlight calculations.
-- Fix bug: first day of month extended line section on sat/sun is not highlighted for weekend day.
-- Fix bug: line thickness should not appear thicker on smaller resolutions.
+- Add: improved moon visual showing moon phase.
+- Add: day of week display on sun graduations via saturday and sunday being lighter color.
+- Add: sunlight markers like https://daylight.website/ with https://github.com/mourner/suncalc.
+- Add: geolocation access for sunlight calculations.
+- Fix: first day of month extended line section on sat/sun is not highlighted for weekend day - fixed calc sat sun for month line.
+- Fix: line thickness should not appear thicker on smaller resolutions - fixed by scaling line thickness to intended screen size.
 
-#### 1.1 &mdash; 2023-07-08
+#### 1.1 &mdash; Fixes 2023-07-08
 
-- Add mobile input handling.
-- Add responsive width/height handling.
-- Fix bug: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
+- Add: mobile input handling.
+- Add: responsive width/height handling.
+- Fix: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
 
 #### 1.0 &mdash; MVP 2023-07-06 
 
@@ -101,8 +106,8 @@ Originally intended basic display achieved.
 
 Core functionality, basic line display.
 
-- Add basic functionality with simple display features;
-- Add square day time marker.
-- Add circle earth with day time graduation lines.
-- Add circle moon with age displayed by orbit position.
-- Add graduation lines as sun light for date.
+- Add: basic functionality with simple display features;
+- Add: square day time marker.
+- Add: circle earth with day time graduation lines.
+- Add: circle moon with age displayed by orbit position.
+- Add: graduation lines as sun light for date.

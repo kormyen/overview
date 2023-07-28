@@ -18,11 +18,13 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 			if (phasePerc <= 0.25) 
 			{
 				// New Moon to Waxing Cresent to First Quarter
+				// 0.00 to 0.25
+
 				let quarterPercentageFirst = phasePerc*4;
 				quarterPercentageFirst = this.easeInSine(quarterPercentageFirst);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
+				this.drawHalfMoonShort(context, radius, COLOR_PRIMARY, true);
 
 				// First half: Black overlay
 				context.scale(1-quarterPercentageFirst, 1);
@@ -35,11 +37,15 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 			else 
 			{
 				// First Quarter to Waxing Gibbous to Full Moon
+				// 0.25 to 0.50
+
 				let quarterPercentageSecond = (phasePerc-0.25)*4;
 				quarterPercentageSecond = this.easeOutSine(quarterPercentageSecond);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
+				this.drawHalfMoonExtra(context, radius, COLOR_PRIMARY, true);
+
+				// context.translate(-1, 0);
 
 				// Second half: white phase
 				context.scale(-quarterPercentageSecond, 1);
@@ -48,6 +54,8 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
 				context.closePath();
 				context.fill();		
+
+				// context.translate(1, 0);
 			}	
 		} 
 		else 
@@ -59,14 +67,16 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 			if (phasePerc <= 0.75) 
 			{
 				// Full Moon to Waning Gibbous to Last Quarter
+				// 0.50 to 0.75
+
 				let quarterPercentageThird = (phasePerc-0.5)*4;
 				quarterPercentageThird = this.easeInSine(quarterPercentageThird);
 
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
+				this.drawHalfMoonExtra(context, radius, COLOR_PRIMARY, true);
 
 				// Second half: white phase
-				this.drawHalfMoon(context, radius, mixColor, false);
+				this.drawHalfMoonExtra(context, radius, mixColor, false);
 
 				context.scale(1-quarterPercentageThird, 1);
 				context.beginPath();
@@ -78,14 +88,16 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 			else
 			{
 				// Last Quarter to Waning Crescent to New Moon
+				// 0.75 to 1.00
+
 				let quarterPercentageForth = (phasePerc-0.75)*4;
 				quarterPercentageForth = this.easeOutSine(quarterPercentageForth);
 
-				// Second half: fill background secondary
-				this.drawHalfMoon(context, radius, mixColor, false);
-
+				// Full background circle: fill background secondary
+				this.drawFullMoon(context, radius, mixColor, false);
+				
 				// First half: fill background white
-				this.drawHalfMoon(context, radius, COLOR_PRIMARY, true);
+				this.drawHalfMoonShort(context, radius, COLOR_PRIMARY, true);
 
 				// First half: secondary overlay
 				context.scale(quarterPercentageForth, 1);
@@ -117,12 +129,50 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 		return 1 - Math.pow(1 - x, 3);
 	}
 
+	this.drawFullMoon = function(context, radius, fillColor, clockwise)
+	{
+		// First half of moon
+		context.beginPath();
+		context.fillStyle = fillColor;
+		context.arc(0, 0, radius, 0, 2 * Math.PI, clockwise); // half circle
+		context.closePath();
+		context.fill();
+	}
+
 	this.drawHalfMoon = function(context, radius, fillColor, clockwise)
 	{
 		// First half of moon
 		context.beginPath();
 		context.fillStyle = fillColor;
 		context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, clockwise); // half circle
+		context.closePath();
+		context.fill();
+	}
+
+	// Extra overdraw to fix a visual glitch with current setup, can see a dithery line down the 
+	// middle between the two halves of the moon when the moon halves align vertical and horizonal with square pixels.
+	// This is used by 0.00 to 0.25
+	// This fix method draws a bit less UNDER half so that the white layer on top can fully cover it (the bg).
+	this.drawHalfMoonShort = function(context, radius, fillColor, clockwise)
+	{
+		// First half of moon
+		context.beginPath();
+		context.fillStyle = fillColor;
+		context.arc(0, 0, radius, -Math.PI/2-0.005, Math.PI/2+0.005, clockwise); // half circle
+		context.closePath();
+		context.fill();
+	}
+
+	// Extra overdraw to fix a visual glitch with current setup, can see a dithery line down the 
+	// middle between the two halves of the moon when the moon halves align vertical and horizonal with square pixels.
+	// This is used by 0.25 to 0.75
+	// This fix method draws a bit EXTRA over half to hide cover the glitch.
+	this.drawHalfMoonExtra = function(context, radius, fillColor, clockwise)
+	{
+		// First half of moon
+		context.beginPath();
+		context.fillStyle = fillColor;
+		context.arc(0, 0, radius, -Math.PI/2+0.005, Math.PI/2-0.005, clockwise); // half circle
 		context.closePath();
 		context.fill();
 	}
