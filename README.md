@@ -69,11 +69,14 @@ The changing shape orbiting Earth is the moon. The position of it as it orbits E
 
 - [To do](TODO.md)
 - [Ideas](IDEAS.md)
+
+## References
+
 - [Astronomy js lib comparison](https://tealdulcet.com/weather/)
 
 ## Changelog
 
-#### 2.0 &mdash; 2023-07-26
+#### 2.0 &mdash; OG 2023-07-26
 
 <img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-26_17-50.jpg'/>
 
@@ -92,7 +95,7 @@ Originally intended basic display achieved.
 - Add responsive width/height handling.
 - Fix bug: on a high dpi laptop's low dpi external monitor the high dpi scale was used.
 
-#### 1.0 &mdash; 2023-07-06
+#### 1.0 &mdash; MVP 2023-07-06 
 
 <img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-06_00-42.jpg'/>
 
