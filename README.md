@@ -79,7 +79,7 @@ The changing shape orbiting Earth is the moon. The position of it as it orbits E
 #### 2.1 &mdash; Fixes 2023-07-28
 
 - Fix: visual glitch in middle of moon due to scaling half, seen when moon halves align horizontally or vertically to screen - fixed by over drawing arc on specfic layers.
-
+- Fix: distracting glitchy dithery look on moon when close to zero/new moon - fixed by introduing epsilon threshold.
 
 #### 2.0 &mdash; Intent 2023-07-26
 

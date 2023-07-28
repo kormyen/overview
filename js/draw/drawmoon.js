@@ -4,6 +4,7 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 	const COLOR_PRIMARY = colorPrimary;
 	const COLOR_SECONDARY = colorSecondary;
 	const COLOR_BACKGROUND = colorBackground;
+	const EPSILON = 0.02;
 
 	this.display = function(context, cx, cy, radius, phasePerc, rotationOffset)
 	{
@@ -23,16 +24,20 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 				let quarterPercentageFirst = phasePerc*4;
 				quarterPercentageFirst = this.easeInSine(quarterPercentageFirst);
 
-				// First half: fill background white
-				this.drawHalfMoonShort(context, radius, COLOR_PRIMARY, true);
+				// Skip glitchy dithery phase
+				if (phasePerc >= EPSILON) 
+				{
+					// First half: fill background white
+					this.drawHalfMoonShort(context, radius, COLOR_PRIMARY, true);
 
-				// First half: Black overlay
-				context.scale(1-quarterPercentageFirst, 1);
-				context.beginPath();
-				context.fillStyle = COLOR_BACKGROUND;
-				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
-				context.closePath();
-				context.fill();	
+					// First half: Black overlay
+					context.scale(1-quarterPercentageFirst, 1);
+					context.beginPath();
+					context.fillStyle = COLOR_BACKGROUND;
+					context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
+					context.closePath();
+					context.fill();	
+				}
 			}
 			else 
 			{
@@ -96,16 +101,20 @@ function DrawMoon(drawShared, colorPrimary, colorSecondary, colorBackground)
 				// Full background circle: fill background secondary
 				this.drawFullMoon(context, radius, mixColor, false);
 				
-				// First half: fill background white
-				this.drawHalfMoonShort(context, radius, COLOR_PRIMARY, true);
+				// Skip glitchy dithery phase
+				if (phasePerc <= 1-EPSILON) 
+				{
+					// First half: fill background white
+					this.drawHalfMoonShort(context, radius, COLOR_PRIMARY, true);
 
-				// First half: secondary overlay
-				context.scale(quarterPercentageForth, 1);
-				context.beginPath();
-				context.fillStyle = mixColor;
-				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
-				context.closePath();
-				context.fill();	
+					// First half: secondary overlay
+					context.scale(quarterPercentageForth, 1);
+					context.beginPath();
+					context.fillStyle = mixColor;
+					context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
+					context.closePath();
+					context.fill();	
+				}
 			}
 		}
 
