@@ -4,6 +4,9 @@ function Overview()
 {
   this.timeData = null;
   this.moonData = null;
+  this.sunData = null;
+  this.tideData = null;
+  this.geolocationEnabled = false;
 
   this.canvas = document.createElement("canvas"); 
   this.canvas.id = "overview";
@@ -35,17 +38,19 @@ function Overview()
   this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND, COLOR_ASCENT, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
   this.drawMoon = new DrawMoon(this.drawShared, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND);
 
-  this.setData = function(timeData, moonData, sunData)
+  this.setData = function(timeData, moonData, sunData, tideData)
   {
     this.timeData = timeData;
     this.moonData = moonData;
     this.sunData = sunData;
+    this.tideData = tideData;
 
     this.update();
   }
 
   this.setLocation = function(lat, long)
   {
+    this.geolocationEnabled = true;
     this.location.latitude = lat;
     this.location.longditude = long;
   }
@@ -117,6 +122,11 @@ function Overview()
       this.timeData.update();
       this.moonData.updateGregorian(this.timeData.currentDate);
       this.sunData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
+
+      if (this.geolocationEnabled)
+      {
+        this.tideData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
+      }
 
       this.setCanvasSize();
       this.clearCanvas();

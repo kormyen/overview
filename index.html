@@ -7,8 +7,9 @@
 
   <script src="js/data/time/timegregorian.js"></script>
   <script src="js/data/moon/overviewmoon.js"></script>
-  <script src="js/data/sun/suncalcwrapper.js"></script>
   <script src="js/lib/suncalc.js"></script>
+  <script src="js/data/sun/suncalcwrapper.js"></script>
+  <script src="js/data/tide/stormglasswrapper.js"></script>
 
   <script src="js/draw/drawshared.js"></script>
   <script src="js/draw/drawsun.js"></script>
@@ -26,7 +27,7 @@
 
   <script type="text/javascript">
     var overview = new Overview();
-    overview.setData(new TimeGregorian(new Date()), new OverviewMoon(), new SunCalcWrapper());
+    overview.setData(new TimeGregorian(new Date()), new OverviewMoon(), new SunCalcWrapper(), new StormglassWrapper());
     overview.display();
     overview.startUpdateLoop();
 

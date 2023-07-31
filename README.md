@@ -67,12 +67,12 @@ The changing shape orbiting Earth is the moon. The position of it as it orbits E
 
 ## Docs
 
-- [To do](TODO.md)
+- [Do](DO.md)
 - [Ideas](IDEAS.md)
 
-## References
+## Reference
 
-- [Astronomy js lib comparison](https://tealdulcet.com/weather/)
+- [Astronomy lib comparison](https://tealdulcet.com/weather/)
 
 ## Changelog
 

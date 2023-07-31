@@ -10,18 +10,17 @@
 - Add text info, ideally editable (next/prev; day, full moon, month, year etc).
 - Add geolocation settings (drag on earth to change x and y of lat and long).
 
-- Add alternate moon data wrappers.
--- https://github.com/Fabiz/MeeusJs
--- https://tealdulcet.com/weather/moon.js
-
-- Add alternate sun data wrappers.
--- https://github.com/commenthol/astronomia
--- https://github.com/Fabiz/MeeusJs
--- https://tealdulcet.com/weather/riseset.js
--- https://github.com/Triggertrap/sun-js
-
 ## New info diplay option
 
+### Likely
+
+- Rainfall amount/weather by hour (around 24h clock).
+- Moon types (blood, blue, super etc).
+- Show full moon date as little moon by day of year.
+
+### Unlikely
+
+- Moon rise time.
 - Geolocation? As contenent lines over earth.
 - Seasons? (23.4 degree axial tilt of Earth) Displayed via sunrise/sunset markers. (or show around outside of month/date?)
 - Solstice? Show around outside of month/date?
@@ -29,4 +28,3 @@
 - Moon distance? Moon position adjustments and distance lines.
 - Lunar eclipses?
 - Moon perigee and apogee
-- Moon types (blood, blue, super etc) 
