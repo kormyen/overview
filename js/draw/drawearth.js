@@ -23,9 +23,12 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         this.lineWidth = lineWidth;
     }
 
-    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData)
+    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, doOffset)
     {
-        this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData);
+        if (settings.doSunBands)
+        {
+            this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset);
+        }
 
         this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared);
@@ -43,9 +46,13 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         // + start to reset back to start of original range
     }
 
-    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData)
+    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset)
     {
-        let currentGraduationDegrees = this.normalize(degreesEarthOffsetShared-180, 0, 360);
+        let currentGraduationDegrees = 180;
+        if (doOffset)
+        {
+            currentGraduationDegrees = this.normalize(degreesEarthOffsetShared-180, 0, 360);
+        }
 
         const TOTALSECONDSINDAY = 60*60*24;
         

@@ -10,13 +10,19 @@
 - Add text info, ideally editable (next/prev; day, full moon, month, year etc).
 - Add geolocation settings (drag on earth to change x and y of lat and long).
 
+## Questions
+
+- Does the tide align to the Moon's apogee and perigee, or does Earth's aphelion and perihelion have a big affect too? Is there a simple visual way to show this connection intuitively?
+
 ## New info diplay option
 
 ### Likely
 
 - Rainfall amount/weather by hour (around 24h clock).
 - Moon types (blood, blue, super etc).
-- Show full moon date as little moon by day of year.
+- Show full moon dates as little moon by day of year.
+- Show Moon's apogee and perigee (eliptical orbit around Earth)
+- Show Earth's aphelion and perihelion (eliptical orbit around Sol)
 
 ### Unlikely
 

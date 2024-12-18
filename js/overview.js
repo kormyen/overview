@@ -89,15 +89,25 @@ function Overview()
     let cy = this.size.height / 2; // center position vertical
     let degreesEarthRotated = this.calcEarthDegreeOffsetShared();
 
+    if (!settings.doOffset)
+    {
+      degreesEarthRotated = 0;
+    }
+
     // Eath (24h time of day)
-    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result);
+    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.doOffset);
 
     // Moon (synodic month)
     let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
     this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated);
     
+    console.log(settings.doOffset)
+
     // Sun (date of month and month in year)
-    this.drawSun.display(context, cx, cy, this.timeData);
+    if (settings.doYear)
+    {
+      this.drawSun.display(context, cx, cy, this.timeData);
+    }
   }
 
   // This calculates a degree offset representing the rotation of the 24h earth due to orbiting the sun (year date display).

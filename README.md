@@ -18,6 +18,8 @@ This is a 24h clock face design that more literally references the origins of ho
 >
 > Source: [Wikipedia: Overview Effect](https://en.wikipedia.org/wiki/Overview_effect)
 
+The goal of this project is to simply, visually and intuitively show cestial movements and how they affect our day to day experience on Earth.
+
 ## Explainer
 
 The tellurion is a top down flat abstract cross section view of Earth (central circle) and a view of the moon representing it's current phase.
