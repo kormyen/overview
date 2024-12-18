@@ -1,24 +1,26 @@
 function Settings()
 {
-  this.doOffset = false;
-  this.doYear = false;
-  this.doSunBands = false;
+  this.offset;
+  this.year;
+  this.sunBands;
+  this.moon;
+  this.midnightTop;
 
-  this.setup = function()
+  this.setup = function(parent)
   {
-    const cbOffset = document.getElementById("cb-offset");
-    cbOffset.addEventListener('change', function() {
-      settings.doOffset = this.checked;
-    });
+    this.offset = new SettingsCheckbox();
+    this.offset.setup(parent, "Offset", "cb-offset", false);
 
-    const cbYear = document.getElementById("cb-year");
-    cbYear.addEventListener('change', function() {
-      settings.doYear = this.checked;
-    });
+    this.year = new SettingsCheckbox();
+    this.year.setup(parent, "Year", "cb-year", false);
 
-    const cbSunBands = document.getElementById("cb-sunBands");
-    cbSunBands.addEventListener('change', function() {
-      settings.doSunBands = this.checked;
-    });
+    this.sunBands = new SettingsCheckbox();
+    this.sunBands.setup(parent, "Sun Bands", "cb-sunBands", false);
+
+    this.moon = new SettingsCheckbox();
+    this.moon.setup(parent, "Moon", "cb-moon", false);
+
+    this.midnightTop = new SettingsCheckbox();
+    this.midnightTop.setup(parent, "Midnight Top", "cb-midnightTop", true);
   }
 }

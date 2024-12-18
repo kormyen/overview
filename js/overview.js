@@ -21,15 +21,19 @@ function Overview()
   const COLOR_ASCENT = '#EE4B2B';
   const COLOR_BACKGROUND = '#1E1E1E';
 
-  const LINE_WIDTH = 4;
-  const LINE_LENGTH_TINY = 0.01;
-  const LINE_LENGTH_SMALL = 0.015;
-  const LINE_LENGTH_MEDIUM = 0.02;
-  const LINE_LENGTH_LARGE = 0.03;
+  const LINE_WIDTH = 2;
+  const LINE_LENGTH_TINY = 0.005;
+  const LINE_LENGTH_SMALL = 0.0075;
+  const LINE_LENGTH_MEDIUM = 0.01;
+  const LINE_LENGTH_LARGE = 0.015;
+
+  const IRL_MOON_DIAMETER = 3476; // km
+  const IRL_EARTH_DIAMETER = 12742; // km
+  const IRL_EARTH_MOON_RATIO = IRL_MOON_DIAMETER / IRL_EARTH_DIAMETER;
 
   const SUN_SIZE = 0.46;
   const EARTH_SIZE = 0.25;
-  const MOON_SIZE = EARTH_SIZE * 0.2727986187; // = Moon diameter 3476km / Earth diameter 12,742km
+  const MOON_SIZE = EARTH_SIZE * IRL_EARTH_MOON_RATIO;
 
   const MOON_DISTANCE = 0.35;
 
@@ -89,7 +93,7 @@ function Overview()
     let cy = this.size.height / 2; // center position vertical
     let degreesEarthRotated = this.calcEarthDegreeOffsetShared();
 
-    if (!settings.doOffset)
+    if (!settings.offset.value)
     {
       degreesEarthRotated = 0;
     }
@@ -98,13 +102,14 @@ function Overview()
     this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.doOffset);
 
     // Moon (synodic month)
-    let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
-    this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated);
+    if (settings.moon.value)
+    {
+      let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
+      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated);
+    } 
     
-    console.log(settings.doOffset)
-
     // Sun (date of month and month in year)
-    if (settings.doYear)
+    if (settings.year.value)
     {
       this.drawSun.display(context, cx, cy, this.timeData);
     }

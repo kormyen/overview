@@ -18,41 +18,18 @@
 
   <script src="js/getlocation.js"></script>
   <script src="js/settings.js"></script>
+  <script src="js/settingsCheckbox.js"></script>
   <script src="js/input.js"></script>
   <script src="js/overview.js"></script>
 </head>
 <body>  
-  <div class='overview-buttonContainer'>
-    <button class='overview-button' id='btn-location'>Enable Geolocation</button>
-
-    <button class='overview-button'>
-      Offset
-      <label class='overview-switch'>
-        <input type='checkbox' id='cb-offset'>
-        <span class='overview-slider round'></span>
-      </label>
-    </button>
-
-    <button class='overview-button'>
-      Year
-      <label class='overview-switch'>
-        <input type='checkbox' id='cb-year'>
-        <span class='overview-slider round'></span>
-      </label>
-    </button>
-
-    <button class='overview-button'>
-      Sun Bands
-      <label class='overview-switch'>
-        <input type='checkbox' id='cb-sunBands'>
-        <span class='overview-slider round'></span>
-      </label>
-    </button>
+  <div class="overview-buttonContainer" id="settingsContainer">
+    <button class="overview-button" id="btn-location">Enable Geolocation</button>
   </div>
 
   <script type="text/javascript">
     var settings = new Settings();
-    settings.setup();
+    settings.setup(document.getElementById("settingsContainer"));
 
     var overview = new Overview();
     overview.setData(new TimeGregorian(new Date()), new OverviewMoon(), new SunCalcWrapper(), new StormglassWrapper());
@@ -60,7 +37,7 @@
     overview.startUpdateLoop();
 
     var input = new Input(overview.canvas);
-    overview.canvas.addEventListener('changeValue', function (e)
+    overview.canvas.addEventListener("changeValue", function (e)
     {
       overview.changeValue(e.detail);
     });

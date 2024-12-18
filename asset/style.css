@@ -1,9 +1,17 @@
 :root {
+  /*
   --color-highlight: #FFF;
   --color-primary: #EEE;
   --color-secondary: #999;
   --color-tertiary: #333;
   --color-background: #1E1E1E;
+  */
+  --color-highlight: #FFFFFF;
+  --color-primary: #D9D9D9;
+  --color-secondary: #5D6163;
+  --color-tertiary: #3E4446;
+  --color-background: #3B4143;
+  --color-dark: #2B3437;
 
   --size-columnPaddingNormal: 10px;
 }

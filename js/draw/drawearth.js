@@ -25,14 +25,19 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
 
     this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, doOffset)
     {
-        if (settings.doSunBands)
+        if (settings.midnightTop.value)
+        {
+            degreesEarthOffsetShared -= 180;
+        }
+
+        if (settings.sunBands.value)
         {
             this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset);
         }
 
         this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared);
-        this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, COLOR_PRIMARY);
+        // this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, COLOR_PRIMARY);
     }
 
     // Normalizes any number to an arbitrary range 
@@ -52,6 +57,10 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         if (doOffset)
         {
             currentGraduationDegrees = this.normalize(degreesEarthOffsetShared-180, 0, 360);
+        }
+        if (settings.midnightTop.value)
+        {
+            currentGraduationDegrees += 180;
         }
 
         const TOTALSECONDSINDAY = 60*60*24;
