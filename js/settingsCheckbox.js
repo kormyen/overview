@@ -12,6 +12,8 @@ function SettingsCheckbox()
 
         this.buildElement(parent, labelText, id, value)
         this.checkbox.addEventListener('change', this, true);
+
+        this.button.addEventListener('click', this, true);
     }
 
     this.buildElement = function(parent, labelText, id, value)
@@ -47,6 +49,11 @@ function SettingsCheckbox()
     {
         if (event.type === "change")
         {
+            this.value = this.checkbox.checked;
+        }
+        if (event.type === "click" && event.target.className == "overview-button")
+        {
+            this.checkbox.checked = !this.checkbox.checked;
             this.value = this.checkbox.checked;
         }
     }
