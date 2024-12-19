@@ -19,7 +19,7 @@ function DrawEarth(drawShared, radius, lineWidth, lineLengthLarge, lineLengthSma
         this.lineWidth = lineWidth;
     }
 
-    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, doOffset, colorPrimary, colorSecondary, colorBackground, colorAscent)
+    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, colorPrimary, colorSecondary, colorBackground, colorAscent)
     {
         if (settings.midnightTop.value)
         {
@@ -28,12 +28,16 @@ function DrawEarth(drawShared, radius, lineWidth, lineLengthLarge, lineLengthSma
 
         if (settings.sunBands.value)
         {
-            this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset, colorPrimary, colorSecondary, colorBackground, colorAscent);
+            this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData, colorSecondary, colorBackground);
         }
 
         this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared, colorAscent);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, colorPrimary, colorSecondary);
-        // this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, colorPrimary);
+
+        if (settings.earthOutline.value)
+        {
+            this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, colorPrimary);
+        }
     }
 
     // Normalizes any number to an arbitrary range 
@@ -47,10 +51,10 @@ function DrawEarth(drawShared, radius, lineWidth, lineLengthLarge, lineLengthSma
         // + start to reset back to start of original range
     }
 
-    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset, colorPrimary, colorSecondary, colorBackground, colorAscent)
+    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData, colorSecondary, colorBackground)
     {
         let currentGraduationDegrees = 180;
-        if (doOffset)
+        if (settings.offset.value)
         {
             currentGraduationDegrees = this.normalize(degreesEarthOffsetShared-180, 0, 360);
         }

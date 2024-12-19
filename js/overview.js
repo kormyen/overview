@@ -94,7 +94,7 @@ function Overview()
     }
 
     // Eath (24h time of day)
-    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.offset.value, settings.colorPrimary, settings.colorSecondary, settings.colorBackground, settings.colorAscent);
+    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground, settings.colorAscent);
 
     // Moon (synodic month)
     if (settings.moon.value)

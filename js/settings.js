@@ -5,6 +5,7 @@ function Settings()
   this.sunBands;
   this.moon;
   this.midnightTop;
+  this.earthOutline;
 
   this.colorHighlight = '#FFFFFF';
   this.colorPrimary = '#D9D9D9'; // #EEE
@@ -23,13 +24,16 @@ function Settings()
     this.year.setup(parent, "Year", "cb-year", false);
 
     this.sunBands = new SettingsCheckbox();
-    this.sunBands.setup(parent, "Sun Bands", "cb-sunBands", false);
+    this.sunBands.setup(parent, "Sun Bands", "cb-sunBands", true);
 
     this.moon = new SettingsCheckbox();
     this.moon.setup(parent, "Moon", "cb-moon", false);
 
     this.midnightTop = new SettingsCheckbox();
     this.midnightTop.setup(parent, "Midnight Top", "cb-midnightTop", true);
+
+    this.earthOutline = new SettingsCheckbox();
+    this.earthOutline.setup(parent, "Earth Outline", "cb-earthOutline", false);
 
     var cssRoot = document.querySelector(':root');
     cssRoot.style.setProperty('--color-highlight', this.colorHighlight);
