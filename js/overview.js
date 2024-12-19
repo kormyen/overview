@@ -34,7 +34,8 @@ function Overview()
 
   this.drawShared = new DrawShared();
   this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
-  this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
+  this.drawSunlight = new DrawSunlight(this.drawShared);
+  this.drawEarth = new DrawEarth(this.drawShared, this.drawSunlight, EARTH_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
   this.drawMoon = new DrawMoon(this.drawShared);
 
   this.setData = function(timeData, moonData, sunData, tideData)
