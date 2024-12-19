@@ -6,6 +6,7 @@ function Settings()
   this.moon;
   this.midnightTop;
   this.earthOutline;
+  this.highlightTime;
 
   this.colorHighlight = '#FFFFFF';
   this.colorPrimary = '#D9D9D9'; // #EEE
@@ -34,6 +35,9 @@ function Settings()
 
     this.earthOutline = new SettingsCheckbox();
     this.earthOutline.setup(parent, "Earth Outline", "cb-earthOutline", false);
+
+    this.highlightTime = new SettingsCheckbox();
+    this.highlightTime.setup(parent, "Highlight Time", "cb-highlightTime", false);
 
     var cssRoot = document.querySelector(':root');
     cssRoot.style.setProperty('--color-highlight', this.colorHighlight);

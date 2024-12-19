@@ -118,7 +118,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             if (display)
             {
                 let valueColor = colorSecondary;
-                if (i == currentGraduationHighlighted)
+                if (settings.highlightTime.value && i == currentGraduationHighlighted)
                 {
                     valueColor = colorPrimary;
                 }
