@@ -2,20 +2,22 @@ function SettingsCheckbox()
 {
     this.id = "";
     this.value = false;
-    this.element;
+    this.checkbox = null;
+    this.button = null;
 
     this.setup = function(parent, labelText, id, value)
     {
         this.id = id;
         this.value = value;
-        this.element = this.buildElement(parent, labelText, id, value)
-        this.element.addEventListener('change', this, true);
+
+        this.buildElement(parent, labelText, id, value)
+        this.checkbox.addEventListener('change', this, true);
     }
 
     this.buildElement = function(parent, labelText, id, value)
     {
-        let button = document.createElement("button");
-        button.className = "overview-button"; 
+        this.button = document.createElement("button");
+        this.button.className = "overview-button"; 
 
         let textContent = document.createTextNode(labelText);
 
@@ -33,19 +35,19 @@ function SettingsCheckbox()
         label.appendChild(input);
         label.appendChild(span);
 
-        button.appendChild(textContent);
-        button.appendChild(label);
+        this.button.appendChild(textContent);
+        this.button.appendChild(label);
 
-        parent.appendChild(button);
+        parent.appendChild(this.button);
 
-        return input;
+        this.checkbox = input;
     }
 
     SettingsCheckbox.prototype.handleEvent = function(event) 
     {
         if (event.type === "change")
         {
-            this.value = this.element.checked;
+            this.value = this.checkbox.checked;
         }
     }
 }

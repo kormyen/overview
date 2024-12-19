@@ -25,7 +25,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
     {
         if (settings.midnightTop.value)
         {
-            degreesEarthOffsetShared -= 180;
+            degreesEarthOffsetShared -= 180;  // offset to align to midnight.
         }
 
         if (settings.sunBands.value)
@@ -53,7 +53,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
 
     this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared, colorPrimary, colorSecondary)
     {
-        let graduationCount = 96;
+        let graduationCount = 96; // 96 = 24 hours with 4x (15 minute) graduations. 24*4.
         let secondary_HideSectionCount = 4;
         let secondary_AutoHide = false;
         let tertiary_HideSectionCount = 24;
