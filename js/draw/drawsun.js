@@ -1,4 +1,4 @@
-function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMedium, lineLengthSmall, colorPrimary, colorSecondary, colorAscent)
+function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMedium, lineLengthSmall)
 {   
     this.drawShared = drawShared;
     this.lineWidth = lineWidth;
@@ -7,17 +7,18 @@ function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMediu
     const LINE_LENGTH_LARGE = lineLengthLarge;
     const LINE_LENGTH_MEDIUM = lineLengthMedium;
     const LINE_LENGTH_SMALL = lineLengthSmall;
-    const COLOR_PRIMARY = colorPrimary; // used to display today
-    const COLOR_SECONDARY = colorSecondary; // used for month graduations
-    const COLOR_ASCENT = colorAscent; // used for saturday and sunday
 
     this.setLineWidth = function(lineWidth)
     {
         this.lineWidth = lineWidth;
     }
 
-    this.display = function(context, cx, cy, timeData)
+    this.display = function(context, cx, cy, timeData, colorPrimary, colorSecondary, colorTertiary)
 	{
+        // colorPrimary used to display today's graduation
+        // colorSecondary used for saturday and sunday graduations
+        // colorTertiary used for all other day's graduations
+
         let currentDayInCurrentMonth = 1;
         let currentMonth = 0;
 
@@ -44,10 +45,10 @@ function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMediu
             if (anyDayOfThisMonth)
             {
                 // Show weekend days with different color.
-                let strokeColor = this.checkIfWeekend(timeData, i+1) ? COLOR_ASCENT : COLOR_SECONDARY;
+                let strokeColor = this.checkIfWeekend(timeData, i+1) ? colorSecondary : colorTertiary;
                 if (timeData.currentDaysIntoYear == i + 1)
                 {
-                    strokeColor = COLOR_PRIMARY;
+                    strokeColor = colorPrimary;
                 }
                 
                 this.drawShared.drawCircGraduation(context, cx, cy, degrees, SUN_SIZE, dayLineLength, this.lineWidth, strokeColor);
@@ -57,16 +58,16 @@ function DrawSun(drawShared, radius, lineWidth, lineLengthLarge, lineLengthMediu
             let firstDayOfAnyMonth = currentDayInCurrentMonth == 1;
             if (firstDayOfAnyMonth)
             {
-                let strokeColor = COLOR_SECONDARY;
+                let strokeColor = colorTertiary;
                 if (anyDayOfThisMonth)
                 {
                     // If this is the current month, then show weekend days with different color.
-                    strokeColor = this.checkIfWeekend(timeData, i+1) ? COLOR_ASCENT : COLOR_SECONDARY;
+                    strokeColor = this.checkIfWeekend(timeData, i+1) ? colorSecondary : colorTertiary;
                 }
                 if (timeData.currentDaysIntoYear == i+1)
                 {
                     // If this is the current day, then show the marker with the indicator color.
-                    strokeColor = COLOR_PRIMARY;
+                    strokeColor = colorPrimary;
                 }
                 this.drawShared.drawCircGraduation(context, cx, cy, degrees, SUN_SIZE + dayLineLength, dayLineLength, this.lineWidth, strokeColor);
             }

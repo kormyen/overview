@@ -75,6 +75,7 @@ The changing shape orbiting Earth is the moon. The position of it as it orbits E
 ## Reference
 
 - [Astronomy lib comparison](https://tealdulcet.com/weather/)
+- [Bartosz Ciechanowski: Moon (interactive article)](https://ciechanow.ski/moon/)
 
 ## Changelog
 

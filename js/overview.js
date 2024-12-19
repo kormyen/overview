@@ -16,11 +16,6 @@ function Overview()
   this.settings = { targetFps: 60 }
   this.location = { latitude: -36.85, longditude: 174.76 } // Auckland, New Zealand.
 
-  const COLOR_PRIMARY = '#FFFFFF';
-  const COLOR_SECONDARY = '#666666';
-  const COLOR_ASCENT = '#EE4B2B';
-  const COLOR_BACKGROUND = '#1E1E1E';
-
   const LINE_WIDTH = 2;
   const LINE_LENGTH_TINY = 0.005;
   const LINE_LENGTH_SMALL = 0.0075;
@@ -38,9 +33,9 @@ function Overview()
   const MOON_DISTANCE = 0.35;
 
   this.drawShared = new DrawShared();
-  this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY, COLOR_ASCENT, COLOR_SECONDARY, this.drawShared.hexMix(COLOR_PRIMARY, COLOR_SECONDARY, 0.5));
-  this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND, COLOR_ASCENT, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
-  this.drawMoon = new DrawMoon(this.drawShared, COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BACKGROUND);
+  this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
+  this.drawEarth = new DrawEarth(this.drawShared, EARTH_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
+  this.drawMoon = new DrawMoon(this.drawShared);
 
   this.setData = function(timeData, moonData, sunData, tideData)
   {
@@ -99,19 +94,19 @@ function Overview()
     }
 
     // Eath (24h time of day)
-    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.doOffset);
+    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.offset.value, settings.colorPrimary, settings.colorSecondary, settings.colorBackground, settings.colorAscent);
 
     // Moon (synodic month)
     if (settings.moon.value)
     {
       let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
-      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated);
+      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
     } 
     
     // Sun (date of month and month in year)
     if (settings.year.value)
     {
-      this.drawSun.display(context, cx, cy, this.timeData);
+      this.drawSun.display(context, cx, cy, this.timeData, settings.colorPrimary, settings.colorSecondary, settings.colorTertiary);
     }
   }
 

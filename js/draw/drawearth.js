@@ -1,14 +1,10 @@
-function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, colorBackground, colorAscent, lineLengthLarge, lineLengthSmall, lineLengthTiny)
+function DrawEarth(drawShared, radius, lineWidth, lineLengthLarge, lineLengthSmall, lineLengthTiny)
 {
     this.size = null;
     this.lineWidth = lineWidth;
 
     this.drawShared = drawShared;
     const EARTH_SIZE = radius;
-    const COLOR_PRIMARY = colorPrimary;
-    const COLOR_SECONDARY = colorSecondary;
-    const COLOR_BACKGROUND = colorBackground;
-    const COLOR_ASCENT = colorAscent;
     const LINE_LENGTH_LARGE = lineLengthLarge;
     const LINE_LENGTH_SMALL = lineLengthSmall;
     const LINE_LENGTH_TINY = lineLengthTiny;
@@ -23,7 +19,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         this.lineWidth = lineWidth;
     }
 
-    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, doOffset)
+    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, doOffset, colorPrimary, colorSecondary, colorBackground, colorAscent)
     {
         if (settings.midnightTop.value)
         {
@@ -32,12 +28,12 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
 
         if (settings.sunBands.value)
         {
-            this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset);
+            this.drawSunLight(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset, colorPrimary, colorSecondary, colorBackground, colorAscent);
         }
 
-        this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
-        this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared);
-        // this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, COLOR_PRIMARY);
+        this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared, colorAscent);
+        this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, colorPrimary, colorSecondary);
+        // this.drawShared.drawCircle(context, cx, cy, EARTH_SIZE, this.lineWidth, colorPrimary);
     }
 
     // Normalizes any number to an arbitrary range 
@@ -51,7 +47,7 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         // + start to reset back to start of original range
     }
 
-    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset)
+    this.drawSunLight = function(context, cx, cy, degreesEarthOffsetShared, sunData, doOffset, colorPrimary, colorSecondary, colorBackground, colorAscent)
     {
         let currentGraduationDegrees = 180;
         if (doOffset)
@@ -81,18 +77,18 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         let rise6Perc = this.getSecondsThroughDay(sunData.Rise6Day) / TOTALSECONDSINDAY;
         // let rise7Perc = this.getSecondsThroughDay(sunData.Rise7SolarNoon) / TOTALSECONDSINDAY; 
 
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set6Perc, rise1Perc, 0.95); // astro
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set5Perc, rise2Perc, 0.85); // nautical
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set4Perc, rise3Perc, 0.75); // civil
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set3Perc, rise4Perc, 0.2); // sunrise
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set2Perc, rise5Perc, 0.4); // golden hour
-        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set1Perc, rise6Perc, 0.5); // day
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set6Perc, rise1Perc, 0.95, colorSecondary, colorBackground); // astro
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set5Perc, rise2Perc, 0.85, colorSecondary, colorBackground); // nautical
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set4Perc, rise3Perc, 0.75, colorSecondary, colorBackground); // civil
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set3Perc, rise4Perc, 0.2, colorSecondary, colorBackground); // sunrise
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set2Perc, rise5Perc, 0.4, colorSecondary, colorBackground); // golden hour
+        this.drawSunLightArc(context, cx, cy, currentGraduationDegrees, set1Perc, rise6Perc, 0.5, colorSecondary, colorBackground); // day
     }
 
-    this.drawSunLightArc = function(context, cx, cy, currentGraduationDegrees, startPerc, endPerc, colorPerc)
+    this.drawSunLightArc = function(context, cx, cy, currentGraduationDegrees, startPerc, endPerc, colorPerc, colorSecondary, colorBackground)
     {
         context.beginPath();
-        context.fillStyle = drawShared.hexMix(COLOR_SECONDARY, COLOR_BACKGROUND, colorPerc);
+        context.fillStyle = drawShared.hexMix(colorSecondary, colorBackground, colorPerc);
 
         const ARC_FIX = -90;
         let sDegrees = this.normalize(ARC_FIX - currentGraduationDegrees - (startPerc * -360), 0, 360);
@@ -115,16 +111,16 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
         return degrees * (Math.PI / 180);
     }
 
-    this.drawEarthTimeHand = function(context, cx, cy, timeData, degreesEarthOffsetShared)
+    this.drawEarthTimeHand = function(context, cx, cy, timeData, degreesEarthOffsetShared, colorAscent)
     {
         // 24h time hand
         let degreesForTimeOfDay = degreesEarthOffsetShared;
         degreesForTimeOfDay += 180; // offset to align to midnight.
         degreesForTimeOfDay += timeData.currentDayPercentage * -360; // 360 degree rotation for time of day.
-        this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, this.lineWidth*2.5, COLOR_ASCENT);
+        this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, this.lineWidth*2.5, colorAscent);
     }
 
-    this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared)
+    this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared, colorPrimary, colorSecondary)
     {
         let graduationCount = 96;
         let secondary_HideSectionCount = 4;
@@ -190,10 +186,10 @@ function DrawEarth(drawShared, radius, lineWidth, colorPrimary, colorSecondary, 
 
             if (display)
             {
-                let valueColor = COLOR_SECONDARY;
+                let valueColor = colorSecondary;
                 if (i == currentGraduationHighlighted)
                 {
-                    valueColor = COLOR_PRIMARY;
+                    valueColor = colorPrimary;
                 }
 
                 let lineLength = LINE_LENGTH_TINY;
