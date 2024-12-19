@@ -34,7 +34,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         }
 
         this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared, colorAscent);
-        this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, colorPrimary, colorSecondary);
+        this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, sunData);
 
         if (settings.earthOutline.value)
         {
@@ -51,7 +51,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, this.lineWidth*2.5, colorAscent);
     }
 
-    this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared, colorPrimary, colorSecondary)
+    this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData)
     {
         let graduationCount = 96; // 96 = 24 hours with 4x (15 minute) graduations. 24*4.
         let secondary_HideSectionCount = 4;
@@ -65,6 +65,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             let currentDayDegree = timeData.currentDayPercentage * 360;
             let currentGraduationDegrees = degreesEarthOffsetShared + 180;
             currentGraduationDegrees -= degreesPerGraduation * i; // offset for each of the graduations
+            let currentGraduationPerc = Math.abs(currentGraduationDegrees)/360;
 
             // Highlight
             let degreesPerHighlight = 360 / graduationCount;
@@ -82,17 +83,21 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             
             // Handle type
             let display = false;
+            if (!settings.graduationMinimal.value)
+            {
+                display = true;
+            }
             let graduationTypePrimary = false; // 6 hour marks
             let graduationTypeSecondary = false; // 1 hour marks
             if (i % 24 === 0)
             {
-                // Primary graduation!
+                // Primary graduation! 6 hour mark
                 graduationTypePrimary = true;
                 display = true;
             }
             else if (i % 4 === 0)
             {
-                // Secondary graduation!
+                // Secondary graduation! 1 hour mark
                 graduationTypeSecondary = true;
                 if (secondary_AutoHide)
                 {
@@ -108,7 +113,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             }
             else
             {
-                // Tertiary graduation!
+                // Tertiary graduation! 15 minute mark
                 if (tertiary_currentSection == tertiary_DrawnSection)
                 {
                     display = true;
@@ -117,12 +122,18 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
 
             if (display)
             {
-                let valueColor = colorSecondary;
-                if (settings.highlightTime.value && i == currentGraduationHighlighted)
+                // Color
+                let valueColor = settings.colorDark;
+                if (settings.graduationHighlight.value && i == currentGraduationHighlighted)
                 {
-                    valueColor = colorPrimary;
+                    valueColor = settings.colorPrimary;
+                }
+                if (settings.graduationSunlight.value && currentGraduationPerc < sunData.set3Perc && currentGraduationPerc > sunData.rise4Perc)
+                {
+                    valueColor = settings.colorPrimary;
                 }
 
+                // Length
                 let lineLength = LINE_LENGTH_TINY;
                 if (graduationTypeSecondary)
                 {

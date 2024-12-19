@@ -6,7 +6,8 @@ function Settings()
   this.moon;
   this.midnightTop;
   this.earthOutline;
-  this.highlightTime;
+  this.graduationHighlight;
+  this.graduationSunlight;
 
   this.colorHighlight = '#FFFFFF';
   this.colorPrimary = '#D9D9D9'; // #EEE
@@ -25,7 +26,7 @@ function Settings()
     this.year.setup(parent, "Year", "cb-year", false);
 
     this.sunBands = new SettingsCheckbox();
-    this.sunBands.setup(parent, "Sun Bands", "cb-sunBands", true);
+    this.sunBands.setup(parent, "Sun Bands", "cb-sunBands", false);
 
     this.moon = new SettingsCheckbox();
     this.moon.setup(parent, "Moon", "cb-moon", false);
@@ -36,8 +37,14 @@ function Settings()
     this.earthOutline = new SettingsCheckbox();
     this.earthOutline.setup(parent, "Earth Outline", "cb-earthOutline", false);
 
-    this.highlightTime = new SettingsCheckbox();
-    this.highlightTime.setup(parent, "Highlight Time", "cb-highlightTime", false);
+    this.graduationMinimal = new SettingsCheckbox();
+    this.graduationMinimal.setup(parent, "Graduation Minimal", "cb-graduationMinimal", false);
+
+    this.graduationHighlight = new SettingsCheckbox();
+    this.graduationHighlight.setup(parent, "Graduation Highlight", "cb-graduationHighlight", false);
+
+    this.graduationSunlight = new SettingsCheckbox();
+    this.graduationSunlight.setup(parent, "Graduation Sunlight", "cb-graduationSunlight", true);
 
     var cssRoot = document.querySelector(':root');
     cssRoot.style.setProperty('--color-highlight', this.colorHighlight);

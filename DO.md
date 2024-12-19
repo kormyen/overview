@@ -2,7 +2,6 @@
 
 ## New Design
 
-- sunset/sunrise colors on hour graduations
 - move hour graduations to Earth's surface
 - triangle time marker
 - tide visualization
