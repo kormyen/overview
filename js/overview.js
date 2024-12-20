@@ -20,7 +20,7 @@ function Overview()
   const LINE_LENGTH_TINY = 0.005;
   const LINE_LENGTH_SMALL = 0.0075;
   const LINE_LENGTH_MEDIUM = 0.01;
-  const LINE_LENGTH_LARGE = 0.015;
+  const LINE_LENGTH_LARGE = 0.02;
 
   const IRL_MOON_DIAMETER = 3476; // km
   const IRL_EARTH_DIAMETER = 12742; // km
@@ -35,7 +35,7 @@ function Overview()
   this.drawShared = new DrawShared();
   this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
   this.drawSunlight = new DrawSunlight(this.drawShared);
-  this.drawEarth = new DrawEarth(this.drawShared, this.drawSunlight, EARTH_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_SMALL, LINE_LENGTH_TINY);
+  this.drawEarth = new DrawEarth(this.drawShared, this.drawSunlight, EARTH_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
   this.drawMoon = new DrawMoon(this.drawShared);
 
   this.setData = function(timeData, moonData, sunData, tideData)
@@ -89,13 +89,13 @@ function Overview()
     let cy = this.size.height / 2; // center position vertical
     let degreesEarthRotated = this.calcEarthDegreeOffsetShared();
 
-    if (!settings.offset.value)
+    if (!settings.earthRotate.value)
     {
       degreesEarthRotated = 0;
     }
 
     // Eath (24h time of day)
-    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground, settings.colorAscent);
+    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
 
     // Moon (synodic month)
     if (settings.moon.value)

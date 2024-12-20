@@ -5,7 +5,7 @@ function DrawSunlight(drawShared)
     this.display = function(context, cx, cy, degreesEarthOffsetShared, sunData, colorSecondary, colorBackground, earthSize)
     {
         let currentGraduationDegrees = 180;
-        if (settings.offset.value)
+        if (settings.earthRotate.value)
         {
             currentGraduationDegrees = this.normalize(degreesEarthOffsetShared-180, 0, 360);
         }

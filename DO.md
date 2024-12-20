@@ -1,19 +1,14 @@
 # DO
 
-## New Design
+## 3 &mdash; New Design
 
-- move hour graduations to Earth's surface
-- triangle time marker
 - tide visualization
 - moon eliptical orbit
 - rain visualization
-
-## 3 &mdash; Tide
-
 - Add improved time marker visual (triangle vs semi-circle).
-- Add ocean tide data display.
+- BUG: sunlight highlights broken when midnight top false, or offset true
 
-## 4 &mdash; Time
+## 4 &mdash; Decimal
 
 - Add alternate time data wrappers.
 -- decimal time.

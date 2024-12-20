@@ -21,7 +21,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         this.lineWidth = lineWidth;
     }
 
-    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, colorPrimary, colorSecondary, colorBackground, colorAscent)
+    this.display = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData, colorPrimary, colorSecondary, colorBackground)
     {
         if (settings.midnightTop.value)
         {
@@ -32,8 +32,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         {
             this.drawSunlight.display(context, cx, cy, degreesEarthOffsetShared, sunData, colorSecondary, colorBackground, EARTH_SIZE * this.size.height);
         }
-
-        this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared, colorAscent);
+        this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, sunData);
 
         if (settings.earthOutline.value)
@@ -42,13 +41,13 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         }
     }
 
-    this.drawEarthTimeHand = function(context, cx, cy, timeData, degreesEarthOffsetShared, colorAscent)
+    this.drawEarthTimeHand = function(context, cx, cy, timeData, degreesEarthOffsetShared)
     {
         // 24h time hand
         let degreesForTimeOfDay = degreesEarthOffsetShared;
         degreesForTimeOfDay += 180; // offset to align to midnight.
         degreesForTimeOfDay += timeData.currentDayPercentage * -360; // 360 degree rotation for time of day.
-        this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, this.lineWidth*2.5, colorAscent);
+        this.drawShared.drawCircGraduation(context, cx, cy, degreesForTimeOfDay, EARTH_SIZE + LINE_LENGTH_LARGE + LINE_LENGTH_TINY*2, LINE_LENGTH_TINY, this.lineWidth*2.5, settings.colorPrimary);
     }
 
     this.drawEarthGraduations = function(context, cx, cy, timeData, degreesEarthOffsetShared, sunData)
@@ -62,9 +61,12 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         for (let i = 0; i < graduationCount; i++)
         {
             // Shared
+            let sharedGraduationDegrees = degreesEarthOffsetShared + 180;
+            let sharedGraduationPerc = Math.abs(sharedGraduationDegrees)/360;
+
             let currentDayDegree = timeData.currentDayPercentage * 360;
-            let currentGraduationDegrees = degreesEarthOffsetShared + 180;
-            currentGraduationDegrees -= degreesPerGraduation * i; // offset for each of the graduations
+
+            let currentGraduationDegrees = sharedGraduationDegrees - (degreesPerGraduation * i); // offset for each of the graduations
             let currentGraduationPerc = Math.abs(currentGraduationDegrees)/360;
 
             // Highlight
@@ -122,29 +124,34 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
 
             if (display)
             {
-                // Color
+                // COLOR
                 let valueColor = settings.colorDark;
                 if (settings.graduationHighlight.value && i == currentGraduationHighlighted)
                 {
                     valueColor = settings.colorPrimary;
                 }
-                if (settings.graduationSunlight.value && currentGraduationPerc < sunData.set3Perc && currentGraduationPerc > sunData.rise4Perc)
+                if (settings.graduationSunlight.value 
+                    && currentGraduationPerc < (sunData.set3Perc+sharedGraduationPerc) 
+                    && currentGraduationPerc > (sunData.rise4Perc+sharedGraduationPerc))
                 {
                     valueColor = settings.colorPrimary;
                 }
 
-                // Length
+                // LENGTH
+                // 15 minute marks
                 let lineLength = LINE_LENGTH_TINY;
                 if (graduationTypeSecondary)
                 {
+                    // 1 hour marks
                     lineLength = LINE_LENGTH_SMALL;
                 }
                 if (graduationTypePrimary)
                 {
+                    // 6 hour marks
                     lineLength = LINE_LENGTH_LARGE;
                 }
                 
-                this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees, EARTH_SIZE, lineLength, this.lineWidth, valueColor);
+                this.drawShared.drawCircGraduation(context, cx, cy, currentGraduationDegrees, EARTH_SIZE+lineLength, lineLength, this.lineWidth, valueColor);
             }
         }
     }

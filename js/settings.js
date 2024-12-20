@@ -1,6 +1,6 @@
 function Settings()
 {
-  this.offset;
+  this.earthRotate;
   this.year;
   this.sunBands;
   this.moon;
@@ -19,8 +19,12 @@ function Settings()
 
   this.setup = function(parent)
   {
-    this.offset = new SettingsCheckbox();
-    this.offset.setup(parent, "Offset", "cb-offset", false);
+    this.earthRotate = new SettingsCheckbox();
+    this.earthRotate.setup(parent, "Earth Rotate", "cb-earthRotate", false);
+    this.earthRotate.button.addEventListener("settingChecked", this, true);
+
+    this.midnightTop = new SettingsCheckbox();
+    this.midnightTop.setup(parent, "Midnight Top", "cb-midnightTop", true);
 
     this.year = new SettingsCheckbox();
     this.year.setup(parent, "Year", "cb-year", false);
@@ -31,14 +35,11 @@ function Settings()
     this.moon = new SettingsCheckbox();
     this.moon.setup(parent, "Moon", "cb-moon", false);
 
-    this.midnightTop = new SettingsCheckbox();
-    this.midnightTop.setup(parent, "Midnight Top", "cb-midnightTop", true);
-
     this.earthOutline = new SettingsCheckbox();
     this.earthOutline.setup(parent, "Earth Outline", "cb-earthOutline", false);
 
     this.graduationMinimal = new SettingsCheckbox();
-    this.graduationMinimal.setup(parent, "Graduation Minimal", "cb-graduationMinimal", false);
+    this.graduationMinimal.setup(parent, "Graduation Minimal", "cb-graduationMinimal", true);
 
     this.graduationHighlight = new SettingsCheckbox();
     this.graduationHighlight.setup(parent, "Graduation Highlight", "cb-graduationHighlight", false);
@@ -54,5 +55,21 @@ function Settings()
     cssRoot.style.setProperty('--color-background', this.colorBackground);
     cssRoot.style.setProperty('--color-dark', this.colorDark);
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
+  }
+
+  Settings.prototype.handleEvent = function(event) 
+  {
+      if (event.type === "settingChecked")
+      {
+        if (this.earthRotate.value)
+        {
+          this.midnightTop.setValue(false);
+          this.midnightTop.hide();
+        }
+        else
+        {
+          this.midnightTop.show();
+        }
+      }
   }
 }
