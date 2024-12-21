@@ -4,8 +4,10 @@
 function StormglassWrapper()
 {
     const API_KEY = ``; // get this from https://dashboard.stormglass.io/
-    const DAY_TO_GET = 7;
+    const DAYS_TO_GET = 7;
     const REAL = false;
+
+    const MS_IN_A_DAY = 86400000; // = 1000 * 60 * 60 * 24;
 
     this.complete = false;
     this.result = {};
@@ -15,8 +17,10 @@ function StormglassWrapper()
         if (!this.complete)
         {
             const dateFormatedStart = this.formatDate(dateStart);
-            const dateEnd = this.addDays(dateStart, DAY_TO_GET);
+            const dateEnd = this.addDays(dateStart, DAYS_TO_GET);
             const dateFormatedEnd = this.formatDate(dateEnd);
+
+            let response = null;
 
             if (REAL)
             {
@@ -30,7 +34,7 @@ function StormglassWrapper()
             }
             else
             {
-                let response = `{
+                response = `{
                     "data": [
                         {
                             "height": -2.6740807172662198,
@@ -208,6 +212,55 @@ function StormglassWrapper()
 
     this.receiveData = function(response)
     {
-        console.log(response);
+        this.parseData(response);
+    }
+
+    this.calcCurrentDayPercentage = function(dateGiven)
+    {
+      // Copy the date to compare start of day with given time
+      let startOfDay = new Date(dateGiven.valueOf());
+      
+      // Set copied date to start of the same day
+      startOfDay.setHours(0);
+      startOfDay.setMinutes(0);
+      startOfDay.setSeconds(0);
+      startOfDay.setMilliseconds(0);
+
+      // Subtract the two days to find the time since beginning of the day,
+      // divide by number of ms in day to get percentage
+      return ( dateGiven - startOfDay ) / MS_IN_A_DAY;
+    }
+
+    this.parseData = function(data)
+    {
+        let dataObj = JSON.parse(data);
+        let result = {};
+
+        for (let i = 0; i < dataObj.data.length; i++)
+        {   
+            let originalTimeString = dataObj.data[i].time;
+            let originalTimeObj = new Date(originalTimeString);
+
+            let dataTimeStringFixed = originalTimeString.substring(0, originalTimeString.length - 9); // Remove incorrect timezone content that breaks things
+            let dateTimeObj = new Date(dataTimeStringFixed);
+            let dayPerc = this.calcCurrentDayPercentage(dateTimeObj);
+
+            let dateLabel = originalTimeObj.toISOString().split('T')[0];
+            let timeLabel = originalTimeObj.toISOString().split('T')[1].substring(0, 5);;
+
+            let tideData = {};
+            tideData.date = dateTimeObj;
+            tideData.dayPerc = dayPerc;
+            tideData.tideHeight = dataObj.data[i].height;
+            tideData.tideType = dataObj.data[i].type;
+
+            if (!result[dateLabel])
+            {
+                result[dateLabel] = {};
+            }
+            result[dateLabel][timeLabel] = tideData;
+        }
+        console.log(result)
+        this.result = result;
     }
 }

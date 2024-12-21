@@ -135,6 +135,15 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
                     && currentGraduationPerc > (sunData.rise4Perc+sharedGraduationPerc))
                 {
                     valueColor = settings.colorPrimary;
+                    // valueColor = settings.colorSecondary;
+                    // if (graduationTypeSecondary)
+                    // {
+                    //     valueColor = settings.colorPrimary;
+                    // }
+                    // else if (graduationTypePrimary)
+                    // {
+                    //     valueColor = settings.colorPrimary;
+                    // }
                 }
 
                 // LENGTH
@@ -145,7 +154,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
                     // 1 hour marks
                     lineLength = LINE_LENGTH_SMALL;
                 }
-                if (graduationTypePrimary)
+                else if (graduationTypePrimary)
                 {
                     // 6 hour marks
                     lineLength = LINE_LENGTH_LARGE;

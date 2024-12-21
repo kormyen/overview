@@ -37,6 +37,7 @@ function Overview()
   this.drawSunlight = new DrawSunlight(this.drawShared);
   this.drawEarth = new DrawEarth(this.drawShared, this.drawSunlight, EARTH_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
   this.drawMoon = new DrawMoon(this.drawShared);
+  this.drawTide = new DrawTide(this.drawShared);
 
   this.setData = function(timeData, moonData, sunData, tideData)
   {
@@ -94,6 +95,8 @@ function Overview()
       degreesEarthRotated = 0;
     }
 
+    this.drawTide.display(context, cx, cy);
+
     // Eath (24h time of day)
     this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
 
@@ -134,10 +137,10 @@ function Overview()
       this.moonData.updateGregorian(this.timeData.currentDate);
       this.sunData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
 
-      if (this.geolocationEnabled)
-      {
+      // if (this.geolocationEnabled)
+      // {
         this.tideData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
-      }
+      // }
 
       this.setCanvasSize();
       this.clearCanvas();

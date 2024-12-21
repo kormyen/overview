@@ -65,17 +65,17 @@ function TimeGregorian(myDate)
 
   this.calcCurrentDayPercentage = function(dateGiven)
   {
-    //we are copying the value of the date object into a new object:
+    // Copy the date to compare start of day with given time
     let startOfDay = new Date(dateGiven.valueOf());
     
-    //define the beginning of the day. Depending on time zone and browser, this may need tweaking:
+    // Set copied date to start of the same day
     startOfDay.setHours(0);
     startOfDay.setMinutes(0);
     startOfDay.setSeconds(0);
     startOfDay.setMilliseconds(0);
 
-    //subtract to find time since beginning of the day, divide by
-    //number of ms in day, and then multiply by 100 to get percentage
+    // Subtract the two days to find the time since beginning of the day,
+    // divide by number of ms in day to get percentage
     return ( dateGiven - startOfDay ) / MS_IN_A_DAY;
   }
 
