@@ -9,12 +9,12 @@ function StormglassWrapper()
 
     const MS_IN_A_DAY = 86400000; // = 1000 * 60 * 60 * 24;
 
-    this.complete = false;
+    this.ready = false;
     this.result = {};
 
     this.updateGregorian = function(dateStart, lat, long)
     {
-        if (!this.complete)
+        if (!this.ready)
         {
             const dateFormatedStart = this.formatDate(dateStart);
             const dateEnd = this.addDays(dateStart, DAYS_TO_GET);
@@ -34,7 +34,7 @@ function StormglassWrapper()
             }
             else
             {
-                response = `{
+                response = JSON.parse(`{
                     "data": [
                         {
                             "height": -2.6740807172662198,
@@ -189,12 +189,12 @@ function StormglassWrapper()
                             "source": "sg"
                         }
                     }
-                }`;
+                }`);
             }
 
             this.receiveData(response);
 
-            this.complete = true;
+            this.ready = true;
         }
     }
 
@@ -231,10 +231,10 @@ function StormglassWrapper()
       return ( dateGiven - startOfDay ) / MS_IN_A_DAY;
     }
 
-    this.parseData = function(data)
+    this.parseData = function(dataObj)
     {
-        let dataObj = JSON.parse(data);
         let result = {};
+        // result.meta = dataObj.meta;
 
         for (let i = 0; i < dataObj.data.length; i++)
         {   
@@ -256,11 +256,10 @@ function StormglassWrapper()
 
             if (!result[dateLabel])
             {
-                result[dateLabel] = {};
+                result[dateLabel] = [];
             }
-            result[dateLabel][timeLabel] = tideData;
+            result[dateLabel].push(tideData);
         }
-        console.log(result)
         this.result = result;
     }
 }

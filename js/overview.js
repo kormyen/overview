@@ -28,6 +28,7 @@ function Overview()
 
   const SUN_SIZE = 0.46;
   const EARTH_SIZE = 0.25;
+  const TIDE_SIZE = 0.4;
   const MOON_SIZE = EARTH_SIZE * IRL_EARTH_MOON_RATIO;
 
   const MOON_DISTANCE = 0.35;
@@ -95,7 +96,10 @@ function Overview()
       degreesEarthRotated = 0;
     }
 
-    this.drawTide.display(context, cx, cy);
+    if (this.tideData.ready)
+    {
+      this.drawTide.display(context, cx, cy, this.timeData, this.tideData.result, TIDE_SIZE);
+    }
 
     // Eath (24h time of day)
     this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
@@ -181,6 +185,7 @@ function Overview()
 
     this.drawShared.setSize(this.size);
     this.drawEarth.setSize(this.size);
+    this.drawTide.setSize(this.size);
 
     // Set scale adjusted line width to fix the line appearing to be thicker on smaller resolutions
     let curLineWidth = curSize/this.sizeReference * LINE_WIDTH;
