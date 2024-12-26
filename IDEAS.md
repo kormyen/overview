@@ -9,6 +9,7 @@
 - Add smooth animations on sunlight (get sun times for next or prev days and lerp).
 - Add text info, ideally editable (next/prev; day, full moon, month, year etc).
 - Add geolocation settings (drag on earth to change x and y of lat and long).
+- Add change planet (show the time on Mars with this clock design)
 
 ## Questions
 
