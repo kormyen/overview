@@ -13,7 +13,7 @@ function GetLocation()
       } 
       else if (result.state === "denied")
       {
-        btnLocation.textContent = 'Geolocation permission denied';
+        btnLocation.textContent = 'Location permission denied';
         btnLocation.className = 'overview-button-disabled';
         btnLocation.disabled = true;
       }
@@ -27,13 +27,13 @@ this.getLocation = function()
   if (navigator.geolocation)
   {
     navigator.geolocation.getCurrentPosition(receivePosition);
-    btnLocation.textContent = 'Check browser permissions...';
+    btnLocation.textContent = 'See browser location permissions';
     btnLocation.className = 'overview-button-disabled';
     btnLocation.disabled = true;
   } 
   else 
   {
-    btnLocation.textContent = 'Geolocation not supported';
+    btnLocation.textContent = 'Location not supported';
     btnLocation.className = 'overview-button-disabled';
     btnLocation.disabled = true;
   }
@@ -42,7 +42,7 @@ this.getLocation = function()
 function receivePosition(position)
 {
   let btnLocation = document.getElementById('btn-location');
-  btnLocation.textContent = 'Geolocation enabled!';
+  btnLocation.textContent = 'Location enabled!';
   btnLocation.className = 'overview-button-disabled';
   btnLocation.disabled = true;
   setTimeout(()=> { document.getElementById('btn-location').style.display = 'none'; }, 1000);

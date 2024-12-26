@@ -14,6 +14,7 @@ function DrawTide(drawShared)
         let todaysTides = tideData["2023-07-31"];
 
         // Calculate tide point positions data
+        let points = [];
         for (let i = 0; i < todaysTides.length; i++)
         {
             let tideDegrees = todaysTides[i].dayPerc * 360;
@@ -28,32 +29,55 @@ function DrawTide(drawShared)
             posY += cy;
 
             // Set data
-            todaysTides[i].posX = posX;
-            todaysTides[i].posY = posY;
+            points[i] = {};
+            points[i].x = posX;
+            points[i].y = posY;
 
+            // DO: calculate my mid points / "control points"
         }
 
+        // Debug points
+        context.beginPath();
+        for (let i = 0; i < points.length; i++)
+        {
+            context.arc(points[i].x, points[i].y, 10, 0, 2 * Math.PI, false);
+            context.fillStyle = 'green';
+            context.fill();
+            context.closePath();
+        }
+        
         // Draw tide
         context.beginPath();
-        context.fillStyle = settings.colorTertiary;
-        context.moveTo(todaysTides[0].posX, todaysTides[0].posY); // start at first point
-        for (let i = 1; i < todaysTides.length; i++)
+        context.fillStyle = "#000000";
+        context.moveTo(points[0].x, points[0].y); // start at first point
+        for (let i = 1; i < points.length; i++)
         {
-            context.quadraticCurveTo(todaysTides[i].posX, todaysTides[i].posY, todaysTides[i].posX, todaysTides[i].posY); // curve to each point
+            context.quadraticCurveTo(points[i].x, points[i].y, points[i].x, points[i].y); // curve to each point
         }
-        context.quadraticCurveTo(todaysTides[0].posX, todaysTides[0].posY, todaysTides[0].posX, todaysTides[0].posY); // curve to start point
+        context.quadraticCurveTo(points[0].x, points[0].y, points[0].x, points[0].y); // curve to start point
         context.fill();
+        context.closePath();
 
 
-        // Quadratic curves example
-        // context.beginPath();
-        // context.moveTo(75, 25);
-        // context.quadraticCurveTo(25, 25, 25, 62.5);
-        // context.quadraticCurveTo(25, 100, 50, 100);
-        // context.quadraticCurveTo(50, 120, 30, 125);
-        // context.quadraticCurveTo(60, 120, 65, 100);
-        // context.quadraticCurveTo(125, 100, 125, 62.5);
-        // context.quadraticCurveTo(125, 25, 75, 25);
-        // context.stroke();
+        // move to the first point
+        context.beginPath();
+        context.fillStyle = settings.colorTertiary;
+        context.moveTo(points[0].x, points[0].y);
+
+        for (var i = 1; i < points.length - 2; i++) {
+            var xc = (points[i].x + points[i + 1].x) / 2;
+            var yc = (points[i].y + points[i + 1].y) / 2;
+            context.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+
+        // curve through the last two points
+        context.quadraticCurveTo(
+        points[i].x,
+        points[i].y,
+        points[i + 1].x,
+        points[i + 1].y
+        );
+        context.fill();
+        context.closePath();
     }
 }

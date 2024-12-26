@@ -96,13 +96,16 @@ function Overview()
       degreesEarthRotated = 0;
     }
 
-    if (this.tideData.ready)
+    if (settings.tide.value && this.tideData.ready)
     {
       this.drawTide.display(context, cx, cy, this.timeData, this.tideData.result, TIDE_SIZE);
     }
 
     // Eath (24h time of day)
-    this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
+    if (settings.timeOfDay.value)
+    {
+      this.drawEarth.display(context, cx, cy, this.timeData, degreesEarthRotated, this.sunData.result, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
+    }
 
     // Moon (synodic month)
     if (settings.moon.value)
