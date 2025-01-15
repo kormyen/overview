@@ -22,7 +22,7 @@ function Settings()
   {
     // TIME OF DAY
     this.timeOfDay = new SettingsCheckbox();
-    this.timeOfDay.setup(parent, "Time of day", "cb-timeOfDay", true);
+    this.timeOfDay.setup(parent, "Show Time of day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
 
     this.earthRotate = new SettingsCheckbox();
@@ -47,17 +47,13 @@ function Settings()
     this.graduationSunlight = new SettingsCheckbox();
     this.graduationSunlight.setup(parent, "Graduation Sunlight", "cb-graduationSunlight", true);
 
-    // TIDE
-    this.tide = new SettingsCheckbox();
-    this.tide.setup(parent, "Tide", "cb-tide", true);
-
     // YEAR
     this.year = new SettingsCheckbox();
-    this.year.setup(parent, "Year", "cb-year", false);
+    this.year.setup(parent, "Show Year", "cb-year", false);
 
     // MOON
     this.moon = new SettingsCheckbox();
-    this.moon.setup(parent, "Moon", "cb-moon", false);
+    this.moon.setup(parent, "Show Moon", "cb-moon", false);
 
     // COLORS
     var cssRoot = document.querySelector(':root');
@@ -69,9 +65,11 @@ function Settings()
     cssRoot.style.setProperty('--color-dark', this.colorDark);
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
 
-    // API
+    // TIDE
     this.stormglassKey = new SettingsText();
     this.stormglassKey.setup(parent, "Stormglass Key", "Your API key here");
+    this.tide = new SettingsCheckbox();
+    this.tide.setup(parent, "Show Tide", "cb-tide", true);
 
     // SETUP
     this.hideShowSettings();
