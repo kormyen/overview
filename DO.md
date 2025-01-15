@@ -1,5 +1,11 @@
 # DO
 
+- open and close settings toggle (ESC)
+- store and retrieve data
+- store user's Stormglass API key on settings close
+- store Stormglass data
+- only retrieve additional days of stormglass data if it has not already been retrieved
+
 #### 3.0 &mdash; Improve 2025-0
 
 - Add: new design

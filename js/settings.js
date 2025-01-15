@@ -57,7 +57,7 @@ function Settings()
 
     // MOON
     this.moon = new SettingsCheckbox();
-    this.moon.setup(parent, "Moon", "cb-moon", true);
+    this.moon.setup(parent, "Moon", "cb-moon", false);
 
     // COLORS
     var cssRoot = document.querySelector(':root');
@@ -68,6 +68,10 @@ function Settings()
     cssRoot.style.setProperty('--color-background', this.colorBackground);
     cssRoot.style.setProperty('--color-dark', this.colorDark);
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
+
+    // API
+    this.stormglassKey = new SettingsText();
+    this.stormglassKey.setup(parent, "Stormglass Key", "Your API key here");
 
     // SETUP
     this.hideShowSettings();
