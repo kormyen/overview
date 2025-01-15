@@ -22,7 +22,7 @@ function Settings()
   {
     // TIME OF DAY
     this.timeOfDay = new SettingsCheckbox();
-    this.timeOfDay.setup(parent, "Time of day", "cb-timeOfDay", false);
+    this.timeOfDay.setup(parent, "Time of day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
 
     this.earthRotate = new SettingsCheckbox();
@@ -57,7 +57,7 @@ function Settings()
 
     // MOON
     this.moon = new SettingsCheckbox();
-    this.moon.setup(parent, "Moon", "cb-moon", false);
+    this.moon.setup(parent, "Moon", "cb-moon", true);
 
     // COLORS
     var cssRoot = document.querySelector(':root');

@@ -30,54 +30,47 @@ function DrawTide(drawShared)
 
             // Set data
             points[i] = {};
+            points[i].degrees = tideDegrees;
             points[i].x = posX;
             points[i].y = posY;
-
-            // DO: calculate my mid points / "control points"
         }
 
-        // Debug points
+        // this.drawDebugDots(context, points, 'yellow', 'green');
+        this.drawPathSharp(context, points, settings.colorTertiary);
+    }
+
+    this.drawPathSharp = function(context, points, color)
+    {
         context.beginPath();
+        context.moveTo(points[0].x, points[0].y);
         for (let i = 0; i < points.length; i++)
         {
+            context.lineTo(points[i].x, points[i].y);
+        }
+        context.lineTo(points[0].x, points[0].y);
+
+        context.fillStyle = color;
+        context.fill();
+        context.closePath();
+    }
+
+    this.drawDebugDots = function(context, points, color1, color2)
+    {
+        console.log(points)
+        for (let i = 0; i < points.length; i++)
+        {
+            context.beginPath();
             context.arc(points[i].x, points[i].y, 10, 0, 2 * Math.PI, false);
-            context.fillStyle = 'green';
+            if (i==0)
+            {
+                context.fillStyle = color1;
+            }
+            else
+            {
+                context.fillStyle = color2;
+            }
             context.fill();
             context.closePath();
         }
-        
-        // Draw tide
-        context.beginPath();
-        context.fillStyle = "#000000";
-        context.moveTo(points[0].x, points[0].y); // start at first point
-        for (let i = 1; i < points.length; i++)
-        {
-            context.quadraticCurveTo(points[i].x, points[i].y, points[i].x, points[i].y); // curve to each point
-        }
-        context.quadraticCurveTo(points[0].x, points[0].y, points[0].x, points[0].y); // curve to start point
-        context.fill();
-        context.closePath();
-
-
-        // move to the first point
-        context.beginPath();
-        context.fillStyle = settings.colorTertiary;
-        context.moveTo(points[0].x, points[0].y);
-
-        for (var i = 1; i < points.length - 2; i++) {
-            var xc = (points[i].x + points[i + 1].x) / 2;
-            var yc = (points[i].y + points[i + 1].y) / 2;
-            context.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-        }
-
-        // curve through the last two points
-        context.quadraticCurveTo(
-        points[i].x,
-        points[i].y,
-        points[i + 1].x,
-        points[i + 1].y
-        );
-        context.fill();
-        context.closePath();
     }
 }

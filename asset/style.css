@@ -30,8 +30,8 @@
   flex-direction: column;
   position: absolute;
   width: 300px;
-  top: 50px;
   left: 50px;
+  padding-top: 50px;
   z-index: 1;
   gap: var(--size-columnPaddingNormal);
 }
