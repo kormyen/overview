@@ -1,5 +1,7 @@
 function Settings()
 {
+  this.container;
+
   this.timeOfDay;
   this.earthRotate;
   this.year;
@@ -22,49 +24,51 @@ function Settings()
 
   this.setup = function(parent)
   {
+    this.container = parent;
+
     // TIME OF DAY
     this.timeOfDay = new SettingsCheckbox();
-    this.timeOfDay.setup(parent, "Show Time of day", "cb-timeOfDay", true);
+    this.timeOfDay.setup(this.container, "Show Time of day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
     this.allSettings.push(this.timeOfDay);
 
     this.earthRotate = new SettingsCheckbox();
-    this.earthRotate.setup(parent, "Rotation", "cb-earthRotate", false);
+    this.earthRotate.setup(this.container, "Rotation", "cb-earthRotate", false);
     this.earthRotate.button.addEventListener("settingChecked", this, true);
     this.allSettings.push(this.earthRotate);
 
     this.midnightTop = new SettingsCheckbox();
-    this.midnightTop.setup(parent, "Midnight Top", "cb-midnightTop", true);
+    this.midnightTop.setup(this.container, "Midnight Top", "cb-midnightTop", true);
     this.allSettings.push(this.midnightTop);
 
     this.sunBands = new SettingsCheckbox();
-    this.sunBands.setup(parent, "Sun Bands", "cb-sunBands", false);
+    this.sunBands.setup(this.container, "Sun Bands", "cb-sunBands", false);
     this.allSettings.push(this.sunBands);
 
     this.earthOutline = new SettingsCheckbox();
-    this.earthOutline.setup(parent, "Earth Outline", "cb-earthOutline", false);
+    this.earthOutline.setup(this.container, "Earth Outline", "cb-earthOutline", false);
     this.allSettings.push(this.earthOutline);
 
     this.graduationMinimal = new SettingsCheckbox();
-    this.graduationMinimal.setup(parent, "Graduation Minimal", "cb-graduationMinimal", true);
+    this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", true);
     this.allSettings.push(this.graduationMinimal);
 
     this.graduationHighlight = new SettingsCheckbox();
-    this.graduationHighlight.setup(parent, "Graduation Highlight", "cb-graduationHighlight", false);
+    this.graduationHighlight.setup(this.container, "Graduation Highlight", "cb-graduationHighlight", false);
     this.allSettings.push(this.graduationHighlight);
 
     this.graduationSunlight = new SettingsCheckbox();
-    this.graduationSunlight.setup(parent, "Graduation Sunlight", "cb-graduationSunlight", true);
+    this.graduationSunlight.setup(this.container, "Graduation Sunlight", "cb-graduationSunlight", true);
     this.allSettings.push(this.graduationSunlight);
 
     // YEAR
     this.year = new SettingsCheckbox();
-    this.year.setup(parent, "Show Year", "cb-year", false);
+    this.year.setup(this.container, "Show Year", "cb-year", false);
     this.allSettings.push(this.year);
 
     // MOON
     this.moon = new SettingsCheckbox();
-    this.moon.setup(parent, "Show Moon", "cb-moon", false);
+    this.moon.setup(this.container, "Show Moon", "cb-moon", false);
     this.allSettings.push(this.moon);
 
     // COLORS
@@ -79,11 +83,11 @@ function Settings()
 
     // TIDE
     this.stormglassKey = new SettingsText();
-    this.stormglassKey.setup(parent, "Stormglass Key", "Your API key here");
+    this.stormglassKey.setup(this.container, "Stormglass Key", "Your API key here");
     this.allSettings.push(this.stormglassKey);
 
     this.tide = new SettingsCheckbox();
-    this.tide.setup(parent, "Show Tide", "cb-tide", true);
+    this.tide.setup(this.container, "Show Tide", "cb-tide", true);
     this.allSettings.push(this.tide);
 
     // SETUP
@@ -104,6 +108,7 @@ function Settings()
     }
     else if (event.type === "modeChange0")
     {
+      this.saveSettings();
       this.hideAll();
     }
     else if (event.type === "modeChange1")
@@ -114,19 +119,12 @@ function Settings()
 
   this.hideAll = function()
   {
-    for (let i = 0; i < this.allSettings.length; i++)
-    {
-      this.allSettings[i].hide();
-    }
+    this.container.style.display = "none";
   }
-
   this.hideShowSettings = function()
   {
-    for (let i = 0; i < this.allSettings.length; i++)
-    {
-      this.allSettings[i].show();
-    }
-
+    this.container.style.display = "flex";
+    
     if (this.timeOfDay.value)
     {
       this.earthRotate.show();
@@ -157,5 +155,10 @@ function Settings()
     {
       this.midnightTop.show();
     }
+  }
+
+  this.saveSettings = function()
+  {
+    console.log("do save")
   }
 }
