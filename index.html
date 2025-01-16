@@ -19,6 +19,7 @@
   <script src="js/draw/drawtide.js"></script>
 
   <script src="js/getlocation.js"></script>
+  <script src="js/state.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/settingsCheckbox.js"></script>
   <script src="js/settingsText.js"></script>
@@ -40,6 +41,12 @@
     overview.startUpdateLoop();
 
     var input = new Input(overview.canvas);
+
+    var state = new State();
+    state.setup(input);
+    
+    settings.setupState(state);
+
     overview.canvas.addEventListener("changeValue", function (e)
     {
       overview.changeValue(e.detail);
