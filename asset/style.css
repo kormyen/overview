@@ -145,13 +145,14 @@ input:checked + .overview-slider:before {
   width: 170px;
   font-size: 16px;
   text-align: right;
-  color: var(--color-primary);
+  color: var(--color-secondary);
   border: 0px;
   box-sizing: border-box;
   border-radius: 34px;
   background-color: var(--color-tertiary);
 }
 .overview-button:hover .overview-setting-input-text {
+  color: var(--color-primary);
   background-color: var(--color-secondary);
 }
 .overview-button ::selection {

@@ -1,5 +1,6 @@
 function Settings()
 {
+  const DEFAULT_API_KEY = "Your API key here";
   this.container;
 
   this.timeOfDay;
@@ -20,8 +21,6 @@ function Settings()
   this.colorDark = '#2B3437';
   this.colorAscent = '#EE4B2B';
 
-  this.allSettings = [];
-
   this.setup = function(parent)
   {
     this.container = parent;
@@ -30,46 +29,36 @@ function Settings()
     this.timeOfDay = new SettingsCheckbox();
     this.timeOfDay.setup(this.container, "Show Time of day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
-    this.allSettings.push(this.timeOfDay);
 
     this.earthRotate = new SettingsCheckbox();
     this.earthRotate.setup(this.container, "Rotation", "cb-earthRotate", false);
     this.earthRotate.button.addEventListener("settingChecked", this, true);
-    this.allSettings.push(this.earthRotate);
 
     this.midnightTop = new SettingsCheckbox();
     this.midnightTop.setup(this.container, "Midnight Top", "cb-midnightTop", true);
-    this.allSettings.push(this.midnightTop);
 
     this.sunBands = new SettingsCheckbox();
     this.sunBands.setup(this.container, "Sun Bands", "cb-sunBands", false);
-    this.allSettings.push(this.sunBands);
 
     this.earthOutline = new SettingsCheckbox();
     this.earthOutline.setup(this.container, "Earth Outline", "cb-earthOutline", false);
-    this.allSettings.push(this.earthOutline);
 
     this.graduationMinimal = new SettingsCheckbox();
     this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", true);
-    this.allSettings.push(this.graduationMinimal);
 
     this.graduationHighlight = new SettingsCheckbox();
     this.graduationHighlight.setup(this.container, "Graduation Highlight", "cb-graduationHighlight", false);
-    this.allSettings.push(this.graduationHighlight);
 
     this.graduationSunlight = new SettingsCheckbox();
     this.graduationSunlight.setup(this.container, "Graduation Sunlight", "cb-graduationSunlight", true);
-    this.allSettings.push(this.graduationSunlight);
 
     // YEAR
     this.year = new SettingsCheckbox();
     this.year.setup(this.container, "Show Year", "cb-year", false);
-    this.allSettings.push(this.year);
 
     // MOON
     this.moon = new SettingsCheckbox();
     this.moon.setup(this.container, "Show Moon", "cb-moon", false);
-    this.allSettings.push(this.moon);
 
     // COLORS
     var cssRoot = document.querySelector(':root');
@@ -82,13 +71,17 @@ function Settings()
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
 
     // TIDE
+    let stormglassKeyValue = localStorage.getItem('stormglassKey');
+    if (stormglassKeyValue == null)
+    {
+      stormglassKeyValue = DEFAULT_API_KEY;
+    }
+
     this.stormglassKey = new SettingsText();
-    this.stormglassKey.setup(this.container, "Stormglass Key", "Your API key here");
-    this.allSettings.push(this.stormglassKey);
+    this.stormglassKey.setup(this.container, "Stormglass Key", stormglassKeyValue);
 
     this.tide = new SettingsCheckbox();
     this.tide.setup(this.container, "Show Tide", "cb-tide", true);
-    this.allSettings.push(this.tide);
 
     // SETUP
     this.hideAll();
@@ -155,10 +148,19 @@ function Settings()
     {
       this.midnightTop.show();
     }
+
+    if (this.stormglassKey.input.value != DEFAULT_API_KEY)
+    {
+      this.tide.show();
+    }
+    else
+    {
+      this.tide.hide();
+    }
   }
 
   this.saveSettings = function()
   {
-    console.log("do save")
+    localStorage.setItem('stormglassKey', this.stormglassKey.input.value);
   }
 }

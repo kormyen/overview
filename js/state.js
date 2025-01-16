@@ -20,12 +20,12 @@ function State()
       if (this.mode == MODE_0)
       {
         this.mode = MODE_1;
-        window.dispatchEvent(eventMode0);
+        window.dispatchEvent(eventMode1);
       }
       else
       {
         this.mode = MODE_0;
-        window.dispatchEvent(eventMode1);
+        window.dispatchEvent(eventMode0);
       }
     }
   }

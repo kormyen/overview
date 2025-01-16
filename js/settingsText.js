@@ -1,14 +1,11 @@
 function SettingsText()
 {
-    this.value = null;
     this.input = null;
     this.button = null;
     const eventUpdated = new CustomEvent("settingUpdated");
 
     this.setup = function(parent, labelText, value)
     {
-        this.value = value;
-
         this.buildElement(parent, labelText, value)
         // this.checkbox.addEventListener("change", this, true);
         this.button.addEventListener("click", this, false);
@@ -32,12 +29,6 @@ function SettingsText()
         parent.appendChild(this.button);
 
         this.input = input;
-    }
-
-    this.setValue = function(value)
-    {
-        this.value = value;
-        this.checkbox.checked = value;
     }
 
     this.hide = function()
