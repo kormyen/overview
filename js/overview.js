@@ -96,9 +96,9 @@ function Overview()
       degreesEarthRotated = 0;
     }
 
-    if (settings.tide.value && this.tideData.ready)
+    if (settings.tide.value && this.tideData.stateDataReady)
     {
-      this.drawTide.display(context, cx, cy, this.timeData, this.tideData.result, TIDE_SIZE);
+      // this.drawTide.display(context, cx, cy, this.timeData, this.tideData.result, TIDE_SIZE);
     }
 
     // Eath (24h time of day)
@@ -146,7 +146,7 @@ function Overview()
 
       // if (this.geolocationEnabled)
       // {
-        this.tideData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
+        this.tideData.updateTides(this.location.latitude, this.location.longditude);
       // }
 
       this.setCanvasSize();

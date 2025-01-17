@@ -1,6 +1,5 @@
 function Settings()
 {
-  const DEFAULT_API_KEY = "Your API key here";
   this.container;
 
   this.timeOfDay;
@@ -71,10 +70,10 @@ function Settings()
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
 
     // TIDE
-    let stormglassKeyValue = localStorage.getItem('stormglassKey');
+    let stormglassKeyValue = localStorage.getItem(globals.STORAGE_KEY_STORMGLASS);
     if (stormglassKeyValue == null)
     {
-      stormglassKeyValue = DEFAULT_API_KEY;
+      stormglassKeyValue = globals.DEFAULT_API_KEY;
     }
 
     this.stormglassKey = new SettingsText();
@@ -149,7 +148,7 @@ function Settings()
       this.midnightTop.show();
     }
 
-    if (this.stormglassKey.input.value != DEFAULT_API_KEY)
+    if (this.stormglassKey.input.value != globals.DEFAULT_API_KEY)
     {
       this.tide.show();
     }
@@ -161,6 +160,6 @@ function Settings()
 
   this.saveSettings = function()
   {
-    localStorage.setItem('stormglassKey', this.stormglassKey.input.value);
+    localStorage.setItem(globals.STORAGE_KEY_STORMGLASS, this.stormglassKey.input.value);
   }
 }

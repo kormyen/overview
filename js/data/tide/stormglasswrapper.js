@@ -3,216 +3,174 @@
 // Wrapper around https://stormglass.io/ api
 function StormglassWrapper()
 {
-    const API_KEY = ``; // get this from https://dashboard.stormglass.io/
     const DAYS_TO_GET = 7;
-    const REAL = false;
+    const TEST_MODE = false; // Setting for testing, can return fake responses for API requests.
 
-    const MS_IN_A_DAY = 86400000; // = 1000 * 60 * 60 * 24;
+    this.stateDataReady = false; // Parsed tide data is ready to use.
+    this.stateRequestProcessing = false; // Request sent for tide data, awaiting response.
+    this.stateRequestDone = false; // Request complete. This is used during debugging so that the API is not spammed and quota exceeded.
+    this.stateRequestError = false; // Request returned an error.
 
-    this.ready = false;
     this.result = {};
 
-    this.updateGregorian = function(dateStart, lat, long)
+    this.updateTides = function(lat, long)
     {
-        if (!this.ready)
+        // Check if we have stored tide data
+        let storedData = localStorage.getItem(globals.STORAGE_DATA_TIDE);
+        if (storedData != null)
         {
-            const dateFormatedStart = this.formatDate(dateStart);
-            const dateEnd = this.addDays(dateStart, DAYS_TO_GET);
-            const dateFormatedEnd = this.formatDate(dateEnd);
+            // We have stored data! ...but is it valid for today's date?
+            let dataTide = JSON.parse(storedData);
+            if (this.checkTideDataValid(dataTide))
+            {
+                // Valid! Use it!
+                console.log("Stored tide data is still valid!");
+                this.result = dataObj;
+                this.stateDataReady = true;
+            }
+            else
+            {
+                // Different date! Get new data!
+                if (this.checkApiReady())
+                {
+                    console.log("Stored tide data NOT valid! Requesting new data!");
+                    // this.sendApiRequest(new Date(), lat, long);
+                }
+            }
+        }
+        else
+        {
+            // Got no data, lets request some!
+            if (this.checkApiReady())
+            {
+                console.log("Stored tide data empty. Requesting new data!");
+                this.sendApiRequest(new Date(), lat, long);
+            }
+        }
+    }
 
-            let response = null;
+    this.sendApiRequest = function(dateStart, lat, long)
+    {
+        this.stateRequestProcessing = true;
+        let response = null;
 
-            if (REAL)
+        const dateFormatedStart = this.formatDateForApi(dateStart);
+        const dateEnd = this.addDaysToDate(dateStart, DAYS_TO_GET);
+        const dateFormatedEnd = this.formatDateForApi(dateEnd);
+
+        if (!TEST_MODE)
+        {
+            // Do a real request to the API.
+            if (settings.stormglassKey.input.value != null)
             {
                 fetch(`https://api.stormglass.io/v2/tide/extremes/point?lat=${lat}&lng=${long}&start=${dateFormatedStart}&end=${dateFormatedEnd}`, {
                     headers: {
-                        'Authorization': API_KEY
+                        'Authorization': settings.stormglassKey.input.value
                     }
                 }).then((response) => response.json()).then((jsonData) => {
-                    this.receiveData(jsonData);
+                    localStorage.setItem(globals.STORAGE_DATA_STORMGLASS_LAST, JSON.stringify(jsonData));
+                    this.parseApiResponse(jsonData);
+                    this.stateRequestDone = true;
                 });
             }
             else
             {
-                response = JSON.parse(`{
-                    "data": [
-                        {
-                            "height": -2.6740807172662198,
-                            "time": "2023-07-31T01:24:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.1785980821491786,
-                            "time": "2023-07-31T07:25:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.6888981387253708,
-                            "time": "2023-07-31T13:51:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.1278358157173645,
-                            "time": "2023-07-31T19:47:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.9197942271004393,
-                            "time": "2023-08-01T02:09:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.3706702459244116,
-                            "time": "2023-08-01T08:13:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.920474287690357,
-                            "time": "2023-08-01T14:35:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.26576063094016,
-                            "time": "2023-08-01T20:36:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -3.095831136923276,
-                            "time": "2023-08-02T02:53:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.4742154483684344,
-                            "time": "2023-08-02T09:02:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -3.0736560939545816,
-                            "time": "2023-08-02T15:19:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.31626992155341,
-                            "time": "2023-08-02T21:25:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -3.176534596878981,
-                            "time": "2023-08-03T03:38:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.4740832695769375,
-                            "time": "2023-08-03T09:51:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -3.1264832190319103,
-                            "time": "2023-08-03T16:04:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.2696152615886787,
-                            "time": "2023-08-03T22:16:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -3.1441802639027734,
-                            "time": "2023-08-04T04:24:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.366989526351195,
-                            "time": "2023-08-04T10:42:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -3.066699038786519,
-                            "time": "2023-08-04T16:51:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.1291848233966024,
-                            "time": "2023-08-04T23:08:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.9939136223580083,
-                            "time": "2023-08-05T05:12:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 3.164362971703169,
-                            "time": "2023-08-05T11:35:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.896270719848477,
-                            "time": "2023-08-05T17:39:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 2.9136865368247045,
-                            "time": "2023-08-06T00:03:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.7377572596192405,
-                            "time": "2023-08-06T06:02:00+00:00",
-                            "type": "low"
-                        },
-                        {
-                            "height": 2.8932246794996215,
-                            "time": "2023-08-06T12:30:00+00:00",
-                            "type": "high"
-                        },
-                        {
-                            "height": -2.6346789216076516,
-                            "time": "2023-08-06T18:31:00+00:00",
-                            "type": "low"
-                        }
-                    ],
-                    "meta": {
-                        "cost": 1,
-                        "dailyQuota": 10,
-                        "datum": "MSL",
-                        "end": "2023-08-07 00:00",
-                        "lat": -36.90155792236328,
-                        "lng": 174.8676757812499,
-                        "requestCount": 1,
-                        "start": "2023-07-31 00:00",
-                        "station": {
-                            "distance": 8,
-                            "lat": -36.93,
-                            "lng": 174.78,
-                            "name": "manukau harbour (onehunga wharf)",
-                            "source": "sg"
-                        }
-                    }
-                }`);
+                console.error("Stormglass API key not set! Cannot retrieve tide data. Press ESC to open settings and set an API key.");
+                this.stateRequestError = true;
+                this.stateRequestDone = true;
             }
-
-            this.receiveData(response);
-
-            this.ready = true;
+        }
+        else
+        {
+            // Just testing so respond with fake data, don't send a request to the API.
+            response = JSON.parse(globals.TEST_STORMGLASS_RESPONSE);
+            this.parseApiResponse(response);
+            this.stateRequestDone = true;
         }
     }
 
-    this.formatDate = function(date)
+    this.parseApiResponse = function(dataObj)
+    {
+        if (dataObj.errors != null && dataObj.errors.key != null)
+        {
+            console.error("Stormglass API error: " + dataObj.errors.key);
+            console.error(dataObj);
+            this.stateRequestError = true;
+        }
+        else
+        {
+            if (!TEST_MODE)
+            {
+                localStorage.setItem(globals.STORAGE_DATA_STORMGLASS_GOOD, JSON.stringify(dataObj));
+            }
+
+            this.result = [];
+            for (let i = 0; i < dataObj.data.length; i++)
+            {   
+                let originalTimeString = dataObj.data[i].time;
+
+                let dataTimeStringFixed = originalTimeString.substring(0, originalTimeString.length - 9); // Remove incorrect timezone content that breaks things
+                let dateTimeObj = new Date(dataTimeStringFixed);
+                let dayPerc = this.calcCurrentDayPercentage(dateTimeObj);
+
+                let tideEvent = {};
+                tideEvent.date = dateTimeObj;
+                tideEvent.dayPerc = dayPerc;
+                tideEvent.tideHeight = dataObj.data[i].height;
+                tideEvent.tideType = dataObj.data[i].type;
+
+                this.result.push(tideEvent);
+            }
+
+            localStorage.setItem(globals.STORAGE_DATA_TIDE, JSON.stringify(this.result));
+            this.stateDataReady = true;
+        }
+
+        this.stateRequestProcessing = false;
+    }
+
+
+    // HELPERS
+    this.checkApiReady = function()
+    {
+        if (!this.stateRequestError && !this.stateRequestProcessing && !this.stateRequestDone)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    this.checkTideDataValid = function(dataObj)
+    {
+        let sameDate = false;
+        for (let i = 0; i < 7; i++)
+        {
+            // Check a few tide events because sometimes we can get yesterday's events first...
+            if (this.checkSameDate(new Date(), new Date(dataObj[i].date)))
+            {
+                sameDate = true;
+            }
+        }
+        return sameDate;
+    }
+
+    this.checkSameDate = function(d1, d2)
+    {
+        return d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
+    }
+
+    this.formatDateForApi = function(date)
     {
         return date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().toString().length != 2 ?"0" + date.getDate() : date.getDate());
     }
 
-    this.addDays = function(date, days)
+    this.addDaysToDate = function(date, days)
     {
         const dateCopy = new Date(date);
         dateCopy.setDate(date.getDate() + days);
         return dateCopy;
-    }
-
-    this.receiveData = function(response)
-    {
-        this.parseData(response);
     }
 
     this.calcCurrentDayPercentage = function(dateGiven)
@@ -228,38 +186,7 @@ function StormglassWrapper()
 
       // Subtract the two days to find the time since beginning of the day,
       // divide by number of ms in day to get percentage
+      let MS_IN_A_DAY = 86400000; // = 1000ms * 60s * 60m * 24h;
       return ( dateGiven - startOfDay ) / MS_IN_A_DAY;
-    }
-
-    this.parseData = function(dataObj)
-    {
-        let result = {};
-        // result.meta = dataObj.meta;
-
-        for (let i = 0; i < dataObj.data.length; i++)
-        {   
-            let originalTimeString = dataObj.data[i].time;
-            let originalTimeObj = new Date(originalTimeString);
-
-            let dataTimeStringFixed = originalTimeString.substring(0, originalTimeString.length - 9); // Remove incorrect timezone content that breaks things
-            let dateTimeObj = new Date(dataTimeStringFixed);
-            let dayPerc = this.calcCurrentDayPercentage(dateTimeObj);
-
-            let dateLabel = originalTimeObj.toISOString().split('T')[0];
-            let timeLabel = originalTimeObj.toISOString().split('T')[1].substring(0, 5);;
-
-            let tideData = {};
-            tideData.date = dateTimeObj;
-            tideData.dayPerc = dayPerc;
-            tideData.tideHeight = dataObj.data[i].height;
-            tideData.tideType = dataObj.data[i].type;
-
-            if (!result[dateLabel])
-            {
-                result[dateLabel] = [];
-            }
-            result[dateLabel].push(tideData);
-        }
-        this.result = result;
     }
 }

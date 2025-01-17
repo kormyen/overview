@@ -18,11 +18,12 @@
   <script src="js/draw/drawmoon.js"></script>
   <script src="js/draw/drawtide.js"></script>
 
-  <script src="js/getlocation.js"></script>
+  <script src="js/settings/getlocation.js"></script>
   <script src="js/state.js"></script>
-  <script src="js/settings.js"></script>
-  <script src="js/settingsCheckbox.js"></script>
-  <script src="js/settingsText.js"></script>
+  <script src="js/settings/settings.js"></script>
+  <script src="js/settings/globals.js"></script>
+  <script src="js/settings/settingsCheckbox.js"></script>
+  <script src="js/settings/settingsText.js"></script>
   <script src="js/input.js"></script>
   <script src="js/overview.js"></script>
 </head>
@@ -32,6 +33,7 @@
   </div>
 
   <script type="text/javascript">
+    var globals = new Globals();
     var settings = new Settings();
     settings.setup(document.getElementById("settingsContainer"));
 
