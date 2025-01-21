@@ -43,69 +43,83 @@ function DrawTide(drawShared)
 
     this.doDrawTide = function(context, radiusLow, radiusHigh, timeData, tideData, indexNext, cx, cy)
     {   
-        // RADIUS
-        let next1Radius = tideData[indexNext].tideType == "high" ? radiusHigh : radiusLow;
-        let next2Radius = tideData[indexNext+1].tideType == "high" ? radiusHigh : radiusLow;
-        let next3Radius = tideData[indexNext+2].tideType == "high" ? radiusHigh : radiusLow;
-        let next4Radius = tideData[indexNext+3].tideType == "high" ? radiusHigh : radiusLow;
-        let next5Radius = tideData[indexNext+4].tideType == "high" ? radiusHigh : radiusLow;
-        let prev1Radius = tideData[indexNext-1].tideType == "high" ? radiusHigh : radiusLow;
-
-        // Calculate current height
-        var curDifference2 = (tideData[indexNext].date.getTime() - tideData[indexNext-1].date.getTime()) / 1000;
-        var curProgress2 = (timeData.currentDate.getTime() - tideData[indexNext-1].date.getTime()) / 1000;
-        let curPercToNextPoint2 = curProgress2 / curDifference2;
-        // let curRadius2 = this.lerp(prev1Radius, next1Radius, this.easeInOutSine(curPercToNextPoint2));
-        let curRadius2 = this.lerp(prev1Radius, next1Radius, curPercToNextPoint2);
-
-        // Calculate future height
-        let futureDifference = tideData[indexNext+4].dayPerc - tideData[indexNext+3].dayPerc;
-        let futureProgress = timeData.currentDayPercentage - tideData[indexNext+3].dayPerc;
-        let futurePercToNextPoint = futureProgress / futureDifference;
-        // let futureRadius = this.lerp(next4Radius, next5Radius, this.easeInOutSine(futurePercToNextPoint));
-        let futureRadius = this.lerp(next4Radius, next5Radius, futurePercToNextPoint);
-
-        // POSITION
-        let next1 = this.calcPositionOnCircle(this.size.height * next1Radius, tideData[indexNext].dayPerc, cx, cy);
-        let next2 = this.calcPositionOnCircle(this.size.height * next2Radius, tideData[indexNext+1].dayPerc, cx, cy);
-        let next3 = this.calcPositionOnCircle(this.size.height * next3Radius, tideData[indexNext+2].dayPerc, cx, cy);
-        let next4 = this.calcPositionOnCircle(this.size.height * next4Radius, tideData[indexNext+3].dayPerc, cx, cy);
-        let next5 = this.calcPositionOnCircle(this.size.height * next5Radius, tideData[indexNext+4].dayPerc, cx, cy);
-        let prevPos1 = this.calcPositionOnCircle(this.size.height * prev1Radius, tideData[indexNext-1].dayPerc, cx, cy);
-
-        let curPos = this.calcPositionOnCircle(this.size.height * curRadius2, timeData.currentDayPercentage, cx, cy);
-        let futurePos = this.calcPositionOnCircle(this.size.height * futureRadius, timeData.currentDayPercentage, cx, cy);
-        
-        // DRAW
-        let points = [];
-        points[0] = curPos;
-        points[1] = next1;
-        points[2] = next2;
-        points[3] = next3;
-        if (timeData.currentDayPercentage > tideData[indexNext+3].dayPerc)
+        if (tideData.length > indexNext+4+1)
         {
-            points[4] = next4;
-            points[5] = futurePos;
-            points[6] = curPos;
+            if (indexNext > 0)
+            {
+                // RADIUS
+                let next1Radius = tideData[indexNext].tideType == "high" ? radiusHigh : radiusLow;
+                let next2Radius = tideData[indexNext+1].tideType == "high" ? radiusHigh : radiusLow;
+                let next3Radius = tideData[indexNext+2].tideType == "high" ? radiusHigh : radiusLow;
+                let next4Radius = tideData[indexNext+3].tideType == "high" ? radiusHigh : radiusLow;
+                let next5Radius = tideData[indexNext+4].tideType == "high" ? radiusHigh : radiusLow;
+                let prev1Radius = tideData[indexNext-1].tideType == "high" ? radiusHigh : radiusLow;
+
+                // Calculate current height
+                var curDifference2 = (tideData[indexNext].date.getTime() - tideData[indexNext-1].date.getTime()) / 1000;
+                var curProgress2 = (timeData.currentDate.getTime() - tideData[indexNext-1].date.getTime()) / 1000;
+                let curPercToNextPoint2 = curProgress2 / curDifference2;
+                // let curRadius2 = this.lerp(prev1Radius, next1Radius, this.easeInOutSine(curPercToNextPoint2));
+                let curRadius2 = this.lerp(prev1Radius, next1Radius, curPercToNextPoint2);
+
+                // Calculate future height
+                let futureDifference = tideData[indexNext+4].dayPerc - tideData[indexNext+3].dayPerc;
+                let futureProgress = timeData.currentDayPercentage - tideData[indexNext+3].dayPerc;
+                let futurePercToNextPoint = futureProgress / futureDifference;
+                // let futureRadius = this.lerp(next4Radius, next5Radius, this.easeInOutSine(futurePercToNextPoint));
+                let futureRadius = this.lerp(next4Radius, next5Radius, futurePercToNextPoint);
+
+                // POSITION
+                let next1 = this.calcPositionOnCircle(this.size.height * next1Radius, tideData[indexNext].dayPerc, cx, cy);
+                let next2 = this.calcPositionOnCircle(this.size.height * next2Radius, tideData[indexNext+1].dayPerc, cx, cy);
+                let next3 = this.calcPositionOnCircle(this.size.height * next3Radius, tideData[indexNext+2].dayPerc, cx, cy);
+                let next4 = this.calcPositionOnCircle(this.size.height * next4Radius, tideData[indexNext+3].dayPerc, cx, cy);
+                let next5 = this.calcPositionOnCircle(this.size.height * next5Radius, tideData[indexNext+4].dayPerc, cx, cy);
+                let prevPos1 = this.calcPositionOnCircle(this.size.height * prev1Radius, tideData[indexNext-1].dayPerc, cx, cy);
+
+                let curPos = this.calcPositionOnCircle(this.size.height * curRadius2, timeData.currentDayPercentage, cx, cy);
+                let futurePos = this.calcPositionOnCircle(this.size.height * futureRadius, timeData.currentDayPercentage, cx, cy);
+                
+                // DRAW
+                let points = [];
+                points[0] = curPos;
+                points[1] = next1;
+                points[2] = next2;
+                points[3] = next3;
+                if (timeData.currentDayPercentage > tideData[indexNext+3].dayPerc)
+                {
+                    points[4] = next4;
+                    points[5] = futurePos;
+                    points[6] = curPos;
+                }
+                else
+                {
+                    points[4] = futurePos;
+                    points[5] = curPos;
+                }
+
+                points = this.smoothPoints(points, cx, cy);
+                // this.drawPointsAsPath(context, points, settings.colorTertiary);
+
+                this.drawDebugDot(context, next1.x, next1.y, 'yellow');
+                this.drawDebugDot(context, next2.x, next2.y, 'yellow');
+                this.drawDebugDot(context, next3.x, next3.y, 'yellow');
+                // this.drawDebugDot(context, next4.x, next4.y, 'DarkBlue');   
+                // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
+                this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'orange');
+                
+                // this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
+                this.drawDebugDot(context, curPos.x, curPos.y, 'red');
+            }
+            else
+            {
+                console.log("Can't draw. No past tide data.")
+            }
         }
         else
         {
-            points[4] = futurePos;
-            points[5] = curPos;
+            console.log("Can't draw. No future tide data.")
         }
-
-        points = this.smoothPoints(points, cx, cy);
-        this.drawPointsAsPath(context, points, settings.colorTertiary);
-
-        this.drawDebugDot(context, next1.x, next1.y, 'orange');
-        this.drawDebugDot(context, next2.x, next2.y, 'yellow');
-        this.drawDebugDot(context, next3.x, next3.y, 'yellow');
-        this.drawDebugDot(context, next4.x, next4.y, 'DarkBlue');   
-        this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
-        this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'red');
-        
-        this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
-        this.drawDebugDot(context, curPos.x, curPos.y, 'green');
     }
 
     this.lerp = function(a, b, alpha)
