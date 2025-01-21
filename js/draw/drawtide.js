@@ -55,13 +55,15 @@ function DrawTide(drawShared)
         var curDifference2 = (tideData[indexNext].date.getTime() - tideData[indexNext-1].date.getTime()) / 1000;
         var curProgress2 = (timeData.currentDate.getTime() - tideData[indexNext-1].date.getTime()) / 1000;
         let curPercToNextPoint2 = curProgress2 / curDifference2;
-        let curRadius2 = this.lerp(prev1Radius, next1Radius, this.easeInOutSine(curPercToNextPoint2));
+        // let curRadius2 = this.lerp(prev1Radius, next1Radius, this.easeInOutSine(curPercToNextPoint2));
+        let curRadius2 = this.lerp(prev1Radius, next1Radius, curPercToNextPoint2);
 
         // Calculate future height
         let futureDifference = tideData[indexNext+4].dayPerc - tideData[indexNext+3].dayPerc;
         let futureProgress = timeData.currentDayPercentage - tideData[indexNext+3].dayPerc;
         let futurePercToNextPoint = futureProgress / futureDifference;
-        let futureRadius = this.lerp(next4Radius, next5Radius, this.easeInOutSine(futurePercToNextPoint));
+        // let futureRadius = this.lerp(next4Radius, next5Radius, this.easeInOutSine(futurePercToNextPoint));
+        let futureRadius = this.lerp(next4Radius, next5Radius, futurePercToNextPoint);
 
         // POSITION
         let next1 = this.calcPositionOnCircle(this.size.height * next1Radius, tideData[indexNext].dayPerc, cx, cy);
@@ -91,8 +93,9 @@ function DrawTide(drawShared)
             points[4] = futurePos;
             points[5] = curPos;
         }
-        this.drawPathSharp(context, points, settings.colorTertiary);
-        // this.drawPathSmooth(context, points, settings.colorTertiary, cx, cy);
+
+        points = this.smoothPoints(points, cx, cy);
+        this.drawPointsAsPath(context, points, settings.colorTertiary);
 
         this.drawDebugDot(context, next1.x, next1.y, 'orange');
         this.drawDebugDot(context, next2.x, next2.y, 'yellow');
@@ -138,6 +141,7 @@ function DrawTide(drawShared)
 
         // Extra data for smooth drawing
         result.perc = perc;
+        result.degrees = degrees;
         result.radius = radius;
 
         return result;
@@ -149,41 +153,10 @@ function DrawTide(drawShared)
         // Store the value of pi.
         var pi = Math.PI;
         // Multiply degrees by pi divided by 180 to convert to radians.
-        return degrees * (pi/180);
+        return degrees * (pi / 180);
     }
 
-    this.displayOld = function(context, cx, cy, timeData, tideData, radius)
-    {
-        // DO: Here would use timeData to get data for current day
-        let todaysTides = tideData["2023-07-31"];
-
-        // Calculate tide point positions data
-        let points = [];
-        for (let i = 0; i < todaysTides.length; i++)
-        {
-            let tideDegrees = todaysTides[i].dayPerc * 360;
-
-            // To find the x and y coordinates on a circle with a known radius and angle use the formula:
-            // x = r(cos(degrees)), y = r(sin(degrees))
-            let posX = this.size.height * radius * Math.cos(tideDegrees);
-            let posY = this.size.height * radius * Math.sin(tideDegrees);
-
-            // Move position values to be from the center of the clock
-            posX += cx;
-            posY += cy;
-
-            // Set data
-            points[i] = {};
-            points[i].degrees = tideDegrees;
-            points[i].x = posX;
-            points[i].y = posY;
-        }
-
-        // this.drawDebugDots(context, points, 'yellow', 'green');
-        this.drawPathSharp(context, points, settings.colorTertiary);
-    }
-
-    this.drawPathSharp = function(context, points, color)
+    this.drawPointsAsPath = function(context, points, color)
     {
         context.beginPath();
         context.moveTo(points[0].x, points[0].y);
@@ -198,9 +171,68 @@ function DrawTide(drawShared)
         context.closePath();
     }
 
-    this.drawPathSmooth = function(context, points, color, centerX, centerY)
+    this.smoothPoints = function(points, centerX, centerY)
     {
-        console.log("draw smooth")
+        // Settings
+        let smoothPercDelta = 0.0001;
+
+        // State
+        let newPoints = [];
+        let distanceTotalBetweenPoints = 0;
+        let currentPerc = points[0].perc;
+
+        // distanceTotalBetweenPoints = points[1].perc - points[0].perc;
+        // newPoints.push(points[0]); // Start
+        // while (currentPerc < points[1].perc)
+        // {
+        //     currentPerc += smoothPercDelta;
+        //     let newPointDistance = currentPerc - points[0].perc;
+        //     let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
+        //     let newPointRadius = this.lerp(points[0].radius, points[1].radius, newPointDistancePerc);
+        //     newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
+        // }
+
+        // distanceTotalBetweenPoints = points[2].perc - points[1].perc;
+        // newPoints.push(points[1]);
+        // while (currentPerc < points[2].perc)
+        // {
+        //     currentPerc += smoothPercDelta;
+        //     let newPointDistance = currentPerc - points[1].perc;
+        //     let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
+        //     let newPointRadius = this.lerp(points[1].radius, points[2].radius, newPointDistancePerc);
+        //     newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
+        // }
+
+        // distanceTotalBetweenPoints = points[2].perc - points[1].perc;
+        // newPoints.push(points[2]);
+        // while (currentPerc < points[3].perc)
+        // {
+        //     currentPerc += smoothPercDelta;
+        //     let newPointDistance = currentPerc - points[2].perc;
+        //     let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
+        //     let newPointRadius = this.lerp(points[2].radius, points[3].radius, newPointDistancePerc);
+        //     newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
+        // }
+
+        for (let i = 0; i < points.length-1; i++)
+        {
+            distanceTotalBetweenPoints = points[i+1].perc - points[i].perc;
+            newPoints.push(points[i]);
+            while (Math.abs(points[i+1].perc - currentPerc) > smoothPercDelta)
+            {
+                currentPerc += smoothPercDelta;
+                if (currentPerc >= 1)
+                {
+                    currentPerc -= 1;
+                }
+                let newPointDistance = currentPerc - points[i].perc;
+                let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
+                let newPointRadius = this.lerp(points[i].radius, points[i+1].radius, newPointDistancePerc);
+                newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
+            }
+        }
+
+        return newPoints;
     }
 
     this.drawDebugDots = function(context, points, color1, color2)
