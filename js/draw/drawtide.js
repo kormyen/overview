@@ -10,25 +10,22 @@ function DrawTide(drawShared)
 
     this.display = function(context, cx, cy, timeData, tideData, radiusLow, radiusHigh)
     {
-        // Get data for current day.
-        let indexLast = -1;
+        // We have tide data, but need to figure out which entry is the next closest to current time (aka indexNext).
         let indexNext = -1;
         for (let i = 0; i < tideData.length; i++)
         {
-            indexLast = i;
             if (this.checkSameDate(tideData[i].date, timeData.currentDate))
             {
                 if (tideData[i].dayPerc > timeData.currentDayPercentage)
                 {
                     indexNext = i;
                     break;
-                }   
+                }
+                else
+                {
+                    indexNext = i + 1;
+                }
             }
-        }
-        if (indexNext == -1 && indexLast != -1)
-        {
-            // there are no more tide events today (the time is close to midnight), so the next event is the first event for tomorrow
-            indexNext = indexLast + 1;
         }
 
         if (tideData.length <= indexNext || (indexNext == -1))
@@ -39,10 +36,13 @@ function DrawTide(drawShared)
         {
             this.doDrawTide(context, radiusLow, radiusHigh, timeData, tideData, indexNext, cx, cy);
         }
+
+        this.doDrawTide(context, radiusLow, radiusHigh, timeData, tideData, indexNext, cx, cy);
+
     }
 
     this.doDrawTide = function(context, radiusLow, radiusHigh, timeData, tideData, indexNext, cx, cy)
-    {   
+    {
         if (tideData.length > indexNext+4+1)
         {
             if (indexNext > 0)

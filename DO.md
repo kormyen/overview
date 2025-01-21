@@ -1,7 +1,6 @@
 # DO
 
-- implement basic tide drawing based on current time (blends into next day based on current time)
-- connect basic tide drawing to real data
+- implement basic tide drawing
 - improve settings text interactions
 
 #### 3.0 &mdash; Improve 2025-0
