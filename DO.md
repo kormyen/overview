@@ -1,9 +1,6 @@
 # DO
 
-- use saved Stormglass key to get real data
-- store Stormglass API data
-- only retrieve additional data from stormglass if it has not already been retrieved
-- implement basic tide drawn based on current time (blends into next day based on current time)
+- implement basic tide drawing based on current time (blends into next day based on current time)
 - connect basic tide drawing to real data
 - improve settings text interactions
 

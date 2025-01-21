@@ -24,8 +24,8 @@ function StormglassWrapper()
             if (this.checkTideDataValid(dataTide))
             {
                 // Valid! Use it!
-                console.log("Stored tide data is still valid!");
-                this.result = dataObj;
+                // console.log("Stored tide data is still valid!");
+                this.result = this.parseStoredData(dataTide);
                 this.stateDataReady = true;
             }
             else
@@ -34,7 +34,7 @@ function StormglassWrapper()
                 if (this.checkApiReady())
                 {
                     console.log("Stored tide data NOT valid! Requesting new data!");
-                    // this.sendApiRequest(new Date(), lat, long);
+                    this.sendApiRequest(new Date(), lat, long);
                 }
             }
         }
@@ -60,6 +60,7 @@ function StormglassWrapper()
 
         if (!TEST_MODE)
         {
+            console.log("Do a real request to the API.");
             // Do a real request to the API.
             if (settings.stormglassKey.input.value != null)
             {
@@ -87,6 +88,15 @@ function StormglassWrapper()
             this.parseApiResponse(response);
             this.stateRequestDone = true;
         }
+    }
+
+    this.parseStoredData = function(value)
+    {
+        for (let i = 0; i < value.length; i++)
+        {
+            value[i].date = new Date(value[i].date);
+        }
+        return value;
     }
 
     this.parseApiResponse = function(dataObj)
@@ -128,7 +138,6 @@ function StormglassWrapper()
 
         this.stateRequestProcessing = false;
     }
-
 
     // HELPERS
     this.checkApiReady = function()

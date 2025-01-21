@@ -28,7 +28,8 @@ function Overview()
 
   const SUN_SIZE = 0.46;
   const EARTH_SIZE = 0.25;
-  const TIDE_SIZE = 0.4;
+  const TIDE_SIZE_LOW = 0.35;
+  const TIDE_SIZE_HIGH = 0.45;
   const MOON_SIZE = EARTH_SIZE * IRL_EARTH_MOON_RATIO;
 
   const MOON_DISTANCE = 0.35;
@@ -96,9 +97,11 @@ function Overview()
       degreesEarthRotated = 0;
     }
 
+    this.timeData.update(); // HACK: Not sure why this is required here, but this.timeData.currentDate seems invalid otherwise for drawTide it was always noon but minutes updated.
+
     if (settings.tide.value && this.tideData.stateDataReady)
     {
-      // this.drawTide.display(context, cx, cy, this.timeData, this.tideData.result, TIDE_SIZE);
+      this.drawTide.display(context, cx, cy, this.timeData, this.tideData.result, TIDE_SIZE_LOW, TIDE_SIZE_HIGH);
     }
 
     // Eath (24h time of day)
