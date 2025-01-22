@@ -90,8 +90,8 @@ function DrawTide(drawShared)
                 this.drawPointsAsPath(context, points, settings.colorTertiary);
 
                 this.drawDebugDot(context, next1.x, next1.y, 'yellow');
-                this.drawDebugDot(context, next2.x, next2.y, 'orange');
-                this.drawDebugDot(context, next3.x, next3.y, 'red');
+                this.drawDebugDot(context, next2.x, next2.y, 'yellow');
+                this.drawDebugDot(context, next3.x, next3.y, 'yellow');
                 // this.drawDebugDot(context, next4.x, next4.y, 'red'); 
                 // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
                 this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'yellow');
@@ -166,10 +166,11 @@ function DrawTide(drawShared)
         {
             context.lineTo(points[i].x, points[i].y);
         }
-        context.lineTo(points[0].x, points[0].y);
+        // context.lineTo(points[0].x, points[0].y);
 
         context.fillStyle = color;
         context.fill();
+        context.stroke();
         context.closePath();
     }
 
@@ -201,7 +202,7 @@ function DrawTide(drawShared)
         
         let distanceTotalBetweenPoints = 0;
         let currentPerc = points[0].perc;
-        for (let i = 0; i < points.length-1; i++)
+        for (let i = 0; i < points.length-2; i++)
         {
             distanceTotalBetweenPoints = points[i+1].perc - points[i].perc;
             newPoints.push(points[i]);
@@ -219,6 +220,8 @@ function DrawTide(drawShared)
                 newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
             }
         }
+
+        newPoints.push(points[points.length-2]);
 
         return newPoints;
     }
