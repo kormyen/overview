@@ -1,6 +1,5 @@
 # DO
 
-- implement basic tide drawing
 - improve settings text interactions
 
 #### 3.0 &mdash; Improve 2025-0

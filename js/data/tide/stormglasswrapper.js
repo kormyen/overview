@@ -34,7 +34,7 @@ function StormglassWrapper()
                 if (this.checkApiReady())
                 {
                     console.log("Stored tide data NOT valid! Requesting new data!");
-                    this.sendApiRequest(new Date(), lat, long);
+                    this.sendApiRequest(this.getYesterdayDate(), lat, long);
                 }
             }
         }
@@ -44,9 +44,17 @@ function StormglassWrapper()
             if (this.checkApiReady())
             {
                 console.log("Stored tide data empty. Requesting new data!");
-                this.sendApiRequest(new Date(), lat, long);
+                this.sendApiRequest(this.getYesterdayDate(), lat, long);
             }
         }
+    }
+
+    this.getYesterdayDate = function()
+    {
+        let oneDayOffset = (24*60*60*1000);
+        let result = new Date();
+        result.setTime(result.getTime() - oneDayOffset);
+        return result;
     }
 
     this.sendApiRequest = function(dateStart, lat, long)
@@ -154,8 +162,9 @@ function StormglassWrapper()
         let sameDate = false;
         for (let i = 0; i < 7; i++)
         {
-            // Check a few tide events because sometimes we can get yesterday's events first...
-            if (this.checkSameDate(new Date(), new Date(dataObj[i].date)))
+            // Check a few tide events just in case - give some leeway maybe our 10 days of data is just a day old or something.
+            // We actually want our data to start with yesterday because we need at least one from the day before to get our curve drawn correctly.
+            if (this.checkSameDate(this.getYesterdayDate(), new Date(dataObj[i].date)))
             {
                 sameDate = true;
             }
