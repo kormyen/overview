@@ -219,7 +219,7 @@ function DrawTide(drawShared)
 
         // Ease from tide data near 9 o'clock to zero/midnight.
         newPoints.push(points[points.length-2]);
-        distanceTotalBetweenPoints = 1 - points[points.length-2].perc;
+        distanceTotalBetweenPoints = 1 - points[points.length-2].perc + points[1].perc;
         while (Math.abs(zeroPoint.perc - currentPerc) > smoothPercDelta)
         {
             currentPerc += smoothPercDelta;
@@ -231,9 +231,10 @@ function DrawTide(drawShared)
             let newPointDistance = currentPerc - points[points.length-2].perc;
             let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
             let newPointDistancePercEased = this.easeInOutSine(newPointDistancePerc);
-            let newPointRadius = this.lerp(points[points.length-2].radius, zeroPoint.radius, newPointDistancePercEased);
+            let newPointRadius = this.lerp(points[points.length-2].radius, points[1].radius, newPointDistancePercEased);
             newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
         }
+        newPoints.push(zeroPoint);
 
         return newPoints;
     }
