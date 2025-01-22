@@ -43,7 +43,7 @@ function Settings()
     this.earthOutline.setup(this.container, "Earth Outline", "cb-earthOutline", false);
 
     this.graduationMinimal = new SettingsCheckbox();
-    this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", true);
+    this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", false);
 
     this.graduationHighlight = new SettingsCheckbox();
     this.graduationHighlight.setup(this.container, "Graduation Highlight", "cb-graduationHighlight", false);

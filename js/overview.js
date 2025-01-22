@@ -32,7 +32,7 @@ function Overview()
   const TIDE_SIZE_HIGH = 0.45;
   const MOON_SIZE = EARTH_SIZE * IRL_EARTH_MOON_RATIO;
 
-  const MOON_DISTANCE = 0.35;
+  const MOON_DISTANCE = 0.375;
 
   this.drawShared = new DrawShared();
   this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
