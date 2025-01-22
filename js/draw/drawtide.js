@@ -84,17 +84,17 @@ function DrawTide(drawShared)
                 points.push(next1);
                 points.push(next2);
                 points.push(next3);
-                points.push(prevPos1);
+                // points.push(prevPos1);
 
-                points = this.smoothPoints(points, cx, cy);
+                points = this.smoothPoints(context, points, cx, cy);
                 this.drawPointsAsPath(context, points, settings.colorTertiary);
 
                 this.drawDebugDot(context, next1.x, next1.y, 'yellow');
-                this.drawDebugDot(context, next2.x, next2.y, 'yellow');
-                this.drawDebugDot(context, next3.x, next3.y, 'yellow');
+                this.drawDebugDot(context, next2.x, next2.y, 'orange');
+                this.drawDebugDot(context, next3.x, next3.y, 'red');
                 // this.drawDebugDot(context, next4.x, next4.y, 'red'); 
                 // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
-                this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'orange');
+                this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'yellow');
                 
                 // this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
                 // this.drawDebugDot(context, curPos.x, curPos.y, 'red');
@@ -173,16 +173,34 @@ function DrawTide(drawShared)
         context.closePath();
     }
 
-    this.smoothPoints = function(points, centerX, centerY)
+    this.smoothPoints = function(context, points, centerX, centerY)
     {
         // Settings
-        let smoothPercDelta = 0.0001;
+        let smoothPercDelta = 0.1;
 
         // State
+        points.sort(function(a, b){return a.perc - b.perc});
         let newPoints = [];
+
+
+        // Start at midnight/zero-percent
+        let zeroDistance = (1-points[points.length-1].perc) + points[0].perc;
+        let zeroPerc = (1-points[points.length-1].perc) / zeroDistance;
+        let zeroRadius = this.lerp(points[points.length-1].radius, points[0].radius, zeroPerc);
+        let zeroPoint = this.calcPositionOnCircle(zeroRadius, 0, centerX, centerY);
+        this.drawDebugDot(context, zeroPoint.x, zeroPoint.y, 'green');
+        
+        let tempPoints = [];
+        tempPoints.push(zeroPoint);
+        for (let i = 0; i < points.length; i++)
+        {
+            tempPoints.push(points[i]);
+        }
+        tempPoints.push(zeroPoint);
+        points = tempPoints;
+        
         let distanceTotalBetweenPoints = 0;
         let currentPerc = points[0].perc;
-
         for (let i = 0; i < points.length-1; i++)
         {
             distanceTotalBetweenPoints = points[i+1].perc - points[i].perc;
