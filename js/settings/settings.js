@@ -57,7 +57,7 @@ function Settings()
 
     // MOON
     this.moon = new SettingsCheckbox();
-    this.moon.setup(this.container, "Show Moon", "cb-moon", false);
+    this.moon.setup(this.container, "Show Moon", "cb-moon", true);
 
     // COLORS
     var cssRoot = document.querySelector(':root');

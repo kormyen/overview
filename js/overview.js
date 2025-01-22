@@ -114,7 +114,7 @@ function Overview()
     if (settings.moon.value)
     {
       let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
-      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated, settings.colorPrimary, settings.colorSecondary, settings.colorBackground);
+      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated, settings.colorPrimary, settings.colorTertiary, settings.colorTertiary);
     } 
     
     // Sun (date of month and month in year)

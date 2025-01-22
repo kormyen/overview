@@ -11,6 +11,8 @@ function DrawMoon(drawShared)
 		// context.rotate(Math.PI * 2 * phasePerc + this.degreesToRadians(-rotationOffset)); // rotate to face earth
 		context.rotate(this.degreesToRadians(-rotationOffset) + Math.PI/2); // rotate to face sun
 
+		this.drawFullMoon(context, radius, colorSecondary, true)
+
 		if (phasePerc <= 0.5) 
 		{
 			if (phasePerc <= 0.25) 
