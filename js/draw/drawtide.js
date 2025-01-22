@@ -187,7 +187,8 @@ function DrawTide(drawShared)
         // Start at midnight/zero-percent
         let zeroDistance = (1-points[points.length-1].perc) + points[0].perc;
         let zeroPerc = (1-points[points.length-1].perc) / zeroDistance;
-        let zeroRadius = this.lerp(points[points.length-1].radius, points[0].radius, zeroPerc);
+        let zeroPercEased = this.easeInOutSine(zeroPerc);
+        let zeroRadius = this.lerp(points[points.length-1].radius, points[0].radius, zeroPercEased);
         let zeroPoint = this.calcPositionOnCircle(zeroRadius, 0, centerX, centerY);
         this.drawDebugDot(context, zeroPoint.x, zeroPoint.y, 'green');
         
@@ -199,6 +200,14 @@ function DrawTide(drawShared)
         }
         tempPoints.push(zeroPoint);
         points = tempPoints;
+
+
+
+        // DO: Here need to do different easing for the first point!
+
+
+
+
         
         let distanceTotalBetweenPoints = 0;
         let currentPerc = points[0].perc;
