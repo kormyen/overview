@@ -89,15 +89,15 @@ function DrawTide(drawShared)
                 points = this.smoothPoints(context, points, cx, cy);
                 this.drawPointsAsPath(context, points, settings.colorTertiary);
 
-                this.drawDebugDot(context, next1.x, next1.y, 'yellow');
-                this.drawDebugDot(context, next2.x, next2.y, 'yellow');
-                this.drawDebugDot(context, next3.x, next3.y, 'yellow');
-                // this.drawDebugDot(context, next4.x, next4.y, 'red'); 
-                // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
-                this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'yellow');
+                // this.drawDebugDot(context, next1.x, next1.y, 'yellow');
+                // this.drawDebugDot(context, next2.x, next2.y, 'yellow');
+                // this.drawDebugDot(context, next3.x, next3.y, 'yellow');
+                // // this.drawDebugDot(context, next4.x, next4.y, 'red'); 
+                // // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
+                // this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'yellow');
                 
-                // this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
-                // this.drawDebugDot(context, curPos.x, curPos.y, 'red');
+                // // this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
+                // // this.drawDebugDot(context, curPos.x, curPos.y, 'red');
             }
             else
             {
@@ -192,16 +192,17 @@ function DrawTide(drawShared)
         let zeroPoint = this.calcPositionOnCircle(zeroRadius, 0, centerX, centerY);
         this.drawDebugDot(context, zeroPoint.x, zeroPoint.y, 'green');
         
-        let tempPoints = [];
-        tempPoints.push(zeroPoint);
+        let pointsSorted = [];
+        pointsSorted.push(zeroPoint);
         for (let i = 0; i < points.length; i++)
         {
-            tempPoints.push(points[i]);
+            pointsSorted.push(points[i]);
         }
-        tempPoints.push(zeroPoint);
-        points = tempPoints;
+        pointsSorted.push(zeroPoint);
+        points = pointsSorted; // points are now sorted so that they start at mightnight, and go around clockwise.
 
-
+        let distanceTotalBetweenPoints = 0;
+        let currentPerc = 0;
 
         // DO: Here need to do different easing for the first point!
 
@@ -209,8 +210,7 @@ function DrawTide(drawShared)
 
 
         
-        let distanceTotalBetweenPoints = 0;
-        let currentPerc = points[0].perc;
+        currentPerc = points[0].perc;
         for (let i = 0; i < points.length-2; i++)
         {
             distanceTotalBetweenPoints = points[i+1].perc - points[i].perc;
