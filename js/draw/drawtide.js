@@ -89,15 +89,15 @@ function DrawTide(drawShared)
                 points = this.smoothPoints(context, points, cx, cy);
                 this.drawPointsAsPath(context, points, settings.colorTertiary);
 
-                this.drawDebugDot(context, next1.x, next1.y, 'yellow');
-                this.drawDebugDot(context, next2.x, next2.y, 'yellow');
-                this.drawDebugDot(context, next3.x, next3.y, 'yellow');
-                // this.drawDebugDot(context, next4.x, next4.y, 'red'); 
-                // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
-                this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'yellow');
+                // this.drawDebugDot(context, next1.x, next1.y, 'yellow');
+                // this.drawDebugDot(context, next2.x, next2.y, 'yellow');
+                // this.drawDebugDot(context, next3.x, next3.y, 'yellow');
+                // // this.drawDebugDot(context, next4.x, next4.y, 'red'); 
+                // // this.drawDebugDot(context, next5.x, next5.y, 'LightBlue');
+                // this.drawDebugDot(context, prevPos1.x, prevPos1.y, 'yellow');
                 
-                // this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
-                // this.drawDebugDot(context, curPos.x, curPos.y, 'red');
+                // // this.drawDebugDot(context, futurePos.x, futurePos.y, 'blue');
+                // // this.drawDebugDot(context, curPos.x, curPos.y, 'red');
             }
             else
             {
@@ -170,14 +170,14 @@ function DrawTide(drawShared)
 
         context.fillStyle = color;
         context.fill();
-        context.stroke();
+        // context.stroke();
         context.closePath();
     }
 
     this.smoothPoints = function(context, points, centerX, centerY)
     {
         // Settings
-        let smoothPercDelta = 0.05;
+        let smoothPercDelta = 0.001;
 
         // State
         points.sort(function(a, b){return a.perc - b.perc});
@@ -189,7 +189,6 @@ function DrawTide(drawShared)
         let zeroPercEased = this.easeInOutSine(zeroPerc);
         let zeroRadius = this.lerp(points[points.length-1].radius, points[0].radius, zeroPercEased);
         let zeroPoint = this.calcPositionOnCircle(zeroRadius, 0, centerX, centerY);
-        this.drawDebugDot(context, zeroPoint.x, zeroPoint.y, 'green');
         
         let pointsSorted = [];
         pointsSorted.push(zeroPoint);
@@ -200,30 +199,23 @@ function DrawTide(drawShared)
         pointsSorted.push(zeroPoint);
         points = pointsSorted; // points are now sorted so that they start at mightnight, and go around clockwise.
 
-
-
-
-
-
-
         newPoints.push(points[0]);
         let distanceTotalBetweenPoints = 0;
         let currentPerc = 0;
 
-        // DO: Here need to do different easing for the first point!
+        // Draw extra smoothing points from for the first point (midnight)
         distanceTotalBetweenPoints = (1 - points[points.length-2].perc) + points[1].perc; // last point minus second point
-        // currentPerc = (1 - points[points.length-2].perc) / distanceTotalBetweenPoints;
-
         while (Math.abs(points[1].perc - currentPerc) > smoothPercDelta)
         {
             currentPerc += smoothPercDelta;
-        //     let newPointDistance = currentPerc - points[points.length-2].perc;
-        //     let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
-        //     let newPointDistancePercEased = this.easeInOutSine(newPointDistancePerc);
-        //     let newPointRadius = this.lerp(points[points.length-2].radius, points[1].radius, newPointDistancePercEased);
-        //     newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
+            let newPointDistance = currentPerc + (1 - points[points.length-2].perc);
+            let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
+            let newPointDistancePercEased = this.easeInOutSine(newPointDistancePerc);
+            let newPointRadius = this.lerp(points[points.length-2].radius, points[1].radius, newPointDistancePercEased);
+            newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
         }
 
+        // Draw extra smoothing points for all the middle points
         currentPerc = points[1].perc;
         for (let i = 1; i < points.length-2; i++) // Start at 2nd point, end before last point.
         {
@@ -240,7 +232,7 @@ function DrawTide(drawShared)
             }
         }
 
-        // Ease from tide data near 9 o'clock to zero/midnight.
+        // Draw extra smoothing points from the last tide data to midnight (starting from near 9 o'clock to midnight).
         newPoints.push(points[points.length-2]);
         distanceTotalBetweenPoints = (1 - points[points.length-2].perc) + points[1].perc;
         while (Math.abs(zeroPoint.perc - currentPerc) > smoothPercDelta)
