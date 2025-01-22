@@ -177,7 +177,7 @@ function DrawTide(drawShared)
     this.smoothPoints = function(context, points, centerX, centerY)
     {
         // Settings
-        let smoothPercDelta = 0.1;
+        let smoothPercDelta = 0.01;
 
         // State
         points.sort(function(a, b){return a.perc - b.perc});
@@ -209,10 +209,6 @@ function DrawTide(drawShared)
             while (Math.abs(points[i+1].perc - currentPerc) > smoothPercDelta)
             {
                 currentPerc += smoothPercDelta;
-                if (currentPerc >= 1)
-                {
-                    currentPerc -= 1;
-                }
                 let newPointDistance = currentPerc - points[i].perc;
                 let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
                 let newPointDistancePercEased = this.easeInOutSine(newPointDistancePerc);
@@ -222,6 +218,21 @@ function DrawTide(drawShared)
         }
 
         newPoints.push(points[points.length-2]);
+        distanceTotalBetweenPoints = 1 - points[points.length-2].perc;
+        while (Math.abs(zeroPoint.perc - currentPerc) > smoothPercDelta)
+        {
+            currentPerc += smoothPercDelta;
+            if (currentPerc >= 1)
+            {
+                // currentPerc -= 1;
+                break;
+            }
+            let newPointDistance = currentPerc - points[points.length-2].perc;
+            let newPointDistancePerc = newPointDistance / distanceTotalBetweenPoints;
+            let newPointDistancePercEased = this.easeInOutSine(newPointDistancePerc);
+            let newPointRadius = this.lerp(points[points.length-2].radius, zeroPoint.radius, newPointDistancePercEased);
+            newPoints.push(this.calcPositionOnCircle(newPointRadius, currentPerc, centerX, centerY));
+        }
 
         return newPoints;
     }
