@@ -217,6 +217,7 @@ function DrawTide(drawShared)
             }
         }
 
+        // Ease from tide data near 9 o'clock to zero/midnight.
         newPoints.push(points[points.length-2]);
         distanceTotalBetweenPoints = 1 - points[points.length-2].perc;
         while (Math.abs(zeroPoint.perc - currentPerc) > smoothPercDelta)
