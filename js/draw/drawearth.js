@@ -151,11 +151,6 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
                         sunsetHourPercStart -= percPerHour;
                     }
 
-                    // let debugPos3 = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 40, sunriseHourPercStart, cx, cy);
-                    // let debugPos4 = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 40, sunrise15MinsPerc, cx, cy);
-                    // this.drawDebugDot(context, debugPos3.x, debugPos3.y, "red");
-                    // this.drawDebugDot(context, debugPos4.x, debugPos4.y, "green");
-
                     if (currentGraduationPerc < sunriseHourPercStart 
                         && currentGraduationPerc > sunriseHourPercEnd)
                     {
@@ -203,51 +198,4 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             }
         }
     }
-
-    this.drawDebugDot = function(context, posX, posY, color)
-    {
-        context.beginPath();
-        context.arc(posX, posY, 10, 0, 2 * Math.PI, false);
-        context.fillStyle = color;
-        context.fill();
-        context.closePath();
-    }
-
-    this.calcDayPercToDegrees = function(percentage)
-    {
-        let result = percentage * 360;
-        result -= 90; // fix starting point.
-        return result;
-    }
-
-    this.degreesToRadians = function(degrees)
-    {
-        // Store the value of pi.
-        var pi = Math.PI;
-        // Multiply degrees by pi divided by 180 to convert to radians.
-        return degrees * (pi / 180);
-    }
-
-    this.calcPositionOnCircle = function(radius, perc, centerX, centerY)
-    {
-        let result = {};
-        let degrees = this.calcDayPercToDegrees(perc);
-
-        // To find the x and y coordinates on a circle with a known radius and angle use the formula:
-        // x = r(cos(degrees)), y = r(sin(degrees))
-        result.x = radius * Math.cos(this.degreesToRadians(degrees));
-        result.y = radius * Math.sin(this.degreesToRadians(degrees));
-
-        // Move position values to be from the center of the clock
-        result.x += centerX;
-        result.y += centerY;
-
-        // Extra data for smooth drawing
-        result.perc = perc;
-        result.degrees = degrees;
-        result.radius = radius;
-
-        return result;
-    }
-
 }
