@@ -12,7 +12,7 @@ Drag left and right to time travel.
 
 The goal of this project is to simply, visually and intuitively show cestial movements and how they affect our day to day experience on Earth.
 
-> My desire is to bring astronomical events and objects down into your personal lived in space - [James Turrell](https://www.youtube.com/watch?v=g0g6JFYRKxQ)
+> "My desire is to bring astronomical events and objects down into your personal, lived-in space." - [James Turrell](https://www.youtube.com/watch?v=g0g6JFYRKxQ)
 
 Every time you check your watch; you see a reminder that we are space pirate ghosts piloting bones on a living rock spinning around nuclear explosions flying through the universe at 200 km per second.
 
@@ -33,6 +33,7 @@ This is a 24h clock face design that more literally references the origins of ho
 
 - [daylight.website by Alex Burner](https://daylight.website/)
 - [Neuoire's Arvelie](https://wiki.xxiivv.com/site/time.html)
+- [James Turrell's Roden Crater](https://www.youtube.com/watch?v=g0g6JFYRKxQ)
 
 > The overview effect is a cognitive shift reported by some astronauts while viewing the Earth from space with... unexpected and even overwhelming emotion, and an increased sense of connection to other people and the Earth as a whole. The effect can cause changes in the observer’s self concept and value system, and can be transformative.
 > Source: [Wikipedia: Overview Effect](https://en.wikipedia.org/wiki/Overview_effect)

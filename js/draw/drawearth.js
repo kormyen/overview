@@ -123,24 +123,38 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
 
                 if (settings.graduationRiseSetDisplay.value)
                 {
+                    // Show the 15 minute graduations for the sunrise and sunset hours.
                     let percPerHour = 1/24;
                     let percPer15Mins = percPerHour/4;
 
+                    // Sunrise
                     let sunriseHourPercEnd = Math.floor((sunData.rise4Perc+sharedGraduationPerc)/percPerHour)*percPerHour;
                     let sunriseHourPercStart = sunriseHourPercEnd + percPerHour;
 
-                    // console.log(sunriseHourPercEnd + " v " + sunriseHourPercStart)
+                    // Fix so that when sunrise is on the hour, the graduations are shown for the sunlight hour not dark ones.
+                    let sunrise15MinsPerc = Math.floor((sunData.rise4Perc+sharedGraduationPerc)/percPer15Mins)*percPer15Mins+percPer15Mins;
+                    if (sunriseHourPercStart == sunrise15MinsPerc)
+                    {
+                        sunriseHourPercEnd += percPerHour;
+                        sunriseHourPercStart += percPerHour;
+                    }
 
-
+                    // Sunset
                     let sunsetHourPercEnd = Math.floor((sunData.set3Perc+sharedGraduationPerc)/percPerHour)*percPerHour+percPerHour;
                     let sunsetHourPercStart = sunsetHourPercEnd - percPerHour;
 
-                    let debugPos = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 30, sunData.set3Perc, cx, cy);
-                    let debugPos2 = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 40, sunsetHourPercEnd, cx, cy);
-                    this.drawDebugDot(context, debugPos.x, debugPos.y, "green");
-                    this.drawDebugDot(context, debugPos2.x, debugPos2.y, "red");
+                    // Fix so that when sunset is on the hour, the graduations are shown for the sunlight hour not dark ones.
+                    let sunset15MinsPerc = Math.floor((sunData.set3Perc+sharedGraduationPerc)/percPer15Mins)*percPer15Mins;
+                    if (sunsetHourPercStart == sunset15MinsPerc)
+                    {
+                        sunsetHourPercEnd -= percPerHour;
+                        sunsetHourPercStart -= percPerHour;
+                    }
 
-                    // console.log(sunsetHourPercStart + " v " + sunsetHourPercEnd)
+                    // let debugPos3 = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 40, sunriseHourPercStart, cx, cy);
+                    // let debugPos4 = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 40, sunrise15MinsPerc, cx, cy);
+                    // this.drawDebugDot(context, debugPos3.x, debugPos3.y, "red");
+                    // this.drawDebugDot(context, debugPos4.x, debugPos4.y, "green");
 
                     if (currentGraduationPerc < sunriseHourPercStart 
                         && currentGraduationPerc > sunriseHourPercEnd)
