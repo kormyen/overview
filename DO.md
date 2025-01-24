@@ -1,20 +1,22 @@
 # DO
 
-- show sunset/rise hour 15 min graduations
-- improve settings text interactions
-- save settings changes to localstorage
-- add settings reset button
-- handle no stormglass api key better
+- add scrolling to settings
+- add titles to settings categories
+- save settings changes to localstorage.
+- add settings reset button.
+- handle no stormglass api key better.
+- improve settings text interactions (select text input box).
 
 #### 3.0 &mdash; Improve 2025-0
 
-- Add: new design
-- Add: tide
-- Add: settings
+- Add: new design.
+- Add: tide.
+- Add: settings.
 
 #### 3.1 &mdash; Fixes
 
-- Fix: sunlight highlights broken when midnight top false, or offset true
+- Add: improved moon rendering.
+- Fix: sunlight highlights broken when midnight top false, or offset true.
 
 #### 4.0 &mdash; Improve
 
