@@ -12,7 +12,9 @@ Drag left and right to time travel.
 
 The goal of this project is to simply, visually and intuitively show cestial movements and how they affect our day to day experience on Earth.
 
-Every time you check your watch; you see a reminder that we are space pirates on a living rock flying through the universe at 200 km per second.
+> My desire is to bring astronomical events and objects down into your personal lived in space - [James Turrell](https://www.youtube.com/watch?v=g0g6JFYRKxQ)
+
+Every time you check your watch; you see a reminder that we are space pirate ghosts piloting bones on a living rock spinning around nuclear explosions flying through the universe at 200 km per second.
 
 This is a 24h clock face design that more literally references the origins of how we beings on planets measure time - the rotation of our home planet producing periods of light and dark in direct view and shade of our home star.
 
