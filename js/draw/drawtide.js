@@ -101,12 +101,12 @@ function DrawTide(drawShared)
             }
             else
             {
-                console.log("Can't draw. No past tide data.")
+                // console.log("Can't draw. No past tide data.")
             }
         }
         else
         {
-            console.log("Can't draw. No future tide data.")
+            // console.log("Can't draw. No future tide data.")
         }
     }
 

@@ -120,6 +120,40 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
                 {
                     display = true;
                 }
+
+                if (settings.graduationRiseSetDisplay.value)
+                {
+                    let percPerHour = 1/24;
+                    let percPer15Mins = percPerHour/4;
+
+                    let sunriseHourPercEnd = Math.floor((sunData.rise4Perc+sharedGraduationPerc)/percPerHour)*percPerHour;
+                    let sunriseHourPercStart = sunriseHourPercEnd + percPerHour;
+
+                    // console.log(sunriseHourPercEnd + " v " + sunriseHourPercStart)
+
+
+                    let sunsetHourPercEnd = Math.floor((sunData.set3Perc+sharedGraduationPerc)/percPerHour)*percPerHour+percPerHour;
+                    let sunsetHourPercStart = sunsetHourPercEnd - percPerHour;
+
+                    let debugPos = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 30, sunData.set3Perc, cx, cy);
+                    let debugPos2 = this.calcPositionOnCircle(EARTH_SIZE * this.size.height + 40, sunsetHourPercEnd, cx, cy);
+                    this.drawDebugDot(context, debugPos.x, debugPos.y, "green");
+                    this.drawDebugDot(context, debugPos2.x, debugPos2.y, "red");
+
+                    // console.log(sunsetHourPercStart + " v " + sunsetHourPercEnd)
+
+                    if (currentGraduationPerc < sunriseHourPercStart 
+                        && currentGraduationPerc > sunriseHourPercEnd)
+                    {
+                        display = true;
+                    }
+                    else if (currentGraduationPerc > sunsetHourPercStart 
+                        && currentGraduationPerc < sunsetHourPercEnd)
+                    {
+                        display = true;
+                    }
+                }
+
             }
 
             if (display)
@@ -135,15 +169,6 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
                     && currentGraduationPerc > (sunData.rise4Perc+sharedGraduationPerc))
                 {
                     valueColor = settings.colorPrimary;
-                    // valueColor = settings.colorSecondary;
-                    // if (graduationTypeSecondary)
-                    // {
-                    //     valueColor = settings.colorPrimary;
-                    // }
-                    // else if (graduationTypePrimary)
-                    // {
-                    //     valueColor = settings.colorPrimary;
-                    // }
                 }
 
                 // LENGTH
@@ -164,4 +189,51 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             }
         }
     }
+
+    this.drawDebugDot = function(context, posX, posY, color)
+    {
+        context.beginPath();
+        context.arc(posX, posY, 10, 0, 2 * Math.PI, false);
+        context.fillStyle = color;
+        context.fill();
+        context.closePath();
+    }
+
+    this.calcDayPercToDegrees = function(percentage)
+    {
+        let result = percentage * 360;
+        result -= 90; // fix starting point.
+        return result;
+    }
+
+    this.degreesToRadians = function(degrees)
+    {
+        // Store the value of pi.
+        var pi = Math.PI;
+        // Multiply degrees by pi divided by 180 to convert to radians.
+        return degrees * (pi / 180);
+    }
+
+    this.calcPositionOnCircle = function(radius, perc, centerX, centerY)
+    {
+        let result = {};
+        let degrees = this.calcDayPercToDegrees(perc);
+
+        // To find the x and y coordinates on a circle with a known radius and angle use the formula:
+        // x = r(cos(degrees)), y = r(sin(degrees))
+        result.x = radius * Math.cos(this.degreesToRadians(degrees));
+        result.y = radius * Math.sin(this.degreesToRadians(degrees));
+
+        // Move position values to be from the center of the clock
+        result.x += centerX;
+        result.y += centerY;
+
+        // Extra data for smooth drawing
+        result.perc = perc;
+        result.degrees = degrees;
+        result.radius = radius;
+
+        return result;
+    }
+
 }

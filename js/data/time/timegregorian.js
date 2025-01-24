@@ -31,7 +31,7 @@ function TimeGregorian(myDate)
     return ((year % 4 === 0 && year % 100 > 0) || year %400 == 0) ? 366 : 365;
   }
 
-  this.calccurrentYearsDaysPerMonthInGregorianYear = function(givenYear)
+  this.calcCurrentYearsDaysPerMonthInGregorianYear = function(givenYear)
   {
     let result = [];
     for (let i = 1; i <= 12; i++)
@@ -91,7 +91,7 @@ function TimeGregorian(myDate)
     // Current year stats
     this.currentYear = this.currentDate.getFullYear();
     this.currentYearsTotalDays = this.calcDaysInGregorianYear(this.currentDate.getFullYear());
-    this.currentYearsDaysPerMonth = this.calccurrentYearsDaysPerMonthInGregorianYear(this.currentDate.getFullYear());
+    this.currentYearsDaysPerMonth = this.calcCurrentYearsDaysPerMonthInGregorianYear(this.currentDate.getFullYear());
   }
 
   this.updateValues();

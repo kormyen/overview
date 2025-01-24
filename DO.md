@@ -1,6 +1,10 @@
 # DO
 
+- show sunset/rise hour 15 min graduations
 - improve settings text interactions
+- save settings changes to localstorage
+- add settings reset button
+- handle no stormglass api key better
 
 #### 3.0 &mdash; Improve 2025-0
 

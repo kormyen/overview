@@ -43,13 +43,16 @@ function Settings()
     this.earthOutline.setup(this.container, "Earth Outline", "cb-earthOutline", false);
 
     this.graduationMinimal = new SettingsCheckbox();
-    this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", false);
+    this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", true);
 
     this.graduationHighlight = new SettingsCheckbox();
     this.graduationHighlight.setup(this.container, "Graduation Highlight", "cb-graduationHighlight", false);
 
     this.graduationSunlight = new SettingsCheckbox();
     this.graduationSunlight.setup(this.container, "Graduation Sunlight", "cb-graduationSunlight", true);
+
+    this.graduationRiseSetDisplay = new SettingsCheckbox();
+    this.graduationRiseSetDisplay.setup(this.container, "Graduation Rise Set Display", "cb-graduationRiseSetDisplay", true);
 
     // YEAR
     this.year = new SettingsCheckbox();
@@ -126,6 +129,7 @@ function Settings()
       this.graduationMinimal.show();
       this.graduationHighlight.show();
       this.graduationSunlight.show();
+      this.graduationRiseSetDisplay.show();
     }
     else
     {
@@ -136,6 +140,7 @@ function Settings()
       this.graduationMinimal.hide();
       this.graduationHighlight.hide();
       this.graduationSunlight.hide();
+      this.graduationRiseSetDisplay.hide();
     }
 
     if (this.earthRotate.value)
