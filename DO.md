@@ -16,6 +16,8 @@
 #### 3.1 &mdash; Fixes
 
 - Add: improved moon rendering.
+- Add: improved tide rendering with smooth animation.
+- Add: improved tide rendering with estimated data.
 - Fix: sunlight highlights broken when midnight top false, or offset true.
 
 #### 4.0 &mdash; Improve
