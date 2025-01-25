@@ -24,7 +24,28 @@ function Settings()
   {
     this.container = parent;
 
+    // GEOLOCATION
+    let titleGeolocation = new SettingsTitle();
+    titleGeolocation.setup(this.container, "Geolocation");
+    let labelGeolocation1 = new SettingsLabel();
+    labelGeolocation1.setup(this.container, "Used for sunlight and tide calculations.");
+    let labelGeolocation2 = new SettingsLabel();
+    labelGeolocation2.setup(this.container, "Manually enter Latitude and Longitude or enable Browser Geolocation.");
+
+    let locationLatitude = -36.848461;
+    let locationLongitude = 174.763336;
+    this.latitude = new SettingsText();
+    this.latitude.setup(this.container, "Latitude", locationLatitude);
+    this.longitude = new SettingsText();
+    this.longitude.setup(this.container, "Longitude", locationLongitude);
+
+    this.geolocation = new SettingsCheckbox();
+    this.geolocation.setup(this.container, "Browser Geolocation", "cb-geolocation", false);
+
     // TIME OF DAY
+    let titleTimeOfDay = new SettingsTitle();
+    titleTimeOfDay.setup(this.container, "Time of day");
+
     this.timeOfDay = new SettingsCheckbox();
     this.timeOfDay.setup(this.container, "Show Time of day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
@@ -55,10 +76,16 @@ function Settings()
     this.graduationRiseSetDisplay.setup(this.container, "Graduation Rise Set Display", "cb-graduationRiseSetDisplay", true);
 
     // YEAR
+    let titleYear = new SettingsTitle();
+    titleYear.setup(this.container, "Year");
+
     this.year = new SettingsCheckbox();
     this.year.setup(this.container, "Show Year", "cb-year", false);
 
     // MOON
+    let titleMoon = new SettingsTitle();
+    titleMoon.setup(this.container, "Moon");
+
     this.moon = new SettingsCheckbox();
     this.moon.setup(this.container, "Show Moon", "cb-moon", true);
 
@@ -73,6 +100,12 @@ function Settings()
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
 
     // TIDE
+    let titleTide = new SettingsTitle();
+    titleTide.setup(this.container, "Tide");
+
+    let labelTide1 = new SettingsLabel();
+    labelTide1.setup(this.container, "Uses set Latitude and Longitude along with Stormglass API requiring an API key.");
+
     let stormglassKeyValue = localStorage.getItem(globals.STORAGE_KEY_STORMGLASS);
     if (stormglassKeyValue == null)
     {

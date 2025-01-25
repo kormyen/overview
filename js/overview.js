@@ -14,7 +14,7 @@ function Overview()
   this.size = null;
   this.sizeReference = 1024;
   this.settings = { targetFps: 60 }
-  this.location = { latitude: -36.85, longditude: 174.76 } // Auckland, New Zealand.
+  this.geolocation = { latitude: -36.85, longitude: 174.76 } // Auckland, New Zealand.
 
   const LINE_WIDTH = 2;
   const LINE_LENGTH_TINY = 0.005;
@@ -54,8 +54,8 @@ function Overview()
   this.setLocation = function(lat, long)
   {
     this.geolocationEnabled = true;
-    this.location.latitude = lat;
-    this.location.longditude = long;
+    this.geolocation.latitude = lat;
+    this.geolocation.longitude = long;
   }
 
   this.display = function()
@@ -145,11 +145,11 @@ function Overview()
     {
       this.timeData.update();
       this.moonData.updateGregorian(this.timeData.currentDate);
-      this.sunData.updateGregorian(this.timeData.currentDate, this.location.latitude, this.location.longditude);
+      this.sunData.updateGregorian(this.timeData.currentDate, this.geolocation.latitude, this.geolocation.longitude);
 
       // if (this.geolocationEnabled)
       // {
-        this.tideData.updateTides(this.location.latitude, this.location.longditude);
+        this.tideData.updateTides(this.geolocation.latitude, this.geolocation.longitude);
       // }
 
       this.setCanvasSize();

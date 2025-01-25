@@ -31,13 +31,15 @@
   flex-direction: column;
   position: absolute;
   width: 400px;
-  left: 50px;
-  padding-top: 50px;
+  right: 0px;
+  padding: 50px var(--size-columnPaddingNormal) 50px 0;
   z-index: 1;
   gap: var(--size-columnPaddingNormal);
+  overflow-y: scroll;
+  height: calc(100% - 100px);
 }
 .overview-button {
-  height: 60px;
+  flex: 0 0 60px;
   background-color: var(--color-tertiary);
   border: none;
   color: var(--color-highlight);
@@ -145,7 +147,7 @@ input:checked + .overview-slider:before {
   width: 170px;
   font-size: 16px;
   text-align: right;
-  color: var(--color-secondary);
+  color: var(--color-primary);
   border: 0px;
   box-sizing: border-box;
   border-radius: 34px;

@@ -13,9 +13,10 @@
 - Add: tide.
 - Add: settings.
 
-#### 3.1 &mdash; Fixes
+#### 3.1 &mdash; Improve
 
 - Add: improved moon rendering.
+- Add: new graduation colors
 - Add: improved tide rendering with smooth animation.
 - Add: improved tide rendering with estimated data.
 - Fix: sunlight highlights broken when midnight top false, or offset true.
