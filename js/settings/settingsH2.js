@@ -1,4 +1,4 @@
-function SettingsLabel()
+function SettingsH2()
 {
     this.setup = function(parent, value)
     {
@@ -9,8 +9,8 @@ function SettingsLabel()
     {
         let textContent = document.createTextNode(value);
 
-        let title = document.createElement("div");
-        title.className = "overview-setting-label";
+        let title = document.createElement("h2");
+        title.className = "overview-setting-h2";
 
         title.appendChild(textContent);
         parent.appendChild(title);

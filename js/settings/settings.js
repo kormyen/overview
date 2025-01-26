@@ -24,13 +24,14 @@ function Settings()
   {
     this.container = parent;
 
+    let titleSettings = new SettingsH1();
+    titleSettings.setup(this.container, "Settings");
+
     // GEOLOCATION
-    let titleGeolocation = new SettingsTitle();
+    let titleGeolocation = new SettingsH2();
     titleGeolocation.setup(this.container, "Geolocation");
     let labelGeolocation1 = new SettingsLabel();
     labelGeolocation1.setup(this.container, "Used for sunlight and tide calculations.");
-    let labelGeolocation2 = new SettingsLabel();
-    labelGeolocation2.setup(this.container, "Manually enter Latitude and Longitude or enable Browser Geolocation.");
 
     let locationLatitude = -36.848461;
     let locationLongitude = 174.763336;
@@ -40,22 +41,24 @@ function Settings()
     this.longitude.setup(this.container, "Longitude", locationLongitude);
 
     this.geolocation = new SettingsCheckbox();
-    this.geolocation.setup(this.container, "Browser Geolocation", "cb-geolocation", false);
+    this.geolocation.setup(this.container, "Get Browser Geolocation", "cb-geolocation", false);
 
     // TIME OF DAY
-    let titleTimeOfDay = new SettingsTitle();
-    titleTimeOfDay.setup(this.container, "Time of day");
+    let titleTimeOfDay = new SettingsH2();
+    titleTimeOfDay.setup(this.container, "Day");
 
     this.timeOfDay = new SettingsCheckbox();
-    this.timeOfDay.setup(this.container, "Show Time of day", "cb-timeOfDay", true);
+    this.timeOfDay.setup(this.container, "Show day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
 
     this.earthRotate = new SettingsCheckbox();
     this.earthRotate.setup(this.container, "Rotation", "cb-earthRotate", false);
     this.earthRotate.button.addEventListener("settingChecked", this, true);
+    this.earthRotate.hide();
 
     this.midnightTop = new SettingsCheckbox();
     this.midnightTop.setup(this.container, "Midnight Top", "cb-midnightTop", true);
+    this.midnightTop.hide();
 
     this.sunBands = new SettingsCheckbox();
     this.sunBands.setup(this.container, "Sun Bands", "cb-sunBands", false);
@@ -76,14 +79,14 @@ function Settings()
     this.graduationRiseSetDisplay.setup(this.container, "Graduation Rise Set Display", "cb-graduationRiseSetDisplay", true);
 
     // YEAR
-    let titleYear = new SettingsTitle();
+    let titleYear = new SettingsH2();
     titleYear.setup(this.container, "Year");
 
     this.year = new SettingsCheckbox();
     this.year.setup(this.container, "Show Year", "cb-year", false);
 
     // MOON
-    let titleMoon = new SettingsTitle();
+    let titleMoon = new SettingsH2();
     titleMoon.setup(this.container, "Moon");
 
     this.moon = new SettingsCheckbox();
@@ -100,11 +103,11 @@ function Settings()
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
 
     // TIDE
-    let titleTide = new SettingsTitle();
+    let titleTide = new SettingsH2();
     titleTide.setup(this.container, "Tide");
 
     let labelTide1 = new SettingsLabel();
-    labelTide1.setup(this.container, "Uses set Latitude and Longitude along with Stormglass API requiring an API key.");
+    labelTide1.setup(this.container, "Requires Stormglass API key.");
 
     let stormglassKeyValue = localStorage.getItem(globals.STORAGE_KEY_STORMGLASS);
     if (stormglassKeyValue == null)
@@ -155,8 +158,8 @@ function Settings()
     
     if (this.timeOfDay.value)
     {
-      this.earthRotate.show();
-      this.midnightTop.show();
+      // this.earthRotate.show();
+      // this.midnightTop.show();
       this.sunBands.show();
       this.earthOutline.show();
       this.graduationMinimal.show();
@@ -166,8 +169,8 @@ function Settings()
     }
     else
     {
-      this.earthRotate.hide();
-      this.midnightTop.hide();
+      // this.earthRotate.hide();
+      // this.midnightTop.hide();
       this.sunBands.hide();
       this.earthOutline.hide();
       this.graduationMinimal.hide();
@@ -176,15 +179,15 @@ function Settings()
       this.graduationRiseSetDisplay.hide();
     }
 
-    if (this.earthRotate.value)
-    {
-      this.midnightTop.setValue(false);
-      this.midnightTop.hide();
-    }
-    else if (this.timeOfDay.value)
-    {
-      this.midnightTop.show();
-    }
+    // if (this.earthRotate.value)
+    // {
+    //   this.midnightTop.setValue(false);
+    //   this.midnightTop.hide();
+    // }
+    // else if (this.timeOfDay.value)
+    // {
+    //   this.midnightTop.show();
+    // }
 
     if (this.stormglassKey.input.value != globals.DEFAULT_API_KEY)
     {
