@@ -14,7 +14,7 @@ function Settings()
 
   this.colorHighlight = '#FFFFFF';
   this.colorPrimary = '#D9D9D9'; // #EEE
-  this.colorSecondary = '#5D6163'; // #999 #666
+  this.colorSecondary = '#7e8588' //'#5D6163'; // #999 #666
   this.colorTertiary = '#3E4446'; // #333
   this.colorBackground = '#3B4143'; // #1E1E1E
   this.colorDark = '#2B3437';
@@ -70,7 +70,7 @@ function Settings()
     this.graduationMinimal.setup(this.container, "Graduation Minimal", "cb-graduationMinimal", true);
 
     this.graduationHighlight = new SettingsCheckbox();
-    this.graduationHighlight.setup(this.container, "Graduation Highlight", "cb-graduationHighlight", false);
+    this.graduationHighlight.setup(this.container, "Graduation Highlight", "cb-graduationHighlight", true);
 
     this.graduationSunlight = new SettingsCheckbox();
     this.graduationSunlight.setup(this.container, "Graduation Sunlight", "cb-graduationSunlight", true);

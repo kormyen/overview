@@ -32,7 +32,7 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         {
             this.drawSunlight.display(context, cx, cy, degreesEarthOffsetShared, sunData, colorSecondary, colorBackground, EARTH_SIZE * this.size.height);
         }
-        this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
+        // this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, sunData);
 
         if (settings.earthOutline.value)
@@ -169,13 +169,13 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
             {
                 // COLOR
                 let valueColor = settings.colorDark;
-                if (settings.graduationHighlight.value && i == currentGraduationHighlighted)
-                {
-                    valueColor = settings.colorPrimary;
-                }
                 if (settings.graduationSunlight.value 
                     && currentGraduationPerc < (sunData.set3Perc+sharedGraduationPerc) 
                     && currentGraduationPerc > (sunData.rise4Perc+sharedGraduationPerc))
+                {
+                    valueColor = settings.colorSecondary;
+                }
+                if (settings.graduationHighlight.value && i == currentGraduationHighlighted)
                 {
                     valueColor = settings.colorPrimary;
                 }
