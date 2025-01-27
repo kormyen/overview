@@ -1,5 +1,6 @@
 # DO
 
+- make new geolocation toggle work with the actual geolocation setting.
 - improve settings text interactions (select text input box).
 - handle no stormglass api key.
 - handle invalid stormglass api key.
