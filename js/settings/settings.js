@@ -107,7 +107,7 @@ function Settings()
     titleTide.setup(this.container, "Tide");
 
     let labelTide1 = new SettingsLabel();
-    labelTide1.setup(this.container, "Requires Stormglass API key.");
+    labelTide1.setupWithLink(this.container, "Requires ", "Stormglass", "https://stormglass.io/", " API key.")
 
     let stormglassKeyValue = localStorage.getItem(globals.STORAGE_KEY_STORMGLASS);
     if (stormglassKeyValue == null)

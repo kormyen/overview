@@ -206,4 +206,10 @@ input:checked + .overview-slider:before {
   flex-direction: row;
   gap: var(--size-columnPaddingNormal);
   align-items: end;
+  gap: 0;
+  white-space-collapse:preserve;
+}
+
+.overview-setting-label-link {
+  color: var(--color-secondary);
 }
