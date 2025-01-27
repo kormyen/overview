@@ -51,6 +51,9 @@ function Settings()
     this.timeOfDay.setup(this.container, "Show day", "cb-timeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
 
+    this.timeHand = new SettingsCheckbox();
+    this.timeHand.setup(this.container, "Time Hand", "cb-timeHand", false);
+
     this.earthRotate = new SettingsCheckbox();
     this.earthRotate.setup(this.container, "Rotation", "cb-earthRotate", false);
     this.earthRotate.button.addEventListener("settingChecked", this, true);

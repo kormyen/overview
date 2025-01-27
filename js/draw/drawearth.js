@@ -32,7 +32,10 @@ function DrawEarth(drawShared, drawSunlight, radius, lineWidth, lineLengthLarge,
         {
             this.drawSunlight.display(context, cx, cy, degreesEarthOffsetShared, sunData, colorSecondary, colorBackground, EARTH_SIZE * this.size.height);
         }
-        // this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
+        if (settings.timeHand.value)
+        {
+            this.drawEarthTimeHand(context, cx, cy, timeData, degreesEarthOffsetShared);
+        }
         this.drawEarthGraduations(context, cx, cy, timeData, degreesEarthOffsetShared, sunData);
 
         if (settings.earthOutline.value)
