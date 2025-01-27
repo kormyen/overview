@@ -128,7 +128,7 @@ function Settings()
     this.hideAll();
   }
   
-  this.setupState = function(state)
+  this.setupState = function()
   {
     window.addEventListener("modeChange0", this, true);
     window.addEventListener("modeChange1", this, true);

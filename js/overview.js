@@ -89,6 +89,10 @@ function Overview()
     // Shared variables
     let context = this.getContext();
     let cx = this.size.width / 2; // center position horizontal
+    if (state.mode == "settings")
+    {
+      cx = (this.size.width - 400) / 2;
+    }
     let cy = this.size.height / 2; // center position vertical
     let degreesEarthRotated = this.calcEarthDegreeOffsetShared();
 
@@ -166,17 +170,18 @@ function Overview()
   {
     let curSize = 0;
     // Set responsive (fit to screen) 1:1 resizing.
-    if (window.innerHeight >= window.innerWidth)
-    {
-      curSize = window.innerWidth;
-      this.size = { width:curSize, height:curSize, ratio:window.devicePixelRatio };
-    } 
-    else 
-    {
-      curSize = window.innerHeight;
-      this.size = { width:curSize, height:curSize, ratio:window.devicePixelRatio };
-    }
+    // if (window.innerHeight >= window.innerWidth)
+    // {
+    //   curSize = window.innerWidth;
+    //   this.size = { width:curSize, height:curSize, ratio:window.devicePixelRatio };
+    // } 
+    // else 
+    // {
+    //   curSize = window.innerHeight;
+    //   this.size = { width:curSize, height:curSize, ratio:window.devicePixelRatio };
+    // }
 
+    this.size = { width:window.innerWidth, height:window.innerHeight, ratio:window.devicePixelRatio };
 
     // Set high DPI canvas, if high devicePixelRatio.
     this.canvas.width = this.size.width * this.size.ratio;

@@ -40,6 +40,8 @@
     var settings = new Settings();
     settings.setup(document.getElementById("settingsContainer"));
 
+    var state = new State();
+
     var overview = new Overview();
     overview.setData(new TimeGregorian(new Date()), new OverviewMoon(), new SunCalcWrapper(), new StormglassWrapper());
     overview.display();
@@ -47,10 +49,8 @@
 
     var input = new Input(overview.canvas);
 
-    var state = new State();
     state.setup(input);
-    
-    settings.setupState(state);
+    settings.setupState();
 
     overview.canvas.addEventListener("changeValue", function (e)
     {
