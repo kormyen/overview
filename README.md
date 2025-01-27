@@ -22,7 +22,6 @@ This is a 24h clock face design that more literally references the origins of ho
 
 - [Do](DO.md)
 - [Ideas](IDEAS.md)
-- [Explainer](EXPLAINER.md)
 
 ## Reference
 

@@ -1,12 +1,12 @@
 # DO
 
 - improve settings text interactions (select text input box).
-- save settings changes to localstorage.
-- add settings reset button.
 - handle no stormglass api key.
 - handle invalid stormglass api key.
 - handle invalid lat/long.
 - projected tide data.
+- add settings reset button.
+- save settings changes to localstorage.
 
 #### 3.0 &mdash; Tide 2025-0
 
