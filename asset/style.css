@@ -177,7 +177,6 @@ input:checked + .overview-slider:before {
   flex-direction: row;
   gap: var(--size-columnPaddingNormal);
   align-items: end;
-  font-weight: 400;
   margin-block-start: 0;
   margin-block-end: 0;
 }
@@ -192,7 +191,6 @@ input:checked + .overview-slider:before {
   gap: var(--size-columnPaddingNormal);
   align-items: end;
   text-transform: uppercase;
-  font-weight: 400;
   margin-block-start: 0;
   margin-block-end: 0;
 }
