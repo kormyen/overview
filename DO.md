@@ -7,7 +7,6 @@
 - handle invalid lat/long.
 - projected tide data.
 - add settings reset button.
-- save settings changes to localstorage.
 
 #### 3.0 &mdash; Tide 2025-0
 

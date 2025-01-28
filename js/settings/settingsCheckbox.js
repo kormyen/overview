@@ -6,12 +6,21 @@ function SettingsCheckbox()
     this.button = null;
     const eventChecked = new CustomEvent("settingChecked");
 
-    this.setup = function(parent, labelText, id, value)
+    this.setup = function(parent, labelText, id, defaultValue)
     {
         this.id = id;
-        this.value = value;
 
-        this.buildElement(parent, labelText, id, value)
+        let storedValue = localStorage.getItem(id);
+        if (storedValue != null)
+        {
+            this.value = (storedValue === 'true');
+        }
+        else
+        {
+            this.value = defaultValue;
+        }
+
+        this.buildElement(parent, labelText, id, this.value)
         this.checkbox.addEventListener("change", this, true);
         this.button.addEventListener("click", this, false);
     }
@@ -53,12 +62,18 @@ function SettingsCheckbox()
 
     this.hide = function()
     {
+        // localStorage.setItem(globals.STORAGE_KEY_STORMGLASS, this.stormglassKey.input.value);
         this.button.style.display = "none";
     }
 
     this.show = function()
     {
         this.button.style.display = "flex";
+    }
+
+    this.save = function()
+    {
+        localStorage.setItem(this.id, this.value);
     }
 
     SettingsCheckbox.prototype.handleEvent = function(event) 

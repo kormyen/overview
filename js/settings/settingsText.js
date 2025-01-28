@@ -1,13 +1,26 @@
 function SettingsText()
 {
+    this.id = null;
+    this.value = null;
     this.input = null;
     this.button = null;
     const eventUpdated = new CustomEvent("settingUpdated");
 
-    this.setup = function(parent, labelText, value)
+    this.setup = function(parent, labelText, id, defaultValue)
     {
-        this.buildElement(parent, labelText, value)
-        // this.checkbox.addEventListener("change", this, true);
+        this.id = id;
+
+        let storedValue = localStorage.getItem(id);
+        if (storedValue != null)
+        {
+            this.value = storedValue;
+        }
+        else
+        {
+            this.value = defaultValue;
+        }
+
+        this.buildElement(parent, labelText, this.value)
         this.button.addEventListener("click", this, false);
     }
 
@@ -39,6 +52,12 @@ function SettingsText()
     this.show = function()
     {
         this.button.style.display = "flex";
+    }
+
+    this.save = function()
+    {
+        this.value = this.input.value;
+        localStorage.setItem(this.id, this.value);
     }
 
     SettingsText.prototype.handleEvent = function(event) 

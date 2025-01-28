@@ -1,7 +1,6 @@
 function Globals()
 {
   this.DEFAULT_API_KEY = "Your API key here";
-  this.STORAGE_KEY_STORMGLASS = "keyStormglass";
   this.STORAGE_DATA_TIDE = "dataTide";
   this.STORAGE_DATA_STORMGLASS_LAST = "dataStormglassLastest";
   this.STORAGE_DATA_STORMGLASS_GOOD = "dataStormglassLastKnownGood";
