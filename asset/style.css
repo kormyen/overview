@@ -12,7 +12,6 @@
 
 * { 
   background: var(--color-background);
-  height: 100%;
   overflow: hidden;
   outline: none;
   font-family: Arial, Helvetica, sans-serif;
@@ -172,7 +171,7 @@ input:checked + .overview-slider:before {
   flex: 0 0 40px;
   color: var(--color-secondary);
   padding: 0px 32px;
-  font-size: 24px;
+  font-size: 22px;
   display: flex;
   flex-direction: row;
   gap: var(--size-columnPaddingNormal);
@@ -185,7 +184,7 @@ input:checked + .overview-slider:before {
   flex: 0 0 40px;
   color: var(--color-secondary);
   padding: 0px 32px;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   flex-direction: row;
   gap: var(--size-columnPaddingNormal);
@@ -199,7 +198,7 @@ input:checked + .overview-slider:before {
   flex: 0 0 20px;
   color: var(--color-secondary);
   padding: 0px 32px;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   flex-direction: row;
   gap: var(--size-columnPaddingNormal);
