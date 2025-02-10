@@ -27,18 +27,21 @@ function Input(canvas)
 
   this.update = function()
   {
-    if (this.mouse.down)
+    if (state.mode == "tellurion")
     {
-      this.sendEvent();
-    }
-    else if (this.sendValue != 0 && this.sendValue)
-    {
-      this.sendValue *= 0.925;
-      if (Math.abs(this.sendValue) <= 0.01)
+      if (this.mouse.down)
       {
-        this.sendValue = 0;
+        this.sendEvent();
       }
-      this.sendEvent();
+      else if (this.sendValue != 0 && this.sendValue)
+      {
+        this.sendValue *= 0.925;
+        if (Math.abs(this.sendValue) <= 0.01)
+        {
+          this.sendValue = 0;
+        }
+        this.sendEvent();
+      }
     }
   }
 
@@ -56,41 +59,47 @@ function Input(canvas)
 
   this.mouseMove = function(event)
   {
-    event.preventDefault();
-    this.mouse.x = event.pageX;
-    this.mouse.y = event.pageY;
-    if (event.touches && event.touches.length > 0)
+    if (state.mode == "tellurion")
     {
-      this.mouse.x = event.touches[0].pageX;
-      this.mouse.y = event.touches[0].pageY;
-    }
+      event.preventDefault();
+      this.mouse.x = event.pageX;
+      this.mouse.y = event.pageY;
+      if (event.touches && event.touches.length > 0)
+      {
+        this.mouse.x = event.touches[0].pageX;
+        this.mouse.y = event.touches[0].pageY;
+      }
 
-    this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
-    if (this.mouse.down)
-    {
-      this.sendValue = this.mouseChangeValue;
+      this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
+      if (this.mouse.down)
+      {
+        this.sendValue = this.mouseChangeValue;
+      }
     }
   }
 
   this.mouseDown = function(event)
   {
-    event.preventDefault();
-
-    // TOUCH
-    if (event.touches && event.touches.length > 0)
+    if (state.mode == "tellurion")
     {
-      this.setMouseDownValues(event.touches[0].pageX, event.touches[0].pageY);
-    }
+      event.preventDefault();
 
-    // MOUSE
-    switch (event.which) {
-      case 1:
-          // Left Mouse button pressed.
-          this.setMouseDownValues(event.pageX, event.pageY);
-          break;
-      default:
-          // Other
-          break;
+      // TOUCH
+      if (event.touches && event.touches.length > 0)
+      {
+        this.setMouseDownValues(event.touches[0].pageX, event.touches[0].pageY);
+      }
+
+      // MOUSE
+      switch (event.which) {
+        case 1:
+            // Left Mouse button pressed.
+            this.setMouseDownValues(event.pageX, event.pageY);
+            break;
+        default:
+            // Other
+            break;
+      }
     }
   }
 
@@ -107,7 +116,10 @@ function Input(canvas)
   
   this.mouseUp = function(event)
   {
-    event.preventDefault();
+    if (state.mode == "tellurion")
+    {
+      event.preventDefault();
+    }
     this.mouse.down = false;
   }
 
