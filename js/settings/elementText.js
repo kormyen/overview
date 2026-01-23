@@ -60,6 +60,12 @@ function ElementText()
         localStorage.setItem(this.id, this.value);
     }
 
+    this.setValue = function(value)
+    {
+        this.value = value;
+        this.input.value = value;
+    }
+
     ElementText.prototype.handleEvent = function(event) 
     {
         if (event.type === "click" && event.target.className == "overview-button")

@@ -2,6 +2,8 @@ function Globals()
 {
   this.MODE_TELLURION = "modeTellurion";
   this.MODE_SETTINGS = "modeSettings";
+  this.DEFAULT_LATITUDE = -36.85;  // Auckland, New Zealand.
+  this.DEFAULT_LONGITUDE = 174.76; // Auckland, New Zealand.
   this.DEFAULT_API_KEY = "Your API key here";
   this.STORAGE_DATA_TIDE = "dataTide";
   this.STORAGE_DATA_STORMGLASS_LAST = "dataStormglassLastest";

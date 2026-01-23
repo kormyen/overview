@@ -36,16 +36,22 @@ function Settings()
     labelGeolocation1.setup(this.container, "Used for sunlight and tide calculations.");
 
     this.latitude = new ElementText();
-    this.latitude.setup(this.container, "Latitude", "settingLatitude", -36.848461);
+    this.latitude.setup(this.container, "Latitude", "settingLatitude", globals.DEFAULT_LATITUDE);
     this.settings.push(this.latitude);
     this.longitude = new ElementText();
-    this.longitude.setup(this.container, "Longitude", "settingLongitude", 174.763336);
+    this.longitude.setup(this.container, "Longitude", "settingLongitude", globals.DEFAULT_LONGITUDE);
     this.settings.push(this.longitude);
 
     this.geolocation = new ElementCheckbox();
     this.geolocation.setup(this.container, "Get Browser Geolocation", "settingGeolocation", false, "getBrowserGeolocation");
     this.geolocation.button.addEventListener("getBrowserGeolocation", this, true);
     this.settings.push(this.geolocation);
+
+    // Auto-request browser geolocation if previously enabled
+    if (this.geolocation.value)
+    {
+      this.requestBrowserGeolocation();
+    }
 
     // TIME OF DAY
     let titleTimeOfDay = new ElementH2();
@@ -191,7 +197,10 @@ function Settings()
     {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          overview.setLocation(position.coords.latitude, position.coords.longitude);
+          this.latitude.setValue(position.coords.latitude);
+          this.latitude.save();
+          this.longitude.setValue(position.coords.longitude);
+          this.longitude.save();
           console.log("Geolocation enabled: " + position.coords.latitude + ", " + position.coords.longitude);
         },
         (error) => {

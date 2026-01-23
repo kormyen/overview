@@ -1,8 +1,8 @@
 # DO
 
-- make new geolocation toggle work with the actual geolocation setting.
 - handle invalid lat/long.
 - add settings reset button.
+- move target fps to actual settings
 
 #### 3.0 &mdash; Tide 2026-0
 

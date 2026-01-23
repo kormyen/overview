@@ -6,7 +6,6 @@ function Overview()
   this.moonData = null;
   this.sunData = null;
   this.tideData = null;
-  this.geolocationEnabled = false;
 
   this.canvas = document.createElement("canvas"); 
   this.canvas.id = "overview";
@@ -14,7 +13,6 @@ function Overview()
   this.size = null;
   this.sizeReference = 1024;
   this.settings = { targetFps: 60 }
-  this.geolocation = { latitude: -36.85, longitude: 174.76 } // Auckland, New Zealand.
 
   const LINE_WIDTH = 2;
   const LINE_LENGTH_TINY = 0.005;
@@ -49,13 +47,6 @@ function Overview()
     this.tideData = tideData;
 
     this.update();
-  }
-
-  this.setLocation = function(lat, long)
-  {
-    this.geolocationEnabled = true;
-    this.geolocation.latitude = lat;
-    this.geolocation.longitude = long;
   }
 
   this.display = function()
@@ -149,11 +140,11 @@ function Overview()
     {
       this.timeData.update();
       this.moonData.updateGregorian(this.timeData.currentDate);
-      this.sunData.updateGregorian(this.timeData.currentDate, this.geolocation.latitude, this.geolocation.longitude);
+      this.sunData.updateGregorian(this.timeData.currentDate, this.settings.latitude, this.settings.longitude);
 
       if (settings.tide.value == true)
       {
-        this.tideData.updateTides(this.geolocation.latitude, this.geolocation.longitude);
+        this.tideData.updateTides(this.settings.latitude, this.settings.longitude);
       }
 
       this.setCanvasSize();
