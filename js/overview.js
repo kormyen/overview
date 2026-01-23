@@ -28,9 +28,9 @@ function Overview()
   const EARTH_SIZE = 0.25;
   const TIDE_SIZE_LOW = 0.35;
   const TIDE_SIZE_HIGH = 0.45;
-  const MOON_SIZE = EARTH_SIZE * IRL_EARTH_MOON_RATIO;
+  const MOON_SIZE = EARTH_SIZE / 10;//EARTH_SIZE * IRL_EARTH_MOON_RATIO;
 
-  const MOON_DISTANCE = 0.375;
+  const MOON_DISTANCE = 0.31; // 0.375;
 
   this.drawShared = new DrawShared();
   this.drawSun = new DrawSun(this.drawShared, SUN_SIZE, LINE_WIDTH, LINE_LENGTH_LARGE, LINE_LENGTH_MEDIUM, LINE_LENGTH_TINY);
@@ -109,7 +109,7 @@ function Overview()
     if (settings.moon.value)
     {
       let moonPos = this.drawShared.calcOrbitLocation(cx, cy, degreesEarthRotated -(360 * this.moonData.currentLuationPercentage), MOON_DISTANCE);
-      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated, settings.colorPrimary, settings.colorTertiary, settings.colorTertiary);
+      this.drawMoon.display(context, moonPos.x, moonPos.y, MOON_SIZE * this.size.height, this.moonData.currentLuationPercentage, degreesEarthRotated, settings.colorSecondary, settings.colorBackground, settings.colorBackground);
     } 
     
     // Sun (date of month and month in year)
