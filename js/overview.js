@@ -80,7 +80,7 @@ function Overview()
     // Shared variables
     let context = this.getContext();
     let cx = this.size.width / 2; // center position horizontal
-    if (state.mode == "settings")
+    if (state.mode == globals.MODE_SETTINGS)
     {
       cx = (this.size.width - 400) / 2;
     }
