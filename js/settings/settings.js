@@ -179,6 +179,7 @@ function Settings()
     else if (event.type == "getBrowserGeolocation")
     {
       console.log("Geolocation setting changed: " + this.geolocation.value);
+      this.geolocation.save();
       if (this.geolocation.value)
       {
         // Geolocation checkbox was toggled ON - request browser geolocation
@@ -193,27 +194,55 @@ function Settings()
 
   this.requestBrowserGeolocation = function()
   {
-    if (navigator.geolocation)
-    {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.latitude.setValue(position.coords.latitude);
-          this.latitude.save();
-          this.longitude.setValue(position.coords.longitude);
-          this.longitude.save();
-          console.log("Geolocation enabled: " + position.coords.latitude + ", " + position.coords.longitude);
-        },
-        (error) => {
-          console.error("Geolocation error: " + error.message);
-          this.geolocation.setValue(false);
+    // Check permission status first before requesting position
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      if (result.state === "granted")
+      {
+        console.log("Permission already granted, get position without prompting");
+        // Permission already granted, get position without prompting
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.latitude.setValue(position.coords.latitude);
+            this.latitude.save();
+            this.longitude.setValue(position.coords.longitude);
+            this.longitude.save();
+            console.log("Geolocation enabled: " + position.coords.latitude + ", " + position.coords.longitude);
+          },
+          (error) => {
+            console.error("Geolocation error: " + error.message);
+            this.geolocation.setValue(false);
+            this.geolocation.save();
+          }
+        );
+      }
+      else if (result.state === "prompt")
+      {
+        console.log("Permission not yet decided, prompt the user");
+        // Permission not yet decided, prompt the user
+        if (navigator.geolocation)
+        {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              this.latitude.setValue(position.coords.latitude);
+              this.latitude.save();
+              this.longitude.setValue(position.coords.longitude);
+              this.longitude.save();
+              console.log("Geolocation enabled: " + position.coords.latitude + ", " + position.coords.longitude);
+            },
+            (error) => {
+              console.error("Geolocation error: " + error.message);
+              this.geolocation.setValue(false);
+              this.geolocation.save();
+            }
+          );
         }
-      );
-    }
-    else
-    {
-      console.error("Geolocation not supported");
-      this.geolocation.setValue(false);
-    }
+      }
+      else if (result.state === "denied")
+      {
+        console.error("Geolocation permission denied");
+        this.geolocation.setValue(false);
+      }
+    });
   }
 
   this.hideSettings = function()
