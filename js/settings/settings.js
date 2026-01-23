@@ -142,6 +142,9 @@ function Settings()
     this.tide.setup(this.container, "Show Tide", "settingShowTide", true);
     this.settings.push(this.tide);
 
+    // VISUAL
+    this.targetFps = 60;
+
     // SETUP
     this.hideSettings();
   }

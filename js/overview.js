@@ -11,8 +11,8 @@ function Overview()
   this.canvas.id = "overview";
   
   this.size = null;
-  this.sizeReference = 1024;
-  this.settings = { targetFps: 60 }
+
+  const SIZE_REFERENCE = 1024;
 
   const LINE_WIDTH = 2;
   const LINE_LENGTH_TINY = 0.005;
@@ -57,7 +57,7 @@ function Overview()
   this.startUpdateLoop = function()
   {
     this.update();
-    setInterval(() => { this.update(); }, 1000 / this.settings.targetFps);
+    setInterval(() => { this.update(); }, 1000 / settings.targetFps);
   }
 
   this.getContext = function()
@@ -195,7 +195,7 @@ function Overview()
     this.drawTide.setSize(this.size);
 
     // Set scale adjusted line width to fix the line appearing to be thicker on smaller resolutions
-    let curLineWidth = curSize/this.sizeReference * LINE_WIDTH;
+    let curLineWidth = curSize/SIZE_REFERENCE * LINE_WIDTH;
     this.drawEarth.setLineWidth(curLineWidth);
     this.drawSun.setLineWidth(curLineWidth);
   }

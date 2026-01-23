@@ -6,7 +6,6 @@ function Input(canvas)
   this.mouseDown = { x: 0, y: 0 }
   this.mouseChangeValue = 0;
   this.sendValue = 0;
-  this.settings = { targetFps: 60 }
 
   const eventSettingsToggled = new CustomEvent("settingsToggled");
 
@@ -23,7 +22,7 @@ function Input(canvas)
 
   window.addEventListener("keydown", ev => this.toggleSettings(ev), false);
 
-  setInterval(() => { this.update(); }, 1000 / this.settings.targetFps);
+  setInterval(() => { this.update(); }, 1000 / settings.targetFps);
 
   this.update = function()
   {

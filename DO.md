@@ -2,13 +2,12 @@
 
 - handle invalid lat/long.
 - add settings reset button.
-- move target fps to actual settings
 
 #### 3.0 &mdash; Tide 2026-0
 
 - Add: new design.
 - Add: tide.
-- Add: settings.
+- Add: settings (press ESC).
 
 #### 3.1 &mdash; Improve
 
