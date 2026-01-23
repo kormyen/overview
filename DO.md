@@ -3,8 +3,8 @@
 #### 3.1 &mdash; Improve
 
 - Add: improved tide rendering with smooth animation.
-- Fix: sunlight highlights broken when midnight top false, or offset true.
 - Add: improved time marker visual (triangle vs semi-circle).
+- Fix: sunlight highlights broken when midnight top false, or offset true.
 
 #### 4.0 &mdash; Weather
 
