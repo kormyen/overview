@@ -33,7 +33,7 @@ function DrawMoon(drawShared)
 					context.scale(1-quarterPercentageFirst, 1);
 					context.beginPath();
 					context.fillStyle = colorBackground;
-					context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
+					context.arc(0, 0, radius, 0, Math.PI * 2, true); // half circle
 					context.closePath();
 					context.fill();	
 				}
@@ -49,13 +49,11 @@ function DrawMoon(drawShared)
 				// First half: fill background white
 				this.drawHalfMoonExtra(context, radius, colorPrimary, true);
 
-				// context.translate(-1, 0);
-
 				// Second half: white phase
 				context.scale(-quarterPercentageSecond, 1);
 				context.beginPath();
 				context.fillStyle = colorPrimary;
-				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
+				context.arc(0, 0, radius, 0, Math.PI * 2, true); // half circle
 				context.closePath();
 				context.fill();		
 
@@ -85,7 +83,7 @@ function DrawMoon(drawShared)
 				context.scale(1-quarterPercentageThird, 1);
 				context.beginPath();
 				context.fillStyle = colorPrimary;
-				context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, false); // half circle
+				context.arc(0, 0, radius, 0, Math.PI * 2, false); // half circle
 				context.closePath();
 				context.fill();		
 			}	
@@ -110,7 +108,7 @@ function DrawMoon(drawShared)
 					context.scale(quarterPercentageForth, 1);
 					context.beginPath();
 					context.fillStyle = mixColor;
-					context.arc(0, 0, radius, -Math.PI/2, Math.PI/2, true); // half circle
+					context.arc(0, 0, radius, 0, Math.PI * 2, true); // half circle
 					context.closePath();
 					context.fill();	
 				}

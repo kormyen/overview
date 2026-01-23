@@ -43,6 +43,7 @@ This is a 24h clock face design that more literally references the origins of ho
 
 - Add: new design.
 - Add: tide.
+- Add: improved moon rendering.
 - Add: settings (press ESC).
 
 #### 2.1 &mdash; Fixes 2023-07-28
