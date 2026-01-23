@@ -1,13 +1,10 @@
 # DO
 
 - make new geolocation toggle work with the actual geolocation setting.
-- handle no stormglass api key.
-- handle invalid stormglass api key.
 - handle invalid lat/long.
-- projected tide data.
 - add settings reset button.
 
-#### 3.0 &mdash; Tide 2025-0
+#### 3.0 &mdash; Tide 2026-0
 
 - Add: new design.
 - Add: tide.
