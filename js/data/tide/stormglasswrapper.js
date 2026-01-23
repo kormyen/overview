@@ -251,13 +251,13 @@ function StormglassWrapper()
     this.checkTideDataValid = function(dataObj)
     {
         let sameDate = false;
-        for (let i = 0; i < 7; i++)
+        // Search entire array for yesterday's date (not just first 7 entries, since we now extrapolate backwards)
+        for (let i = 0; i < dataObj.length; i++)
         {
-            // Check a few tide events just in case - give some leeway maybe our 10 days of data is just a day old or something.
-            // We actually want our data to start with yesterday because we need at least one from the day before to get our curve drawn correctly.
             if (this.checkSameDate(this.getYesterdayDate(), new Date(dataObj[i].date)))
             {
                 sameDate = true;
+                break;
             }
         }
         return sameDate;
