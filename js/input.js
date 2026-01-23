@@ -26,23 +26,38 @@ function Input(canvas)
 
   setInterval(() => { this.update(); }, 1000 / settings.targetFps);
 
+  this.isMouseOverSettings = function()
+  {
+    if (state.mode !== globals.MODE_SETTINGS) {
+      return false;
+    }
+    
+    const settingsPanel = document.getElementById('settingsContainer');
+    if (!settingsPanel) {
+      return false;
+    }
+    
+    const rect = settingsPanel.getBoundingClientRect();
+    return this.mouse.x >= rect.left && 
+           this.mouse.x <= rect.right && 
+           this.mouse.y >= rect.top && 
+           this.mouse.y <= rect.bottom;
+  }
+
   this.update = function()
   {
-    if (state.mode == globals.MODE_TELLURION)
+    if (this.mouse.down)
     {
-      if (this.mouse.down)
+      this.sendEvent();
+    }
+    else if (this.sendValue != 0 && this.sendValue)
+    {
+      this.sendValue *= 0.925;
+      if (Math.abs(this.sendValue) <= 0.01)
       {
-        this.sendEvent();
+        this.sendValue = 0;
       }
-      else if (this.sendValue != 0 && this.sendValue)
-      {
-        this.sendValue *= 0.925;
-        if (Math.abs(this.sendValue) <= 0.01)
-        {
-          this.sendValue = 0;
-        }
-        this.sendEvent();
-      }
+      this.sendEvent();
     }
   }
 
@@ -60,28 +75,25 @@ function Input(canvas)
 
   this.mouseMove = function(event)
   {
-    if (state.mode == globals.MODE_TELLURION)
+    event.preventDefault();
+    this.mouse.x = event.pageX;
+    this.mouse.y = event.pageY;
+    if (event.touches && event.touches.length > 0)
     {
-      event.preventDefault();
-      this.mouse.x = event.pageX;
-      this.mouse.y = event.pageY;
-      if (event.touches && event.touches.length > 0)
-      {
-        this.mouse.x = event.touches[0].pageX;
-        this.mouse.y = event.touches[0].pageY;
-      }
+      this.mouse.x = event.touches[0].pageX;
+      this.mouse.y = event.touches[0].pageY;
+    }
 
-      this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
-      if (this.mouse.down)
-      {
-        this.sendValue = this.mouseChangeValue;
-      }
+    this.mouseChangeValue = (this.mouse.x - this.mouseDown.x);
+    if (this.mouse.down)
+    {
+      this.sendValue = this.mouseChangeValue;
     }
   }
 
   this.mouseDown = function(event)
   {
-    if (state.mode == globals.MODE_TELLURION)
+    if (!this.isMouseOverSettings())
     {
       event.preventDefault();
 
@@ -117,10 +129,7 @@ function Input(canvas)
   
   this.mouseUp = function(event)
   {
-    if (state.mode == "modeTellurion")
-    {
-      event.preventDefault();
-    }
+    event.preventDefault();
     this.mouse.down = false;
   }
 
