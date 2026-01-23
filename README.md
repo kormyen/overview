@@ -6,7 +6,9 @@ A digital [tellurion](https://en.wikipedia.org/wiki/Tellurion).
 
 [**Live web version here**](https://overview-psi.vercel.app/)
 
-Drag left and right to time travel.
+- Drag left and right to time travel.
+- Press ESC for settings.
+- Add a (free) [Stormglass](https://stormglass.io/) API key to enable tide visuals.
 
 ## Abstract
 
