@@ -6,6 +6,7 @@ function Input(canvas)
   this.mouseDown = { x: 0, y: 0 }
   this.mouseChangeValue = 0;
   this.sendValue = 0;
+  this.escapePressed = false;
 
   const eventSettingsToggled = new CustomEvent("settingsToggled");
 
@@ -21,6 +22,7 @@ function Input(canvas)
   window.addEventListener('touchcancel',  ev => this.mouseUp(ev), false);
 
   window.addEventListener("keydown", ev => this.toggleSettings(ev), false);
+  window.addEventListener("keyup", ev => this.keyUp(ev), false);
 
   setInterval(() => { this.update(); }, 1000 / settings.targetFps);
 
@@ -124,9 +126,18 @@ function Input(canvas)
 
   this.toggleSettings = function(event)
   {
+    if (event.key == "Escape" && !this.escapePressed)
+    {
+      this.escapePressed = true;
+      window.dispatchEvent(eventSettingsToggled);
+    }
+  }
+
+  this.keyUp = function(event)
+  {
     if (event.key == "Escape")
     {
-      window.dispatchEvent(eventSettingsToggled);
+      this.escapePressed = false;
     }
   }
 }
