@@ -4,11 +4,13 @@ function ElementText()
     this.value = null;
     this.input = null;
     this.button = null;
+    this.defaultValue = null;
     const eventUpdated = new CustomEvent("settingUpdated");
 
     this.setup = function(parent, labelText, id, defaultValue)
     {
         this.id = id;
+        this.defaultValue = defaultValue;
 
         let storedValue = localStorage.getItem(id);
         if (storedValue != null)

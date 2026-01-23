@@ -142,6 +142,18 @@ function Settings()
     this.tide.setup(this.container, "Show Tide", "settingShowTide", true);
     this.settings.push(this.tide);
 
+    // RESET BUTTON
+    let titleDanger = new ElementH2();
+    titleDanger.setup(this.container, "Reset");
+    let labelDanger1 = new ElementLabel();
+    labelDanger1.setup(this.container, "Immediately reset all settings to default values.");
+
+    let resetButton = document.createElement("button");
+    resetButton.className = "overview-button";
+    resetButton.textContent = "RESET";
+    resetButton.addEventListener("click", ()=>{ this.resetDefaults(); });
+    this.container.appendChild(resetButton);
+
     // VISUAL
     this.targetFps = 60;
 
@@ -297,5 +309,25 @@ function Settings()
       this.settings[i].save();      
     }
     console.log("Settings saved!");
+  }
+
+  this.resetDefaults = function()
+  {
+    for (let i = 0; i < this.settings.length; i++)
+    {
+      let s = this.settings[i];
+      if (s.defaultValue !== undefined)
+      {
+        if (typeof s.setValue === "function")
+        {
+          s.setValue(s.defaultValue);
+        }
+        else if (s.input)
+        {
+          s.input.value = s.defaultValue;
+        }
+      }
+    }
+    this.saveSettings();
   }
 }

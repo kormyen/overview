@@ -6,9 +6,12 @@ function ElementCheckbox()
     this.button = null;
     this.eventChecked = null;
 
+    this.defaultValue = false;
+
     this.setup = function(parent, labelText, id, defaultValue, eventName = "settingChecked")
     {
         this.id = id;
+        this.defaultValue = defaultValue;
 
         let storedValue = localStorage.getItem(id);
         if (storedValue != null)
