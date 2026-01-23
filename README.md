@@ -2,9 +2,9 @@
 
 A digital [tellurion](https://en.wikipedia.org/wiki/Tellurion).
 
-<img src='https://raw.githubusercontent.com/kormyen/overview/master/2023-07-26_17-50.jpg'/>
+[**Live web version here**](https://overview-psi.vercel.app/)
 
-[**Live web version here**](https://overview-kormyen.vercel.app/)
+<img src='https://raw.githubusercontent.com/kormyen/overview/master/2026-01-23_23-34.jpg'/>
 
 Drag left and right to time travel.
 
@@ -40,6 +40,8 @@ This is a 24h clock face design that more literally references the origins of ho
 ## Changelog
 
 #### 3.0 &mdash; Tide 2026-01-23
+
+<img src='https://raw.githubusercontent.com/kormyen/overview/master/2026-01-23_23-34.jpg'/>
 
 - Add: new design.
 - Add: tide.
