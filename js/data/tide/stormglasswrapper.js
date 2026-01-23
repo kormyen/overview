@@ -33,8 +33,15 @@ function StormglassWrapper()
                 // Different date! Get new data!
                 if (this.checkApiReady())
                 {
-                    console.log("Stored tide data NOT valid! Requesting new data!");
-                    this.sendApiRequest(this.getYesterdayDate(), lat, long);
+                    if (this.checkApiKeyReady())
+                    {
+                        console.log("Stored tide data NOT valid! Requesting new data!");
+                        this.sendApiRequest(this.getYesterdayDate(), lat, long);
+                    }
+                    else 
+                    {
+                        console.log("Stored tide data NOT valid! Stormglass API key NOT valid! Cannot request new data.");
+                    }
                 }
             }
         }
@@ -43,8 +50,15 @@ function StormglassWrapper()
             // Got no data, lets request some!
             if (this.checkApiReady())
             {
-                console.log("Stored tide data empty. Requesting new data!");
-                this.sendApiRequest(this.getYesterdayDate(), lat, long);
+                if (this.checkApiKeyReady())
+                {
+                    console.log("Stored tide data empty. Requesting new data!");
+                    this.sendApiRequest(this.getYesterdayDate(), lat, long);
+                }
+                else 
+                {
+                    console.log("Stored tide data empty. Stormglass API key NOT valid! Cannot request new data.");
+                }
             }
         }
     }
@@ -68,14 +82,16 @@ function StormglassWrapper()
 
         if (!TEST_MODE)
         {
-            console.log("Do a real request to the API.");
             // Do a real request to the API.
-            if (settings.stormglassKey.input.value != null)
+            if (settings.stormglassKey.input.value != globals.DEFAULT_API_KEY 
+                && settings.stormglassKey.input.value != null)
             {
                 fetch(`https://api.stormglass.io/v2/tide/extremes/point?lat=${lat}&lng=${long}&start=${dateFormatedStart}&end=${dateFormatedEnd}`, {
                     headers: {
                         'Authorization': settings.stormglassKey.input.value
                     }
+                    // 'd952c4a8-2f92-11ee-8b7f-0242ac130002-d952c53e-2f92-11ee-8b7f-0242ac130002'
+                    //settings.stormglassKey.input.value
                 }).then((response) => response.json()).then((jsonData) => {
                     localStorage.setItem(globals.STORAGE_DATA_STORMGLASS_LAST, JSON.stringify(jsonData));
                     this.parseApiResponse(jsonData);
@@ -148,6 +164,17 @@ function StormglassWrapper()
     }
 
     // HELPERS
+    this.checkApiKeyReady = function()
+    {
+        if (settings.stormglassKey.input.value != globals.DEFAULT_API_KEY 
+            && settings.stormglassKey.input.value != null
+            && settings.stormglassKey.input.value.length > 70)
+        {
+            return true;
+        }
+        return false;
+    }
+
     this.checkApiReady = function()
     {
         if (!this.stateRequestError && !this.stateRequestProcessing && !this.stateRequestDone)

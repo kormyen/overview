@@ -1,5 +1,7 @@
 function Globals()
 {
+  this.MODE_TELLURION = "modeTellurion";
+  this.MODE_SETTINGS = "modeSettings";
   this.DEFAULT_API_KEY = "Your API key here";
   this.STORAGE_DATA_TIDE = "dataTide";
   this.STORAGE_DATA_STORMGLASS_LAST = "dataStormglassLastest";

@@ -1,4 +1,4 @@
-function SettingsLabel()
+function ElementLabel()
 {
     this.setup = function(parent, value)
     {

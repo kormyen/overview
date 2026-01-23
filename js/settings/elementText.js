@@ -1,4 +1,4 @@
-function SettingsText()
+function ElementText()
 {
     this.id = null;
     this.value = null;
@@ -60,7 +60,7 @@ function SettingsText()
         localStorage.setItem(this.id, this.value);
     }
 
-    SettingsText.prototype.handleEvent = function(event) 
+    ElementText.prototype.handleEvent = function(event) 
     {
         if (event.type === "click" && event.target.className == "overview-button")
         {

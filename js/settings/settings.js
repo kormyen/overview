@@ -26,87 +26,87 @@ function Settings()
   {
     this.container = parent;
 
-    let titleSettings = new SettingsH1();
+    let titleSettings = new ElementH1();
     titleSettings.setup(this.container, "Settings");
 
     // GEOLOCATION
-    let titleGeolocation = new SettingsH2();
+    let titleGeolocation = new ElementH2();
     titleGeolocation.setup(this.container, "Geolocation");
-    let labelGeolocation1 = new SettingsLabel();
+    let labelGeolocation1 = new ElementLabel();
     labelGeolocation1.setup(this.container, "Used for sunlight and tide calculations.");
 
-    this.latitude = new SettingsText();
+    this.latitude = new ElementText();
     this.latitude.setup(this.container, "Latitude", "settingLatitude", -36.848461);
     this.settings.push(this.latitude);
-    this.longitude = new SettingsText();
+    this.longitude = new ElementText();
     this.longitude.setup(this.container, "Longitude", "settingLongitude", 174.763336);
     this.settings.push(this.longitude);
 
-    this.geolocation = new SettingsCheckbox();
+    this.geolocation = new ElementCheckbox();
     this.geolocation.setup(this.container, "Get Browser Geolocation", "settingGeolocation", false);
     this.settings.push(this.geolocation);
 
     // TIME OF DAY
-    let titleTimeOfDay = new SettingsH2();
+    let titleTimeOfDay = new ElementH2();
     titleTimeOfDay.setup(this.container, "Day");
 
-    this.timeOfDay = new SettingsCheckbox();
+    this.timeOfDay = new ElementCheckbox();
     this.timeOfDay.setup(this.container, "Show day", "settingTimeOfDay", true);
     this.timeOfDay.button.addEventListener("settingChecked", this, true);
     this.settings.push(this.timeOfDay);
 
-    this.timeHand = new SettingsCheckbox();
+    this.timeHand = new ElementCheckbox();
     this.timeHand.setup(this.container, "Time Hand", "settingTimeHand", false);
     this.settings.push(this.timeHand);
 
-    this.earthRotate = new SettingsCheckbox();
+    this.earthRotate = new ElementCheckbox();
     this.earthRotate.setup(this.container, "Rotation", "settingEarthRotate", false);
     this.earthRotate.button.addEventListener("settingChecked", this, true);
     this.earthRotate.hide();
     this.settings.push(this.earthRotate);
 
-    this.midnightTop = new SettingsCheckbox();
+    this.midnightTop = new ElementCheckbox();
     this.midnightTop.setup(this.container, "Midnight Top", "settingMidnightTop", true);
     this.midnightTop.hide();
     this.settings.push(this.midnightTop);
 
-    this.sunBands = new SettingsCheckbox();
+    this.sunBands = new ElementCheckbox();
     this.sunBands.setup(this.container, "Sun Bands", "settingSunBands", false);
     this.settings.push(this.sunBands);
 
-    this.earthOutline = new SettingsCheckbox();
+    this.earthOutline = new ElementCheckbox();
     this.earthOutline.setup(this.container, "Planet Outline", "settingPlanetOutline", false);
     this.settings.push(this.earthOutline);
 
-    this.graduationMinimal = new SettingsCheckbox();
+    this.graduationMinimal = new ElementCheckbox();
     this.graduationMinimal.setup(this.container, "Graduation Minimal", "settingGraduationMinimal", true);
     this.settings.push(this.graduationMinimal);
 
-    this.graduationHighlight = new SettingsCheckbox();
+    this.graduationHighlight = new ElementCheckbox();
     this.graduationHighlight.setup(this.container, "Graduation Highlight", "settingGraduationHighlight", true);
     this.settings.push(this.graduationHighlight);
 
-    this.graduationSunlight = new SettingsCheckbox();
+    this.graduationSunlight = new ElementCheckbox();
     this.graduationSunlight.setup(this.container, "Graduation Sunlight", "settingGraduationSunlight", true);
     this.settings.push(this.graduationSunlight);
 
-    this.graduationRiseSetDisplay = new SettingsCheckbox();
+    this.graduationRiseSetDisplay = new ElementCheckbox();
     this.graduationRiseSetDisplay.setup(this.container, "Graduation Rise Set Display", "settingGraduationRiseSetDisplay", true);
     this.settings.push(this.graduationRiseSetDisplay);
 
     // YEAR
-    let titleYear = new SettingsH2();
+    let titleYear = new ElementH2();
     titleYear.setup(this.container, "Year");
 
-    this.year = new SettingsCheckbox();
+    this.year = new ElementCheckbox();
     this.year.setup(this.container, "Show Year", "settingShowYear", false);
     this.settings.push(this.year);
 
     // MOON
-    let titleMoon = new SettingsH2();
+    let titleMoon = new ElementH2();
     titleMoon.setup(this.container, "Moon");
 
-    this.moon = new SettingsCheckbox();
+    this.moon = new ElementCheckbox();
     this.moon.setup(this.container, "Show Moon", "settingShowMoon", true);
     this.settings.push(this.moon);
 
@@ -121,28 +121,41 @@ function Settings()
     cssRoot.style.setProperty('--color-ascent', this.colorAscent);
 
     // TIDE
-    let titleTide = new SettingsH2();
+    let titleTide = new ElementH2();
     titleTide.setup(this.container, "Tide");
 
-    let labelTide = new SettingsLabel();
+    let labelTide = new ElementLabel();
     labelTide.setupWithLink(this.container, "Requires free or paid ", "Stormglass", "https://stormglass.io/", " API key.")
 
-    this.stormglassKey = new SettingsText();
+    this.stormglassKey = new ElementText();
     this.stormglassKey.setup(this.container, "Stormglass API key", "settingStormglassKey", globals.DEFAULT_API_KEY);
     this.settings.push(this.stormglassKey);
 
-    this.tide = new SettingsCheckbox();
+    this.tide = new ElementCheckbox();
     this.tide.setup(this.container, "Show Tide", "settingShowTide", true);
     this.settings.push(this.tide);
 
     // SETUP
-    this.hideAll();
+    this.hideSettings();
+  }
+
+  this.update = function()
+  {
+    if (this.stormglassKey.input.value != globals.DEFAULT_API_KEY 
+      && this.stormglassKey.input.value != null)
+    {
+      this.tide.show();
+    }
+    else
+    {
+      this.tide.hide();
+    }
   }
   
   this.setupState = function()
   {
-    window.addEventListener("modeChange0", this, true);
-    window.addEventListener("modeChange1", this, true);
+    window.addEventListener(globals.MODE_TELLURION, this, true);
+    window.addEventListener(globals.MODE_SETTINGS, this, true);
   }
 
   Settings.prototype.handleEvent = function(event) 
@@ -151,22 +164,22 @@ function Settings()
     {
       this.hideShowSettings();
     }
-    else if (event.type === "modeChange0")
+    else if (event.type === globals.MODE_TELLURION)
     {
       this.saveSettings();
-      this.hideAll();
+      this.hideSettings();
     }
-    else if (event.type === "modeChange1")
+    else if (event.type === globals.MODE_SETTINGS)
     {
-      this.hideShowSettings();
+      this.showSettings();
     }
   }
 
-  this.hideAll = function()
+  this.hideSettings = function()
   {
     this.container.style.display = "none";
   }
-  this.hideShowSettings = function()
+  this.showSettings = function()
   {
     this.container.style.display = "flex";
     
@@ -202,15 +215,6 @@ function Settings()
     // {
     //   this.midnightTop.show();
     // }
-
-    if (this.stormglassKey.input.value != globals.DEFAULT_API_KEY)
-    {
-      this.tide.show();
-    }
-    else
-    {
-      this.tide.hide();
-    }
   }
 
   this.saveSettings = function()
@@ -219,5 +223,6 @@ function Settings()
     {
       this.settings[i].save();      
     }
+    console.log("Settings saved!");
   }
 }

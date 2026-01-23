@@ -1,4 +1,4 @@
-function SettingsCheckbox()
+function ElementCheckbox()
 {
     this.id = "";
     this.value = false;
@@ -76,7 +76,7 @@ function SettingsCheckbox()
         localStorage.setItem(this.id, this.value);
     }
 
-    SettingsCheckbox.prototype.handleEvent = function(event) 
+    ElementCheckbox.prototype.handleEvent = function(event) 
     {
         if (event.type === "change")
         {

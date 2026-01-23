@@ -1,12 +1,12 @@
 function State()
 {
-  const MODE_0 = "tellurion";
-  const MODE_1 = "settings";
+  const MODE_TELLURION = "modeTellurion";
+  const MODE_SETTINGS = "modeSettings";
 
-  this.mode = MODE_0;
+  this.mode = MODE_TELLURION;
 
-  const eventMode0 = new CustomEvent("modeChange0");
-  const eventMode1 = new CustomEvent("modeChange1");
+  const eventModeTellurion = new CustomEvent(MODE_TELLURION);
+  const eventModeSettings = new CustomEvent(MODE_SETTINGS);
 
   this.setup = function(input)
   {
@@ -17,15 +17,15 @@ function State()
   {
     if (event.type === "settingsToggled")
     {
-      if (this.mode == MODE_0)
+      if (this.mode == MODE_TELLURION)
       {
-        this.mode = MODE_1;
-        window.dispatchEvent(eventMode1);
+        this.mode = MODE_SETTINGS;
+        window.dispatchEvent(eventModeSettings);
       }
       else
       {
-        this.mode = MODE_0;
-        window.dispatchEvent(eventMode0);
+        this.mode = MODE_TELLURION;
+        window.dispatchEvent(eventModeTellurion);
       }
     }
   }

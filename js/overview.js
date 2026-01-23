@@ -151,14 +151,19 @@ function Overview()
       this.moonData.updateGregorian(this.timeData.currentDate);
       this.sunData.updateGregorian(this.timeData.currentDate, this.geolocation.latitude, this.geolocation.longitude);
 
-      // if (this.geolocationEnabled)
-      // {
+      if (settings.tide.value == true)
+      {
         this.tideData.updateTides(this.geolocation.latitude, this.geolocation.longitude);
-      // }
+      }
 
       this.setCanvasSize();
       this.clearCanvas();
       this.drawTellurion();
+
+      if (state.mode == globals.MODE_SETTINGS)
+      {
+        settings.update();
+      }
     }
     else
     {

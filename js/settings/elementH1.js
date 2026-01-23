@@ -1,4 +1,4 @@
-function SettingsH1()
+function ElementH1()
 {
     this.setup = function(parent, value)
     {

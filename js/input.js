@@ -27,7 +27,7 @@ function Input(canvas)
 
   this.update = function()
   {
-    if (state.mode == "tellurion")
+    if (state.mode == globals.MODE_TELLURION)
     {
       if (this.mouse.down)
       {
@@ -59,7 +59,7 @@ function Input(canvas)
 
   this.mouseMove = function(event)
   {
-    if (state.mode == "tellurion")
+    if (state.mode == globals.MODE_TELLURION)
     {
       event.preventDefault();
       this.mouse.x = event.pageX;
@@ -80,7 +80,7 @@ function Input(canvas)
 
   this.mouseDown = function(event)
   {
-    if (state.mode == "tellurion")
+    if (state.mode == globals.MODE_TELLURION)
     {
       event.preventDefault();
 
@@ -116,7 +116,7 @@ function Input(canvas)
   
   this.mouseUp = function(event)
   {
-    if (state.mode == "tellurion")
+    if (state.mode == "modeTellurion")
     {
       event.preventDefault();
     }
