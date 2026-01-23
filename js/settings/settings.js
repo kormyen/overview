@@ -148,11 +148,8 @@ function Settings()
     let labelDanger1 = new ElementLabel();
     labelDanger1.setup(this.container, "Immediately reset all settings to default values.");
 
-    let resetButton = document.createElement("button");
-    resetButton.className = "overview-button";
-    resetButton.textContent = "RESET";
-    resetButton.addEventListener("click", ()=>{ this.resetDefaults(); });
-    this.container.appendChild(resetButton);
+    let resetButton = new ElementButton();
+    resetButton.setup(this.container, "RESET", ()=>{ this.resetDefaults(); });
 
     // VISUAL
     this.targetFps = 60;
