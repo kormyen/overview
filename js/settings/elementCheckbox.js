@@ -4,9 +4,9 @@ function ElementCheckbox()
     this.value = false;
     this.checkbox = null;
     this.button = null;
-    const eventChecked = new CustomEvent("settingChecked");
+    this.eventChecked = null;
 
-    this.setup = function(parent, labelText, id, defaultValue)
+    this.setup = function(parent, labelText, id, defaultValue, eventName = "settingChecked")
     {
         this.id = id;
 
@@ -20,6 +20,7 @@ function ElementCheckbox()
             this.value = defaultValue;
         }
 
+        this.eventChecked = new Event(eventName);
         this.buildElement(parent, labelText, id, this.value)
         this.checkbox.addEventListener("change", this, true);
         this.button.addEventListener("click", this, false);
@@ -81,13 +82,13 @@ function ElementCheckbox()
         if (event.type === "change")
         {
             this.value = this.checkbox.checked;
-            this.button.dispatchEvent(eventChecked);
+            this.button.dispatchEvent(this.eventChecked);
         }
         if (event.type === "click" && event.target.className == "overview-button")
         {
             this.checkbox.checked = !this.checkbox.checked;
             this.value = this.checkbox.checked;
-            this.button.dispatchEvent(eventChecked);
+            this.button.dispatchEvent(this.eventChecked);
         }
     }
 }

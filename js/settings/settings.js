@@ -43,7 +43,8 @@ function Settings()
     this.settings.push(this.longitude);
 
     this.geolocation = new ElementCheckbox();
-    this.geolocation.setup(this.container, "Get Browser Geolocation", "settingGeolocation", false);
+    this.geolocation.setup(this.container, "Get Browser Geolocation", "settingGeolocation", false, "getBrowserGeolocation");
+    this.geolocation.button.addEventListener("getBrowserGeolocation", this, true);
     this.settings.push(this.geolocation);
 
     // TIME OF DAY
@@ -52,7 +53,7 @@ function Settings()
 
     this.timeOfDay = new ElementCheckbox();
     this.timeOfDay.setup(this.container, "Show day", "settingTimeOfDay", true);
-    this.timeOfDay.button.addEventListener("settingChecked", this, true);
+    // this.timeOfDay.button.addEventListener("settingChecked", this, true);
     this.settings.push(this.timeOfDay);
 
     this.timeHand = new ElementCheckbox();
@@ -61,7 +62,7 @@ function Settings()
 
     this.earthRotate = new ElementCheckbox();
     this.earthRotate.setup(this.container, "Rotation", "settingEarthRotate", false);
-    this.earthRotate.button.addEventListener("settingChecked", this, true);
+    // this.earthRotate.button.addEventListener("settingChecked", this, true);
     this.earthRotate.hide();
     this.settings.push(this.earthRotate);
 
@@ -160,11 +161,7 @@ function Settings()
 
   Settings.prototype.handleEvent = function(event) 
   {
-    if (event.type === "settingChecked")
-    {
-      this.hideShowSettings();
-    }
-    else if (event.type === globals.MODE_TELLURION)
+    if (event.type === globals.MODE_TELLURION)
     {
       this.saveSettings();
       this.hideSettings();
@@ -172,6 +169,41 @@ function Settings()
     else if (event.type === globals.MODE_SETTINGS)
     {
       this.showSettings();
+    }
+    else if (event.type == "getBrowserGeolocation")
+    {
+      console.log("Geolocation setting changed: " + this.geolocation.value);
+      if (this.geolocation.value)
+      {
+        // Geolocation checkbox was toggled ON - request browser geolocation
+        this.requestBrowserGeolocation();
+      }
+    }
+    else
+    {
+      console.warn("Unhandled settings event: " + event.type);
+    }
+  }
+
+  this.requestBrowserGeolocation = function()
+  {
+    if (navigator.geolocation)
+    {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          overview.setLocation(position.coords.latitude, position.coords.longitude);
+          console.log("Geolocation enabled: " + position.coords.latitude + ", " + position.coords.longitude);
+        },
+        (error) => {
+          console.error("Geolocation error: " + error.message);
+          this.geolocation.setValue(false);
+        }
+      );
+    }
+    else
+    {
+      console.error("Geolocation not supported");
+      this.geolocation.setValue(false);
     }
   }
 

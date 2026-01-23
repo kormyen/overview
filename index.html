@@ -17,8 +17,6 @@
   <script src="js/draw/drawearth.js"></script>
   <script src="js/draw/drawmoon.js"></script>
   <script src="js/draw/drawtide.js"></script>
-
-  <script src="js/settings/getlocation.js"></script>
   <script src="js/state.js"></script>
   <script src="js/settings/settings.js"></script>
   <script src="js/settings/globals.js"></script>
@@ -32,7 +30,6 @@
 </head>
 <body>  
   <div class="overview-settings-container" id="settingsContainer">
-    <button class="overview-button" id="btn-location">Location</button>
   </div>
 
   <script type="text/javascript">
@@ -56,9 +53,6 @@
     {
       overview.changeValue(e.detail);
     });
-
-    var getlocation = new GetLocation();
-    getlocation.setup();
   </script>
 </body>
 </html>
