@@ -140,11 +140,11 @@ function Overview()
     {
       this.timeData.update();
       this.moonData.updateGregorian(this.timeData.currentDate);
-      this.sunData.updateGregorian(this.timeData.currentDate, this.settings.latitude, this.settings.longitude);
+      this.sunData.updateGregorian(this.timeData.currentDate, settings.latitude.value, settings.longitude.value);
 
       if (settings.tide.value == true)
       {
-        this.tideData.updateTides(this.settings.latitude, this.settings.longitude);
+        this.tideData.updateTides(settings.latitude.value, settings.longitude.value);
       }
 
       this.setCanvasSize();
