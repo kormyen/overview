@@ -36,10 +36,16 @@ function Settings()
     labelGeolocation1.setup(this.container, "Used for sunlight and tide calculations.");
 
     this.latitude = new ElementText();
-    this.latitude.setup(this.container, "Latitude", "settingLatitude", globals.DEFAULT_LATITUDE);
+    this.latitude.setup(this.container, "Latitude", "settingLatitude", globals.DEFAULT_LATITUDE, {
+      min: -90,
+      max: 90
+    });
     this.settings.push(this.latitude);
     this.longitude = new ElementText();
-    this.longitude.setup(this.container, "Longitude", "settingLongitude", globals.DEFAULT_LONGITUDE);
+    this.longitude.setup(this.container, "Longitude", "settingLongitude", globals.DEFAULT_LONGITUDE, {
+      min: -180,
+      max: 180
+    });
     this.settings.push(this.longitude);
 
     this.geolocation = new ElementCheckbox();

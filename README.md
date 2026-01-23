@@ -39,6 +39,12 @@ This is a 24h clock face design that more literally references the origins of ho
 
 ## Changelog
 
+#### 3.0 &mdash; Tide 2026-01-23
+
+- Add: new design.
+- Add: tide.
+- Add: settings (press ESC).
+
 #### 2.1 &mdash; Fixes 2023-07-28
 
 - Fix: visual glitch in middle of moon due to scaling half, seen when moon halves align horizontally or vertically to screen - fixed by over drawing arc on specfic layers.

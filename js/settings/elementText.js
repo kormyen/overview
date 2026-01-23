@@ -7,10 +7,11 @@ function ElementText()
     this.defaultValue = null;
     const eventUpdated = new CustomEvent("settingUpdated");
 
-    this.setup = function(parent, labelText, id, defaultValue)
+    this.setup = function(parent, labelText, id, defaultValue, constraints = {})
     {
         this.id = id;
         this.defaultValue = defaultValue;
+        this.constraints = constraints;
 
         let storedValue = localStorage.getItem(id);
         if (storedValue != null)
@@ -22,11 +23,17 @@ function ElementText()
             this.value = defaultValue;
         }
 
-        this.buildElement(parent, labelText, this.value)
+        this.buildElement(parent, labelText, this.value, constraints)
         this.button.addEventListener("click", this, false);
+        
+        // Add validation on blur to clamp values
+        if (constraints.min !== undefined || constraints.max !== undefined)
+        {
+            this.input.addEventListener("blur", this, false);
+        }
     }
 
-    this.buildElement = function(parent, labelText, value)
+    this.buildElement = function(parent, labelText, value, constraints)
     {
         this.button = document.createElement("button");
         this.button.className = "overview-button"; 
@@ -72,8 +79,32 @@ function ElementText()
     {
         if (event.type === "click" && event.target.className == "overview-button")
         {
-            console.log("select")
             this.input.select();
+        }
+        else if (event.type === "blur")
+        {
+            // Validate and clamp numeric values
+            if (this.constraints.min !== undefined || this.constraints.max !== undefined)
+            {
+                let val = parseFloat(this.input.value);
+                if (isNaN(val))
+                {
+                    this.input.value = this.value || this.defaultValue;
+                    return;
+                }
+                
+                if (this.constraints.min !== undefined && val < this.constraints.min)
+                {
+                    val = this.constraints.min;
+                }
+                if (this.constraints.max !== undefined && val > this.constraints.max)
+                {
+                    val = this.constraints.max;
+                }
+                
+                this.input.value = val;
+                this.value = val;
+            }
         }
     }
 }
