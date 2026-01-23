@@ -156,11 +156,75 @@ function StormglassWrapper()
                 this.result.push(tideEvent);
             }
 
+            // Extrapolate tide data forward and backward infinitely based on average interval
+            this.extrapolateTideData();
+
+            console.log(this.result);
+
             localStorage.setItem(globals.STORAGE_DATA_TIDE, JSON.stringify(this.result));
             this.stateDataReady = true;
         }
 
         this.stateRequestProcessing = false;
+    }
+
+    this.extrapolateTideData = function()
+    {
+        if (this.result.length < 2) return;
+
+        // Calculate median tide height from API data
+        let heights = this.result.map(event => event.tideHeight).sort((a, b) => a - b);
+        let medianHeight = heights.length % 2 === 0
+            ? (heights[heights.length / 2 - 1] + heights[heights.length / 2]) / 2
+            : heights[Math.floor(heights.length / 2)];
+
+        // Calculate average time between tide events
+        let totalTime = 0;
+        for (let i = 1; i < this.result.length; i++)
+        {
+            totalTime += this.result[i].date.getTime() - this.result[i-1].date.getTime();
+        }
+        const avgInterval = totalTime / (this.result.length - 1);
+
+        // Extrapolate backwards ~1 year
+        let backwardsArray = [];
+        let backwardsDate = new Date(this.result[0].date.getTime());
+        let backwardsTideType = this.result[0].tideType === "high" ? "low" : "high";
+        const oneYearMs = 365 * 24 * 60 * 60 * 1000;
+
+        while (backwardsDate.getTime() > this.result[0].date.getTime() - oneYearMs)
+        {
+            backwardsDate.setTime(backwardsDate.getTime() - avgInterval);
+            let event = {
+                date: new Date(backwardsDate),
+                dayPerc: this.calcCurrentDayPercentage(backwardsDate),
+                tideHeight: medianHeight, // Extrapolated, uses median height
+                tideType: backwardsTideType
+            };
+            backwardsArray.unshift(event);
+            backwardsTideType = backwardsTideType === "high" ? "low" : "high";
+        }
+
+        // Extrapolate forwards ~1 year
+        let forwardsArray = [];
+        let forwardsDate = new Date(this.result[this.result.length - 1].date.getTime());
+        let forwardsTideType = this.result[this.result.length - 1].tideType === "high" ? "low" : "high";
+
+        while (forwardsDate.getTime() < this.result[this.result.length - 1].date.getTime() + oneYearMs)
+        {
+            forwardsDate.setTime(forwardsDate.getTime() + avgInterval);
+            let event = {
+                date: new Date(forwardsDate),
+                dayPerc: this.calcCurrentDayPercentage(forwardsDate),
+                tideHeight: medianHeight, // Extrapolated, uses median height
+                tideType: forwardsTideType
+            };
+            forwardsArray.push(event);
+            forwardsTideType = forwardsTideType === "high" ? "low" : "high";
+        }
+
+        // Combine backwards + original + forwards
+        this.result = backwardsArray.concat(this.result, forwardsArray);
     }
 
     // HELPERS
