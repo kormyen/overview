@@ -18,8 +18,8 @@ function Settings()
   this.colorPrimary = '#D9D9D9'; // #EEE
   this.colorSecondary = '#7e8588' //'#5D6163'; // #999 #666
   this.colorTertiary = '#3E4446'; // #333
-  this.colorBackground = '#3B4143'; // #1E1E1E
-  this.colorDark = '#2B3437';
+  this.colorBackground = '#3A3F41'; // #1E1E1E
+  this.colorDark = '#1B2022';
   this.colorAscent = '#EE4B2B';
 
   this.setup = function(parent)

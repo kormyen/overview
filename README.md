@@ -4,6 +4,8 @@ A digital [tellurion](https://en.wikipedia.org/wiki/Tellurion).
 
 <img src='https://raw.githubusercontent.com/kormyen/overview/master/2026-01-23_23-34.jpg'/>
 
+## Demo
+
 [**Live web version here**](https://overview-psi.vercel.app/)
 
 - Drag left and right to time travel.
